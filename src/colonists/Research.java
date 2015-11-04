@@ -1,5 +1,5 @@
 package colonists;
 
 public enum Research {
-	Health, Growth, Military, Experimentation;
+	Health, Growth, Military, Experimentation, None;
 }

@@ -74,5 +74,11 @@ public abstract class Colonist {
 		}
 	}
 	
+//	public void switchType(String decision, int identification){
+//		switch(decision){
+//		
+//		}
+//	}
+	
 	
 }
