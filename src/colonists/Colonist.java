@@ -74,7 +74,7 @@ public abstract class Colonist {
 		}
 	}
 
-	public Colonist swithOccupation(String decision, int identification) {
+	public Colonist switchOccupation(String decision, int identification) {
 		if (decision.compareTo("Worker") == 0){
 			return new Worker(identification);
 		} else if (decision.compareTo("Farmer") == 0){
