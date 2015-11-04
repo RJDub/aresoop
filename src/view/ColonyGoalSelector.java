@@ -1,5 +1,5 @@
 package view;
 
-public class ColonyGoalSelector {
+public class ColonyGoalSelector extends Selector{
 
 }
