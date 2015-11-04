@@ -8,71 +8,90 @@ public abstract class Colonist {
 	Fatigue FatigueLevel;
 	int id;
 	Point Location;
-	
-	public Colonist(int input){
+
+	public Colonist(int input) {
 		id = input;
 	}
-	
-	public int getID(){
+
+	public int getID() {
 		return id;
 	}
-	
-	public Hunger getHungry(){
+
+	public Hunger getHungry() {
 		return HungerLevel;
 	}
-	
-	public Thirst getThirsty(){
+
+	public Thirst getThirsty() {
 		return ThirstLevel;
 	}
-	
-	public Fatigue getFatigue(){
+
+	public Fatigue getFatigue() {
 		return FatigueLevel;
 	}
-	
-	public double getXcoord(){
+
+	public double getXcoord() {
 		return Location.getX();
 	}
-	
-	public double getYcoord(){
+
+	public double getYcoord() {
 		return Location.getY();
 	}
-	
-	public boolean isAlive(){
-		if (HungerLevel == Hunger.Dead || ThirstLevel == Thirst.Dead || FatigueLevel == Fatigue.Dead){
+
+	public boolean isAlive() {
+		if (HungerLevel == Hunger.Dead || ThirstLevel == Thirst.Dead || FatigueLevel == Fatigue.Dead) {
 			return false;
 		} else {
 			return true;
 		}
 	}
-	
-	public void moveToDestination(Point dest){
+
+	public void moveToDestination(Point dest) {
 		double destx = dest.getX();
 		double desty = dest.getY();
-		
-		while (true){
-			if (Location.getX() < destx && Location.getY() < desty){
-				Location.setLocation(Location.getX()+1, Location.getY()+1);
-			} else if (Location.getX() < destx && Location.getY() == desty){
-				Location.setLocation(Location.getX()+1, Location.getY());
-			} else if (Location.getX() < destx && Location.getY() > desty){
-				Location.setLocation(Location.getX()+1, Location.getY()-1);
-			} else if (Location.getX() == destx && Location.getY() < desty){
-				Location.setLocation(Location.getX(), Location.getY()+1);
-			} else if (Location.getX() == destx && Location.getY() == desty){
+
+		while (true) {
+			if (Location.getX() < destx && Location.getY() < desty) {
+				Location.setLocation(Location.getX() + 1, Location.getY() + 1);
+			} else if (Location.getX() < destx && Location.getY() == desty) {
+				Location.setLocation(Location.getX() + 1, Location.getY());
+			} else if (Location.getX() < destx && Location.getY() > desty) {
+				Location.setLocation(Location.getX() + 1, Location.getY() - 1);
+			} else if (Location.getX() == destx && Location.getY() < desty) {
+				Location.setLocation(Location.getX(), Location.getY() + 1);
+			} else if (Location.getX() == destx && Location.getY() == desty) {
 				Location.setLocation(Location.getX(), Location.getY());
-			} else if (Location.getX() == destx && Location.getY() > desty){
-				Location.setLocation(Location.getX(), Location.getY()-1);
-			} else if (Location.getX() > destx && Location.getY() < desty){
-				Location.setLocation(Location.getX()-1, Location.getY()+1);
-			} else if (Location.getX() > destx && Location.getY() == desty){
-				Location.setLocation(Location.getX()-1, Location.getY());
-			} else if (Location.getX() > destx && Location.getY() > desty){
-				Location.setLocation(Location.getX()-1, Location.getY()-1);
+			} else if (Location.getX() == destx && Location.getY() > desty) {
+				Location.setLocation(Location.getX(), Location.getY() - 1);
+			} else if (Location.getX() > destx && Location.getY() < desty) {
+				Location.setLocation(Location.getX() - 1, Location.getY() + 1);
+			} else if (Location.getX() > destx && Location.getY() == desty) {
+				Location.setLocation(Location.getX() - 1, Location.getY());
+			} else if (Location.getX() > destx && Location.getY() > desty) {
+				Location.setLocation(Location.getX() - 1, Location.getY() - 1);
 			} else {
 				break;
 			}
 		}
 	}
+
+	public Colonist swithOccupation(String decision, int identification) {
+		if (decision.compareTo("Worker") == 0){
+			return new Worker(identification);
+		} else if (decision.compareTo("Farmer") == 0){
+			return new Farmer(identification);
+		} else {
+			return new Explorer(identification);
+		}
+	}
 	
-	
+	public ProfessionalColonist upgradeColonist(String type, int identification) {
+		if (type.compareTo("Worker") == 0){
+			return new Engineer(identification);
+		} else if (type.compareTo("Farmer") == 0){
+			return new Advocate(identification);
+		} else {
+			return new Scientist(identification);
+		}
+	}
+
 }
