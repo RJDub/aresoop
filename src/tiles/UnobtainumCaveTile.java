@@ -1,5 +1,5 @@
 package tiles;
 
-public class UnobtainumCaveTile {
+public class UnobtainumCaveTile extends CaveTile{
 
 }
