@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence-diagram version="1.1.9" icons="true">  
+  <object id="1" language="java" name="view.AresGUI" project="ARES" file="/ARES/src/view/AresGUI.java" binary="false" 
+    label="aresGUI" type="class" autoSize="true">    
+    <position height="-1" width="-1" x="390" y="0"/>    
+    <execution id="2">      
+      <position height="179" width="79" x="5" y="78"/>    
+    </execution>    
+    <execution id="9">      
+      <position height="186" width="79" x="5" y="121"/>    
+    </execution>  
+  </object>  
+  <object id="16" language="java" name="view.Map" project="ARES" file="/ARES/src/view/Map.java" binary="false" 
+    label="map" type="class" autoSize="true">    
+    <position height="-1" width="-1" x="406" y="0"/>    
+    <execution id="4">      
+      <position height="21" width="52" x="88" y="99"/>    
+    </execution>    
+    <execution id="17">      
+      <position height="63" width="52" x="88" y="104"/>    
+    </execution>    
+    <execution id="20">      
+      <position height="63" width="52" x="88" y="123"/>    
+    </execution>    
+    <execution id="23">      
+      <position height="63" width="52" x="88" y="138"/>    
+    </execution>  
+  </object>  
+  <object id="26" language="java" name="tiles.Tile" project="ARES" file="/ARES/src/tiles/Tile.java" binary="false" 
+    label="tile" type="class" autoSize="true">    
+    <position height="-1" width="-1" x="379" y="0"/>    
+    <execution id="19">      
+      <position height="21" width="48" x="144" y="125"/>    
+    </execution>  
+  </object>  
+  <object id="27" language="java" name="colonists.Colonist" project="ARES" file="/ARES/src/colonists/Colonist.java" 
+    binary="false" label="colonist" type="class" autoSize="true">    
+    <position height="-1" width="-1" x="489" y="0"/>    
+    <execution id="22">      
+      <position height="21" width="81" x="196" y="144"/>    
+    </execution>  
+  </object>  
+  <object id="28" language="java" name="buildings.Building" project="ARES" file="/ARES/src/buildings/Building.java" 
+    binary="false" label="building" type="class" autoSize="true">    
+    <position height="-1" width="-1" x="315" y="0"/>    
+    <execution id="25">      
+      <position height="21" width="81" x="281" y="159"/>    
+    </execution>  
+  </object>  
+  <object id="29" language="java" name="management.BuildingManager" project="ARES" 
+    file="/ARES/src/management/BuildingManager.java" binary="false" label="buildingManager" type="class" autoSize="true">    
+    <position height="-1" width="-1" x="616" y="0"/>    
+    <execution id="6">      
+      <position height="21" width="140" x="366" y="120"/>    
+    </execution>  
+  </object>  
+  <object id="30" language="java" name="management.ColonistManager" project="ARES" 
+    file="/ARES/src/management/ColonistManager.java" binary="false" label="colonistManager" type="class" autoSize="true">    
+    <position height="-1" width="-1" x="616" y="0"/>    
+    <execution id="11">      
+      <position height="21" width="140" x="510" y="142"/>    
+    </execution>  
+  </object>  
+  <object id="31" language="java" name="management.ColonyGoalManager" project="ARES" 
+    file="/ARES/src/management/ColonyGoalManager.java" binary="false" label="colonyGoalManager" type="class" 
+    autoSize="true">    
+    <position height="-1" width="-1" x="616" y="0"/>    
+    <execution id="13">      
+      <position height="21" width="163" x="700" y="178"/>    
+    </execution>  
+  </object>  
+  <object id="32" language="java" name="management.ColonyProjectManager" project="ARES" 
+    file="/ARES/src/management/ColonyProjectManager.java" binary="false" label="colonyProjectManager" type="class" 
+    autoSize="true">    
+    <position height="-1" width="-1" x="616" y="0"/>    
+    <execution id="8">      
+      <position height="21" width="179" x="517" y="215"/>    
+    </execution>  
+  </object>  
+  <object id="33" language="java" name="management.ResourceManager" project="ARES" 
+    file="/ARES/src/management/ResourceManager.java" binary="false" label="resourceManager" type="class" autoSize="true">    
+    <position height="-1" width="-1" x="616" y="0"/>    
+    <execution id="15">      
+      <position height="21" width="147" x="366" y="265"/>    
+    </execution>  
+  </object>  
+  <message id="3" asynchronous="false">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="4"/>  
+  </message>  
+  <message id="5" asynchronous="false">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="6"/>  
+  </message>  
+  <message id="7" asynchronous="false">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="8"/>  
+  </message>  
+  <message id="10" asynchronous="false">    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="11"/>  
+  </message>  
+  <message id="12" asynchronous="false">    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="13"/>  
+  </message>  
+  <message id="14" asynchronous="false">    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="15"/>  
+  </message>  
+  <message id="18" asynchronous="false">    
+    <end type="SOURCE" refId="17"/>    
+    <end type="TARGET" refId="19"/>  
+  </message>  
+  <message id="21" asynchronous="false">    
+    <end type="SOURCE" refId="20"/>    
+    <end type="TARGET" refId="22"/>  
+  </message>  
+  <message id="24" asynchronous="false">    
+    <end type="SOURCE" refId="23"/>    
+    <end type="TARGET" refId="25"/>  
+  </message>
+</sequence-diagram>
