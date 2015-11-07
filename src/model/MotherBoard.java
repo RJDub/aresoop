@@ -30,8 +30,18 @@ public class MotherBoard {
 				int r = random.nextInt(3);
 				switch(r){
 				case 0:
-					tiles[i][j] = new ResourceTile();
+					tiles[i][j] = new ResourceTile(new String("./ground.png"));
+				break;
+				
+				case 1:
+					tiles[i][j] = new ResourceTile(new String("./obstacle.png"));
+				break;
+					
+				case 2:
+					tiles[i][j] = new ResourceTile(new String("./resource.png"));
+				break;
 				}
+				
 			}
 		}
 		//resource, ground, obstacle
