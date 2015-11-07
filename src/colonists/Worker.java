@@ -1,8 +1,8 @@
 package colonists;
 
-public class Farmer extends Colonist{
+public class Worker extends Colonist{
 
-	public Farmer(int input) {
+	public Worker(int input) {
 		super(input);
 		// TODO Auto-generated constructor stub
 	}

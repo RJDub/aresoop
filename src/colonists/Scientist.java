@@ -1,5 +1,21 @@
 package colonists;
 
-public class Scientist extends Colonist{
+public class Scientist extends ProfessionalColonist{
+
+	Research project;
+	
+	public Scientist(int input) {
+		super(input);
+		// TODO Auto-generated constructor stub
+		project = Research.None;
+	}
+	
+	public Research getProject(){
+		return project;
+	}
+	
+	public void updateProject(Research decision){
+		project = decision;
+	}
 
 }
