@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-public class TestManagement {
+public class TestMotherBoard {
 
 	@Test
 	public void test() {
