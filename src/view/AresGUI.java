@@ -8,7 +8,7 @@ public class AresGUI extends JFrame{
 	
 	private Map board;
 	private MotherBoard Logic;
-	public void main (String[] args){
+	public static void main (String[] args){
 		AresGUI view = new AresGUI();
 		view.setVisible(true);
 	}
