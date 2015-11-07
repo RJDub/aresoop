@@ -1,17 +1,13 @@
 package view;
 
 import javax.swing.JFrame;
-import management.*;
+
+import model.*;
 
 public class AresGUI extends JFrame{
 	
 	private Map board;
-	private Manager build_manager;
-	private Manager col_manager;
-	private Manager goal_manager;
-	private Manager proj_manager;
-	private Manager res_manager;
-	
+	private MotherBoard Logic;
 	public void main (String[] args){
 		AresGUI view = new AresGUI();
 		view.setVisible(true);
@@ -30,10 +26,6 @@ public class AresGUI extends JFrame{
 	}
 	
 	public void setupModel(){
-		build_manager = new BuildingManager();
-		col_manager = new ColonistManager();
-		goal_manager = new ColonyGoalManager();
-		proj_manager = new ColonyProjectManager();
-		res_manager = new ResourceManager();
+		Logic = new MotherBoard();
 	}
 }
