@@ -3,10 +3,13 @@ package view;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Point;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Random;
 
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import tiles.*;
 import colonists.*;
@@ -50,11 +53,17 @@ public class Map extends JPanel{
 		repaint();
 	}
 	public void paintComponent(Graphics g) {
+		Image tile;
 	    super.paintComponent(g);
 	    Graphics2D g2 = (Graphics2D) g;
 	    // Draw background image 100 times
-	    for (int x = 0; x < BOARD_X_SIZE; x += 50)
-	      for (int y = 0; y < BOARD_Y_SIZE; c += 50)
-	        g2.drawImage(tile, r, c, null);
+	    for (int x = 0; x < BoardModel[0].length;x += 50)
+	      for (int y = 0; y < BoardModel.length; y += 50)
+	    	  tile = ImageIO.read(new File("./images/Ground.png"));
+	        g2.drawImage(BoardModel[x][y].getTileImage());
+	}
+	
+	}
+	
 	}
 }
