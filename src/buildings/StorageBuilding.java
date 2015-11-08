@@ -1,23 +1,20 @@
 package buildings;
 
-import java.awt.Point;
 import java.util.ArrayList;
 
 import enums.Resource;
 import model.Building;
-import tiles.*;
 
 public class StorageBuilding extends Building {
 
 	private Resource type;
 	private int capacity;
 	private ArrayList<Resource> resources;
-	public StorageBuilding(Point create, Resource input) {
-		super(create);
-		// TODO Auto-generated constructor stub
+	
+	public StorageBuilding(Resource input, int cap) {
 		type = input;
 		resources = new ArrayList<Resource>();
-		capacity = 10;
+		capacity = cap;
 	}
 	
 	public Resource getType(){
