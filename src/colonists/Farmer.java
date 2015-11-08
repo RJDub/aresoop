@@ -1,7 +1,7 @@
 package colonists;
 import java.util.ArrayList;
 
-import tiles.*;
+import enums.*;
 
 import model.Colonist;
 
