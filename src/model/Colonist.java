@@ -1,6 +1,17 @@
-package colonists;
+package model;
 
 import java.awt.Point;
+
+import colonists.Advocate;
+import colonists.Engineer;
+import colonists.Explorer;
+import colonists.Farmer;
+import colonists.ProfessionalColonist;
+import colonists.Scientist;
+import colonists.Worker;
+import enums.Fatigue;
+import enums.Hunger;
+import enums.Thirst;
 
 public abstract class Colonist {
 	Hunger HungerLevel;

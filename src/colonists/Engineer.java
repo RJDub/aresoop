@@ -1,5 +1,7 @@
 package colonists;
 
+import enums.Design;
+
 public class Engineer extends ProfessionalColonist{
 
 	Design project;

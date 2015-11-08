@@ -1,5 +1,7 @@
 package colonists;
 
+import model.Colonist;
+
 public abstract class ProfessionalColonist extends Colonist{
 
 	public ProfessionalColonist(int input) {

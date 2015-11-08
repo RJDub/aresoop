@@ -14,6 +14,9 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import tiles.*;
 import colonists.*;
+import model.Building;
+import model.Colonist;
+import model.Tile;
 import buildings.*;
 
 public class Map extends JPanel {

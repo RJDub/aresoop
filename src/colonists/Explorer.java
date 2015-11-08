@@ -1,5 +1,7 @@
 package colonists;
 
+import model.Colonist;
+
 public class Explorer extends Colonist{
 
 	public Explorer(int input) {
