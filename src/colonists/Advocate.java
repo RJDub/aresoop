@@ -1,5 +1,7 @@
 package colonists;
 
+import enums.Advocacy;
+
 public class Advocate extends ProfessionalColonist{
 	Advocacy project;
 

@@ -2,7 +2,9 @@ package buildings;
 
 import java.awt.Point;
 
-public abstract class ResourceBuilding extends Building{
+import model.Building;
+
+public class ResourceBuilding extends Building{
 
 	public ResourceBuilding(Point create) {
 		super(create);
