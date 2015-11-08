@@ -8,8 +8,8 @@ public class ResourceTile extends Tile {
 
 	ArrayList<Resource> resources;
 
-	public ResourceTile(Point create) {
-		super(create);
+	public ResourceTile(String path) {
+		super(path);
 		// TODO Auto-generated constructor stub
 		resources = new ArrayList<Resource>();
 		determineResources();
