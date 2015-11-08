@@ -1,21 +1,35 @@
 package tiles;
 
-import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Random;
 
 import enums.Resource;
-import model.Tile;
+import model.*;
 
 public class ResourceTile extends Tile {
 
-	ArrayList<Resource> resources;
+	private ArrayList<Resource> resources;
+	private ArrayList<Colonist> occupants;
+	private ArrayList<Building> buildings;
 
 	public ResourceTile(String path) {
 		super(path);
-		// TODO Auto-generated constructor stub
 		resources = new ArrayList<Resource>();
+		occupants = new ArrayList<Colonist>();
+		buildings = new ArrayList<Building>();
 		determineResources();
+	}
+	
+	public ArrayList<Colonist> getOccupants(){
+		return occupants;
+	}
+	
+	public ArrayList<Resource> getResources(){
+		return resources;
+	}
+	
+	public ArrayList<Building> getBuildings(){
+		return buildings;
 	}
 
 	private void determineResources() {
@@ -60,6 +74,17 @@ public class ResourceTile extends Tile {
 		default:
 			break;
 		}
+	}
+	
+	//TODO: add support to upgrade a building and to add objects to a building (ie tools)
+	
+	public Colonist removeOccupant(Colonist person){
+		for (int i = 0; i < occupants.size(); i++){
+			if (occupants.get(i).getName().compareTo(person.getName()) == 0){
+				return occupants.remove(i);
+			}
+		}
+		return null;
 	}
 
 }
