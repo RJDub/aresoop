@@ -1,12 +1,33 @@
 package colonists;
+import java.util.ArrayList;
+
+import tiles.*;
 
 import model.Colonist;
 
 public class Farmer extends Colonist{
+	
+	private int maxCapacity;
+	private ArrayList<Resource> resources;
 
-	public Farmer(int input) {
+	public Farmer(String input) {
 		super(input);
-		// TODO Auto-generated constructor stub
+		
+		maxCapacity = 5;
+		
+		resources = null;
+	}
+	
+	public void addResource(Resource input) {
+		resources.add(input);
+	}
+	
+	public ArrayList<Resource> getResource() {
+		return resources;
+	}
+	
+	public int getmaxCapacity() {
+		return maxCapacity;
 	}
 
 }

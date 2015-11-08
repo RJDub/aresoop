@@ -4,7 +4,7 @@ import model.Colonist;
 
 public class Worker extends Colonist{
 
-	public Worker(int input) {
+	public Worker(String input) {
 		super(input);
 		// TODO Auto-generated constructor stub
 	}

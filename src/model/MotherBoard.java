@@ -16,12 +16,13 @@ public class MotherBoard {
 	
 	public MotherBoard(){
 		tiles = new Tile[10][10];
+
 		
 		setupBoard();
 	}
 	
 	private void setupBoard(){
-		//random radnom.nextint()
+		//random random.nextint()
 		Random random = new Random();
 		
 		//assign tiles to each part of the array
