@@ -1,7 +1,5 @@
 package tiles;
 
-import java.awt.Point;
-
 import model.Tile;
 
 public class ObstacleTile extends Tile{

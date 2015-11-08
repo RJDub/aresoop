@@ -1,22 +1,20 @@
 package buildings;
 
 import java.awt.Point;
-import java.util.ArrayList;
 
-import model.Building;
+import model.*;
 import enums.*;
 
 public class ResourceBuilding extends Building{
 	
 	private Resource type;
 	private int capacity;
-	private ArrayList<Resource> resources;
+	private int level;
 
-	public ResourceBuilding(Point create, Resource input) {
-		super(create);
+	public ResourceBuilding(Resource input, int cap) {
 		type = input;
-		capacity = 20;
-		resources = null;
+		capacity = cap;
+		level = 1;
 	}
 	
 	public Resource getType(){
@@ -27,16 +25,10 @@ public class ResourceBuilding extends Building{
 		return capacity;
 	}
 	
-	public ArrayList<Resource> getAllResources(){
-		return resources;
+	public int getLevel(){
+		return level;
 	}
 	
-	public Resource harvest(){
-		return resources.remove(0);
-	}
 	
-	public void generate(){
-		
-	}
 
 }
