@@ -19,8 +19,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="3" language="java" name="buildings.Building" project="ARES" file="/ARES/src/buildings/Building.java" 
-    binary="false" corner="BOTTOM_RIGHT">    
+  <class id="3" language="java" name="model.Building" project="ARES" file="/ARES/src/model/Building.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="360" y="445"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -82,7 +82,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <enumeration id="10" language="java" name="colonists.Advocacy" project="ARES" file="/ARES/src/colonists/Advocacy.java" 
+  <enumeration id="10" language="java" name="enums.Advocacy" project="ARES" file="/ARES/src/enums/Advocacy.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1163" y="989"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -109,7 +109,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </enumeration>  
-  <class id="13" language="java" name="colonists.Colonist" project="ARES" file="/ARES/src/colonists/Colonist.java" 
+  <class id="13" language="java" name="model.Colonist" project="ARES" file="/ARES/src/model/Colonist.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1401" y="404"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -118,7 +118,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <enumeration id="14" language="java" name="colonists.Hunger" project="ARES" file="/ARES/src/colonists/Hunger.java" 
+  <enumeration id="14" language="java" name="enums.Hunger" project="ARES" file="/ARES/src/enums/Hunger.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1187" y="102"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -154,7 +154,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <enumeration id="18" language="java" name="colonists.Fatigue" project="ARES" file="/ARES/src/colonists/Fatigue.java" 
+  <enumeration id="18" language="java" name="enums.Fatigue" project="ARES" file="/ARES/src/enums/Fatigue.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1411" y="96"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -163,7 +163,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </enumeration>  
-  <enumeration id="19" language="java" name="colonists.Thirst" project="ARES" file="/ARES/src/colonists/Thirst.java" 
+  <enumeration id="19" language="java" name="enums.Thirst" project="ARES" file="/ARES/src/enums/Thirst.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1625" y="98"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -172,7 +172,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </enumeration>  
-  <enumeration id="20" language="java" name="colonists.Design" project="ARES" file="/ARES/src/colonists/Design.java" 
+  <enumeration id="20" language="java" name="enums.Design" project="ARES" file="/ARES/src/enums/Design.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1430" y="983"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -217,7 +217,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="25" language="java" name="tiles.Tile" project="ARES" file="/ARES/src/tiles/Tile.java" binary="false" 
+  <class id="25" language="java" name="model.Tile" project="ARES" file="/ARES/src/model/Tile.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="882" y="456"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -226,241 +226,216 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="26" language="java" name="view.AdvocacySelector" project="ARES" file="/ARES/src/view/AdvocacySelector.java" 
-    binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="365" y="901"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="27" language="java" name="view.ResearchSelector" project="ARES" file="/ARES/src/view/ResearchSelector.java" 
-    binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="568" y="1021"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="28" language="java" name="view.ColonyGoalSelector" project="ARES" 
-    file="/ARES/src/view/ColonyGoalSelector.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="366" y="1019"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="29" language="java" name="view.BuildingSelector" project="ARES" file="/ARES/src/view/BuildingSelector.java" 
-    binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="747" y="1022"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="30" language="java" name="view.DesignSelector" project="ARES" file="/ARES/src/view/DesignSelector.java" 
-    binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="750" y="917"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="31" language="java" name="view.Selector" project="ARES" file="/ARES/src/view/Selector.java" binary="false" 
+  <class id="26" language="java" name="view.AresGUI" project="ARES" file="/ARES/src/view/AresGUI.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="562" y="840"/>    
+    <position height="-1" width="-1" x="644" y="711"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="32" language="java" name="view.AresGUI" project="ARES" file="/ARES/src/view/AresGUI.java" binary="false" 
+  <class id="27" language="java" name="model.MotherBoard" project="ARES" file="/ARES/src/model/MotherBoard.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="902" y="650"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="28" language="java" name="view.Map" project="ARES" file="/ARES/src/view/Map.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="883" y="796"/>    
+    <position height="-1" width="-1" x="453" y="666"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="33" language="java" name="view.Map" project="ARES" file="/ARES/src/view/Map.java" binary="false" 
-    corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="883" y="628"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <association id="34">    
-    <end type="SOURCE" refId="33" navigable="false">      
-      <attribute id="35" name="colonists">        
+  <association id="29">    
+    <end type="SOURCE" refId="28" navigable="false">      
+      <attribute id="30" name="BoardModel">        
         <position height="0" width="0" x="0" y="0"/>      
       </attribute>      
-      <multiplicity id="36" minimum="0" maximum="2147483647">        
+      <multiplicity id="31" minimum="0" maximum="2147483647">        
         <position height="0" width="0" x="0" y="0"/>      
       </multiplicity>    
     </end>    
-    <end type="TARGET" refId="13" navigable="true"/>    
+    <end type="TARGET" refId="25" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="37">    
-    <end type="SOURCE" refId="24"/>    
-    <end type="TARGET" refId="25"/>  
-  </generalization>  
-  <association id="38">    
-    <end type="SOURCE" refId="13" navigable="false">      
-      <attribute id="39" name="FatigueLevel">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="40" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="18" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <generalization id="41">    
-    <end type="SOURCE" refId="21"/>    
-    <end type="TARGET" refId="13"/>  
-  </generalization>  
-  <generalization id="42">    
-    <end type="SOURCE" refId="28"/>    
-    <end type="TARGET" refId="31"/>  
-  </generalization>  
-  <generalization id="43">    
-    <end type="SOURCE" refId="11"/>    
-    <end type="TARGET" refId="13"/>  
-  </generalization>  
-  <generalization id="44">    
-    <end type="SOURCE" refId="7"/>    
-    <end type="TARGET" refId="3"/>  
-  </generalization>  
-  <generalization id="45">    
-    <end type="SOURCE" refId="27"/>    
-    <end type="TARGET" refId="31"/>  
-  </generalization>  
-  <generalization id="46">    
-    <end type="SOURCE" refId="1"/>    
-    <end type="TARGET" refId="3"/>  
-  </generalization>  
-  <generalization id="47">    
-    <end type="SOURCE" refId="9"/>    
-    <end type="TARGET" refId="22"/>  
-  </generalization>  
-  <generalization id="48">    
-    <end type="SOURCE" refId="8"/>    
-    <end type="TARGET" refId="7"/>  
-  </generalization>  
-  <generalization id="49">    
-    <end type="SOURCE" refId="17"/>    
-    <end type="TARGET" refId="22"/>  
-  </generalization>  
-  <association id="50">    
-    <end type="SOURCE" refId="33" navigable="false">      
-      <attribute id="51" name="buildings">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="52" minimum="0" maximum="2147483647">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="3" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <generalization id="53">    
-    <end type="SOURCE" refId="5"/>    
-    <end type="TARGET" refId="7"/>  
-  </generalization>  
-  <association id="54">    
-    <end type="SOURCE" refId="9" navigable="false">      
-      <attribute id="55" name="project">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="56" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="20" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <generalization id="57">    
+  <generalization id="32">    
     <end type="SOURCE" refId="2"/>    
     <end type="TARGET" refId="7"/>  
   </generalization>  
-  <generalization id="58">    
-    <end type="SOURCE" refId="22"/>    
-    <end type="TARGET" refId="13"/>  
-  </generalization>  
-  <generalization id="59">    
-    <end type="SOURCE" refId="6"/>    
-    <end type="TARGET" refId="3"/>  
-  </generalization>  
-  <association id="60">    
+  <association id="33">    
     <end type="SOURCE" refId="15" navigable="false">      
-      <attribute id="61" name="project">        
+      <attribute id="34" name="project">        
         <position height="0" width="0" x="0" y="0"/>      
       </attribute>      
-      <multiplicity id="62" minimum="0" maximum="1">        
+      <multiplicity id="35" minimum="0" maximum="1">        
         <position height="0" width="0" x="0" y="0"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="10" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="63">    
-    <end type="SOURCE" refId="13" navigable="false">      
-      <attribute id="64" name="HungerLevel">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="65" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="14" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <generalization id="66">    
-    <end type="SOURCE" refId="15"/>    
+  <generalization id="36">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="3"/>  
+  </generalization>  
+  <generalization id="37">    
+    <end type="SOURCE" refId="9"/>    
     <end type="TARGET" refId="22"/>  
   </generalization>  
-  <generalization id="67">    
-    <end type="SOURCE" refId="29"/>    
-    <end type="TARGET" refId="31"/>  
-  </generalization>  
-  <association id="68">    
+  <association id="38">    
     <end type="SOURCE" refId="17" navigable="false">      
-      <attribute id="69" name="project">        
+      <attribute id="39" name="project">        
         <position height="0" width="0" x="0" y="0"/>      
       </attribute>      
-      <multiplicity id="70" minimum="0" maximum="1">        
+      <multiplicity id="40" minimum="0" maximum="1">        
         <position height="0" width="0" x="0" y="0"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="12" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="71">    
-    <end type="SOURCE" refId="13" navigable="false">      
-      <attribute id="72" name="ThirstLevel">        
+  <generalization id="41">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="3"/>  
+  </generalization>  
+  <generalization id="42">    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="7"/>  
+  </generalization>  
+  <generalization id="43">    
+    <end type="SOURCE" refId="21"/>    
+    <end type="TARGET" refId="13"/>  
+  </generalization>  
+  <generalization id="44">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="3"/>  
+  </generalization>  
+  <association id="45">    
+    <end type="SOURCE" refId="26" navigable="false">      
+      <attribute id="46" name="board">        
         <position height="0" width="0" x="0" y="0"/>      
       </attribute>      
-      <multiplicity id="73" minimum="0" maximum="1">        
+      <multiplicity id="47" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="28" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="48">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="3"/>  
+  </generalization>  
+  <association id="49">    
+    <end type="SOURCE" refId="27" navigable="false">      
+      <attribute id="50" name="colonists">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="51" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="13" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="52">    
+    <end type="SOURCE" refId="23"/>    
+    <end type="TARGET" refId="25"/>  
+  </generalization>  
+  <generalization id="53">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="7"/>  
+  </generalization>  
+  <association id="54">    
+    <end type="SOURCE" refId="13" navigable="false">      
+      <attribute id="55" name="HungerLevel">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="56" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="14" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="57">    
+    <end type="SOURCE" refId="26" navigable="false">      
+      <attribute id="58" name="Logic">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="59" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="27" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="60">    
+    <end type="SOURCE" refId="22"/>    
+    <end type="TARGET" refId="13"/>  
+  </generalization>  
+  <generalization id="61">    
+    <end type="SOURCE" refId="24"/>    
+    <end type="TARGET" refId="25"/>  
+  </generalization>  
+  <association id="62">    
+    <end type="SOURCE" refId="13" navigable="false">      
+      <attribute id="63" name="ThirstLevel">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="64" minimum="0" maximum="1">        
         <position height="0" width="0" x="0" y="0"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="19" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
+  <generalization id="65">    
+    <end type="SOURCE" refId="16"/>    
+    <end type="TARGET" refId="13"/>  
+  </generalization>  
+  <generalization id="66">    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="13"/>  
+  </generalization>  
+  <association id="67">    
+    <end type="SOURCE" refId="28" navigable="false">      
+      <attribute id="68" name="buildings">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="69" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="3" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="70">    
+    <end type="SOURCE" refId="15"/>    
+    <end type="TARGET" refId="22"/>  
+  </generalization>  
+  <association id="71">    
+    <end type="SOURCE" refId="28" navigable="false">      
+      <attribute id="72" name="colonists">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="73" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="13" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
   <association id="74">    
-    <end type="SOURCE" refId="33" navigable="false">      
-      <attribute id="75" name="BoardModel">        
+    <end type="SOURCE" refId="27" navigable="false">      
+      <attribute id="75" name="tiles">        
         <position height="0" width="0" x="0" y="0"/>      
       </attribute>      
       <multiplicity id="76" minimum="0" maximum="2147483647">        
@@ -471,36 +446,44 @@
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="77">    
-    <end type="SOURCE" refId="32" navigable="false">      
-      <attribute id="78" name="board">        
+    <end type="SOURCE" refId="27" navigable="false">      
+      <attribute id="78" name="buldings">        
         <position height="0" width="0" x="0" y="0"/>      
       </attribute>      
-      <multiplicity id="79" minimum="0" maximum="1">        
+      <multiplicity id="79" minimum="0" maximum="2147483647">        
         <position height="0" width="0" x="0" y="0"/>      
       </multiplicity>    
     </end>    
-    <end type="TARGET" refId="33" navigable="true"/>    
+    <end type="TARGET" refId="3" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="80">    
-    <end type="SOURCE" refId="16"/>    
-    <end type="TARGET" refId="13"/>  
-  </generalization>  
-  <generalization id="81">    
-    <end type="SOURCE" refId="30"/>    
-    <end type="TARGET" refId="31"/>  
-  </generalization>  
-  <generalization id="82">    
-    <end type="SOURCE" refId="23"/>    
-    <end type="TARGET" refId="25"/>  
-  </generalization>  
-  <generalization id="83">    
-    <end type="SOURCE" refId="4"/>    
-    <end type="TARGET" refId="3"/>  
-  </generalization>  
-  <generalization id="84">    
-    <end type="SOURCE" refId="26"/>    
-    <end type="TARGET" refId="31"/>  
+  <association id="80">    
+    <end type="SOURCE" refId="9" navigable="false">      
+      <attribute id="81" name="project">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="82" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="20" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="83">    
+    <end type="SOURCE" refId="13" navigable="false">      
+      <attribute id="84" name="FatigueLevel">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="85" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="18" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="86">    
+    <end type="SOURCE" refId="17"/>    
+    <end type="TARGET" refId="22"/>  
   </generalization>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     sort-features="false" accessors="true" visibility="true">    

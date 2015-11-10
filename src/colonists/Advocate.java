@@ -1,9 +1,11 @@
 package colonists;
 
+import enums.Advocacy;
+
 public class Advocate extends ProfessionalColonist{
 	Advocacy project;
 
-	public Advocate(int input) {
+	public Advocate(String input) {
 		super(input);
 		// TODO Auto-generated constructor stub
 		project = Advocacy.None;

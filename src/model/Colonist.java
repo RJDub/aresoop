@@ -1,20 +1,32 @@
-package colonists;
+package model;
 
 import java.awt.Point;
+
+import colonists.Advocate;
+import colonists.Engineer;
+import colonists.Explorer;
+import colonists.Farmer;
+import colonists.ProfessionalColonist;
+import colonists.Scientist;
+import colonists.Worker;
+import enums.Fatigue;
+import enums.Hunger;
+import enums.Thirst;
 
 public abstract class Colonist {
 	Hunger HungerLevel;
 	Thirst ThirstLevel;
 	Fatigue FatigueLevel;
-	int id;
+	String name;
+	
 	Point Location;
 
-	public Colonist(int input) {
-		id = input;
+	public Colonist(String input) {
+		name = input;
 	}
 
-	public int getID() {
-		return id;
+	public String getName() {
+		return name;
 	}
 
 	public Hunger getHungry() {
@@ -74,7 +86,7 @@ public abstract class Colonist {
 		}
 	}
 
-	public Colonist switchOccupation(String decision, int identification) {
+	public Colonist switchOccupation(String decision, String identification) {
 		if (decision.compareTo("Worker") == 0){
 			return new Worker(identification);
 		} else if (decision.compareTo("Farmer") == 0){
@@ -84,7 +96,7 @@ public abstract class Colonist {
 		}
 	}
 	
-	public ProfessionalColonist upgradeColonist(String type, int identification) {
+	public ProfessionalColonist upgradeColonist(String type, String identification) {
 		if (type.compareTo("Worker") == 0){
 			return new Engineer(identification);
 		} else if (type.compareTo("Farmer") == 0){
