@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -19,12 +20,23 @@ import buildings.*;
 public class Map extends JPanel {
 	private final int BOARD_X_SIZE = 10;
 	private final int BOARD_Y_SIZE = 10;
+	private final int INCREMENT = 50;
 
 	private Tile[][] BoardModel;
 	private ArrayList<Colonist> colonists;
 	private ArrayList<Building> buildings;
 
+	private BufferedImage sheet, background;
+	public static Random r = new Random();
+	
 	public Map() {
+		try {
+			sheet = ImageIO.read(new File("images" + File.separator
+					+ "SpriteSheet.gif"));
+
+		} catch (IOException e) {
+			System.out.println("Could not find 'SpriteSheet.gif'");
+		}
 		this.setVisible(true);
 		this.setSize(1000, 1000);
 		this.setBackground(Color.LIGHT_GRAY);
@@ -34,11 +46,13 @@ public class Map extends JPanel {
 		buildings = new ArrayList<Building>();
 		
 		//temporary board construction
-		for (int x = 0; x < 10; x ++){
-			for (int y = 0; y<10; y++){
+		for (int x = 0; x < BOARD_X_SIZE; x ++){
+			for (int y = 0; y<BOARD_Y_SIZE; y++){
 				BoardModel[x][y] = new GroundTile(new Point(x,y));
 			}
 		}
+		BoardModel[5][4] = new IceSheetTile(new Point(3,4));
+		//repaint();
 	}
 
 	// public void constructBoard(){
@@ -64,20 +78,32 @@ public class Map extends JPanel {
 	}
 	
 	public void paintComponent(Graphics g) {
-		Image tile = null;
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
 		// Draw background image 100 times
-		for (int x = 0; x < BoardModel[0].length; x += 50) {
-			for (int y = 0; y < BoardModel.length; y += 50) {
-				try {
-					tile = ImageIO.read(new File(BoardModel[x][y].getImagePath()));
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				g2.drawImage(tile, x, y, null);
+		for (int x = 0; x < BoardModel[0].length; x++) {
+			for (int y = 0; y < BoardModel.length; y ++) {
+				Image image = getBufferedImage(BoardModel[x][y].terrainType);
+				g2.drawImage(image, x*INCREMENT, y*INCREMENT, null);
 			}
 		}
 	}
+	private BufferedImage getBufferedImage(Terrain terrainType) {
+		int width = 50;
+		int height = 50;
+		int xLocationOnSheet=0;
+		int yLocationOnSheet=0;
+		switch (terrainType){
+		case Flat:
+			xLocationOnSheet = 0;
+			yLocationOnSheet= 0;
+			break;
+		case IceSheet:
+			xLocationOnSheet =100;
+			yLocationOnSheet= 0;
+		}
+		return sheet.getSubimage(xLocationOnSheet, yLocationOnSheet, width, height);
+		
+	}
+	
 }

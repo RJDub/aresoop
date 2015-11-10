@@ -33,6 +33,7 @@ public class AresGUI extends JFrame{
 		
 		board = new Map();
 		this.add(board);
+		board.drawBoard();
 		
 		//informationPanel = new JPanel();
 		//informationPanel.setLayout(new GridLayout(1,3));
