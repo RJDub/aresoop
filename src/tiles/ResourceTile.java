@@ -6,6 +6,7 @@ import java.util.Random;
 import buildings.ResourceBuilding;
 import enums.Resource;
 import model.*;
+import colonists.*;
 
 public class ResourceTile extends Tile {
 

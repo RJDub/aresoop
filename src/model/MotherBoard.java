@@ -19,17 +19,19 @@ public class MotherBoard extends Observable {
 		colonists = new ArrayList<>();
 		buldings = new ArrayList<>();
 		setupBoard();
+		
+		
 	}
 
 	private void setupBoard() {
 		// random random.nextint()
 		Random random = new Random();
-
-		// assign tiles to each part of the array
-		for (int i = 0; i < 10; i++) {
-			for (int j = 0; j < 10; j++) {
-				int r = random.nextInt(3);
-				switch (r) {
+		
+		//assign tiles to each part of the array
+		for (int i = 0; i < 10; i++){
+			for(int j = 0; j<10; j++){
+				int rand = random.nextInt(3);
+				switch(rand){
 				case 0:
 					tiles[i][j] = new GroundTile();
 					break;

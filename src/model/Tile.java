@@ -12,5 +12,7 @@ public abstract class Tile {
 		
 	}
 	
-	
+	public String getImagePath(){
+		return imagePath;
+	}
 }
