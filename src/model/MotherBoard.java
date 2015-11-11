@@ -30,7 +30,7 @@ public class MotherBoard {
 				int r = random.nextInt(3);
 				switch (r) {
 				case 0:
-					tiles[i][j] = new GroundTile(new String("./ground.png"));
+					tiles[i][j] = new GroundTile();
 					break;
 
 				case 1:
