@@ -17,9 +17,7 @@ import javax.swing.JPanel;
 import tiles.*;
 import colonists.*;
 import enums.Terrain;
-import model.Building;
-import model.Colonist;
-import model.Tile;
+import model.*;
 import buildings.*;
 
 public class Map extends JPanel {
@@ -50,6 +48,18 @@ public class Map extends JPanel {
 		colonists = new ArrayList<Colonist>();
 		buildings = new ArrayList<Building>();
 		
+		// temporary colonist construction
+		colonists = new ArrayList<Colonist>();
+		Colonist frank = new Farmer("Frank");
+		Colonist susie = new Scientist("Susie");
+		frank.setXcoord(2);
+		frank.setYcoord(3);
+		susie.setXcoord(2);
+		susie.setYcoord(5);
+		
+		colonists.add(frank);
+		colonists.add(susie);
+		
 		//temporary board construction
 		for (int x = 0; x < BOARD_X_SIZE; x ++){
 			for (int y = 0; y<BOARD_Y_SIZE; y++){
@@ -75,7 +85,22 @@ public class Map extends JPanel {
 				g2.drawImage(image, x*INCREMENT, y*INCREMENT, null);
 			}
 		}
+		drawColonits(g2);
 	}
+	private void drawColonits(Graphics2D g2) {
+		for (Colonist c: colonists){
+			Image image = getBufferedImageColonist();
+			g2.drawImage(image, INCREMENT*(int)c.getXcoord(),INCREMENT*(int)c.getYcoord(), null);
+		}
+		
+	}
+
+	private BufferedImage getBufferedImageColonist() {
+		int width = 50;
+		int height = 50;
+		return sheet.getSubimage(0, 50, width, height);
+	}
+
 	private BufferedImage getBufferedImage(Terrain terrainType) {
 		int width = 50;
 		int height = 50;
