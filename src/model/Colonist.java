@@ -36,6 +36,7 @@ public abstract class Colonist {
 	public Thirst getThirst() {
 		return ThirstLevel;
 	}
+	
 
 	public Fatigue getFatigue() {
 		return FatigueLevel;
@@ -65,11 +66,33 @@ public abstract class Colonist {
 		}
 	}
 	
+	public void makeHungry(){
+		if (getHunger() == Hunger.Full){
+			HungerLevel = Hunger.Normal;
+		} else if (getHunger() == Hunger.Normal){
+			HungerLevel = Hunger.Hungry;
+		} else if (getHunger() == Hunger.Hungry){
+			HungerLevel = Hunger.Starving;
+		} else if (getHunger() == Hunger.Starving){
+			HungerLevel = Hunger.Dead;
+		}
+	}
+	
 	public void makeQuenched(){
 		if (getThirst() == Thirst.Parched){
 			ThirstLevel = Thirst.Normal;
 		} else if (getThirst() == Thirst.Normal){
 			ThirstLevel = Thirst.Quenched;
+		}
+	}
+	
+	public void makeFull(){
+		if (getHunger() == Hunger.Starving){
+			HungerLevel = Hunger.Hungry;
+		} else if (getHunger() == Hunger.Hungry){
+			HungerLevel = Hunger.Normal;
+		} else if (getHunger() == Hunger.Normal){
+			HungerLevel = Hunger.Full;
 		}
 	}
 

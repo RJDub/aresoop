@@ -95,4 +95,5 @@ public class MotherBoard extends Observable {
 	public void updateBoardGame(){
 		
 	}
+	
 }
