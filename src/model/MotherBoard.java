@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Observable;
 import java.util.Random;
 
 import tiles.*;
@@ -8,9 +9,9 @@ import colonists.*;
 import enums.Resource;
 import buildings.*;
 
-public class MotherBoard {
+public class MotherBoard extends Observable {
 	private Tile[][] tiles;
-	private ArrayList<Colonist> colonists;
+	public ArrayList<Colonist> colonists;
 	private ArrayList<Building> buldings;
 
 	public MotherBoard() {
@@ -74,6 +75,8 @@ public class MotherBoard {
 	}
 	
 	public void update(){
+		setChanged();
+	    notifyObservers(this);
 		updateResources();
 		updateColonists();
 		updateBoardGame();

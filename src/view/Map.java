@@ -10,6 +10,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
@@ -20,7 +22,7 @@ import enums.Terrain;
 import model.*;
 import buildings.*;
 
-public class Map extends JPanel {
+public class Map extends JPanel implements Observer{
 	private final int BOARD_X_SIZE = 10;
 	private final int BOARD_Y_SIZE = 10;
 	private final int INCREMENT = 50;
@@ -116,6 +118,19 @@ public class Map extends JPanel {
 			yLocationOnSheet= 0;
 		}
 		return sheet.getSubimage(xLocationOnSheet, yLocationOnSheet, width, height);
+		
+	}
+
+	@Override
+	public void update(Observable arg0, Object arg1) {
+		MotherBoard newMB = (MotherBoard) arg1;
+		// do calculations
+		// colonists = newMB.colonists;
+		for(Colonist c : colonists){
+			c.setXcoord(c.getXcoord()+1);
+//			c.setYcoord(c.getYcoord()+1);
+		}
+		repaint();
 		
 	}
 	

@@ -1,10 +1,13 @@
 package view;
 
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.Timer;
 
 import model.*;
 
@@ -19,11 +22,15 @@ public class AresGUI extends JFrame{
 
 		AresGUI view = new AresGUI();
 		view.setVisible(true);
+		
+		
 	}
 	
 	public AresGUI(){
 		layoutGUI();
 		setupModel();
+		Timer timer = new Timer(1000, new UpdateGameStateActionListener());
+		timer.start();
 	}
 	
 	public void layoutGUI(){
@@ -41,6 +48,17 @@ public class AresGUI extends JFrame{
 	}
 	
 	public void setupModel(){
+		Logic = new MotherBoard();
+		Logic.addObserver(board);
+	}
+	
+	private class UpdateGameStateActionListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			Logic.update();
+			
+		}
 		
 	}
 }
