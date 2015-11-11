@@ -19,7 +19,7 @@ public abstract class Colonist {
 	Fatigue FatigueLevel;
 	String name;
 	
-	Point Location;
+	private int x,y;
 
 	public Colonist(String input) {
 		name = input;
@@ -41,12 +41,18 @@ public abstract class Colonist {
 		return FatigueLevel;
 	}
 
-	public double getXcoord() {
-		return Location.getX();
+	public int getXcoord() {
+		return x;
 	}
 
-	public double getYcoord() {
-		return Location.getY();
+	public void setXcoord(int x){
+		this.x = x;
+	}
+	public int getYcoord() {
+		return y;
+	}
+	public void setYcoord(int y) {
+		this.y = y;
 	}
 	
 	public void makeThirsty(){
@@ -75,34 +81,34 @@ public abstract class Colonist {
 		}
 	}
 
-	public void moveToDestination(Point dest) {
-		double destx = dest.getX();
-		double desty = dest.getY();
-
-		while (true) {
-			if (Location.getX() < destx && Location.getY() < desty) {
-				Location.setLocation(Location.getX() + 1, Location.getY() + 1);
-			} else if (Location.getX() < destx && Location.getY() == desty) {
-				Location.setLocation(Location.getX() + 1, Location.getY());
-			} else if (Location.getX() < destx && Location.getY() > desty) {
-				Location.setLocation(Location.getX() + 1, Location.getY() - 1);
-			} else if (Location.getX() == destx && Location.getY() < desty) {
-				Location.setLocation(Location.getX(), Location.getY() + 1);
-			} else if (Location.getX() == destx && Location.getY() == desty) {
-				Location.setLocation(Location.getX(), Location.getY());
-			} else if (Location.getX() == destx && Location.getY() > desty) {
-				Location.setLocation(Location.getX(), Location.getY() - 1);
-			} else if (Location.getX() > destx && Location.getY() < desty) {
-				Location.setLocation(Location.getX() - 1, Location.getY() + 1);
-			} else if (Location.getX() > destx && Location.getY() == desty) {
-				Location.setLocation(Location.getX() - 1, Location.getY());
-			} else if (Location.getX() > destx && Location.getY() > desty) {
-				Location.setLocation(Location.getX() - 1, Location.getY() - 1);
-			} else {
-				break;
-			}
-		}
-	}
+//	public void moveToDestination(Point dest) {
+//		double destx = dest.getX();
+//		double desty = dest.getY();
+//
+//		while (true) {
+//			if (Location.getX() < destx && Location.getY() < desty) {
+//				Location.setLocation(Location.getX() + 1, Location.getY() + 1);
+//			} else if (Location.getX() < destx && Location.getY() == desty) {
+//				Location.setLocation(Location.getX() + 1, Location.getY());
+//			} else if (Location.getX() < destx && Location.getY() > desty) {
+//				Location.setLocation(Location.getX() + 1, Location.getY() - 1);
+//			} else if (Location.getX() == destx && Location.getY() < desty) {
+//				Location.setLocation(Location.getX(), Location.getY() + 1);
+//			} else if (Location.getX() == destx && Location.getY() == desty) {
+//				Location.setLocation(Location.getX(), Location.getY());
+//			} else if (Location.getX() == destx && Location.getY() > desty) {
+//				Location.setLocation(Location.getX(), Location.getY() - 1);
+//			} else if (Location.getX() > destx && Location.getY() < desty) {
+//				Location.setLocation(Location.getX() - 1, Location.getY() + 1);
+//			} else if (Location.getX() > destx && Location.getY() == desty) {
+//				Location.setLocation(Location.getX() - 1, Location.getY());
+//			} else if (Location.getX() > destx && Location.getY() > desty) {
+//				Location.setLocation(Location.getX() - 1, Location.getY() - 1);
+//			} else {
+//				break;
+//			}
+//		}
+//	}
 
 	public Colonist switchOccupation(String decision, String identification) {
 		if (decision.compareTo("Worker") == 0){
