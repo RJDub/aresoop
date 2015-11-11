@@ -9,8 +9,8 @@ public class GroundTile extends Tile {
 	private ArrayList<Colonist> occupants;
 	private ArrayList<Building> buildings;
 	
-	public GroundTile(String path){
-		super(path);
+	public GroundTile(){
+		
 		occupants = new ArrayList<Colonist>();
 		buildings = new ArrayList<Building>();
 	}
