@@ -10,15 +10,9 @@ import model.*;
 public class GroundTile extends Tile {
 	
 
-
 private ArrayList<Colonist> occupants;
 private ArrayList<Building> buildings;	
 	public GroundTile(){
-		
-		terrainType = Terrain.Flat;
-
-		
-
 		occupants = new ArrayList<Colonist>();
 		buildings = new ArrayList<Building>();
 

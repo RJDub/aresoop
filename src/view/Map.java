@@ -27,9 +27,7 @@ public class Map extends JPanel implements Observer{
 	private final int BOARD_Y_SIZE = 10;
 	private final int INCREMENT = 50;
 
-	private Tile[][] BoardModel;
-	private ArrayList<Colonist> colonists;
-	private ArrayList<Building> buildings;
+	private MotherBoard Mobo;
 
 	private BufferedImage sheet, background;
 	public static Random r = new Random();
@@ -46,29 +44,29 @@ public class Map extends JPanel implements Observer{
 		this.setSize(1000, 1000);
 		this.setBackground(Color.LIGHT_GRAY);
 
-		BoardModel = new Tile[10][10];
-		colonists = new ArrayList<Colonist>();
-		buildings = new ArrayList<Building>();
-		
-		// temporary colonist construction
-		colonists = new ArrayList<Colonist>();
-		Colonist frank = new Farmer("Frank");
-		Colonist susie = new Scientist("Susie");
-		frank.setXcoord(2);
-		frank.setYcoord(3);
-		susie.setXcoord(2);
-		susie.setYcoord(5);
-		
-		colonists.add(frank);
-		colonists.add(susie);
-		
-		//temporary board construction
-		for (int x = 0; x < BOARD_X_SIZE; x ++){
-			for (int y = 0; y<BOARD_Y_SIZE; y++){
-				BoardModel[x][y] = new GroundTile();
-			}
-		}
-		BoardModel[5][4] = new IceSheetTile(new Point(3,4));
+//		BoardModel = new Tile[10][10];
+//		colonists = new ArrayList<Colonist>();
+//		buildings = new ArrayList<Building>();
+//		
+//		// temporary colonist construction
+//		colonists = new ArrayList<Colonist>();
+//		Colonist frank = new Farmer("Frank");
+//		Colonist susie = new Scientist("Susie");
+//		frank.setXcoord(2);
+//		frank.setYcoord(3);
+//		susie.setXcoord(2);
+//		susie.setYcoord(5);
+//		
+//		colonists.add(frank);
+//		colonists.add(susie);
+//		
+//		//temporary board construction
+//		for (int x = 0; x < BOARD_X_SIZE; x ++){
+//			for (int y = 0; y<BOARD_Y_SIZE; y++){
+//				BoardModel[x][y] = new GroundTile();
+//			}
+//		}
+//		BoardModel[5][4] = new IceSheetTile(new Point(3,4));
 		//repaint();
 	}
 
@@ -123,10 +121,10 @@ public class Map extends JPanel implements Observer{
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		MotherBoard newMB = (MotherBoard) arg1;
+		Mobo = (MotherBoard) arg1;
 		// do calculations
 		// colonists = newMB.colonists;
-		for(Colonist c : colonists){
+		for(Colonist c : Mobo.getColonists()){
 			c.setXcoord(c.getXcoord()+1);
 //			c.setYcoord(c.getYcoord()+1);
 		}
