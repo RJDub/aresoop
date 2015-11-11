@@ -29,11 +29,11 @@ public abstract class Colonist {
 		return name;
 	}
 
-	public Hunger getHungry() {
+	public Hunger getHunger() {
 		return HungerLevel;
 	}
 
-	public Thirst getThirsty() {
+	public Thirst getThirst() {
 		return ThirstLevel;
 	}
 
@@ -47,6 +47,24 @@ public abstract class Colonist {
 
 	public double getYcoord() {
 		return Location.getY();
+	}
+	
+	public void makeThirsty(){
+		if (getThirst() == Thirst.Quenched){
+			ThirstLevel = Thirst.Normal;
+		} else if (getThirst() == Thirst.Normal){
+			ThirstLevel = Thirst.Parched;
+		} else if (getThirst() == Thirst.Parched){
+			ThirstLevel = Thirst.Dead;
+		}
+	}
+	
+	public void makeQuenched(){
+		if (getThirst() == Thirst.Parched){
+			ThirstLevel = Thirst.Normal;
+		} else if (getThirst() == Thirst.Normal){
+			ThirstLevel = Thirst.Quenched;
+		}
 	}
 
 	public boolean isAlive() {

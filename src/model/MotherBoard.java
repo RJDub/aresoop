@@ -72,4 +72,22 @@ public class MotherBoard {
 		}
 		// resource, ground, obstacle
 	}
+	
+	public void update(){
+		updateResources();
+		updateColonists();
+		updateBoardGame();
+	}
+	
+	public void updateResources(){
+		
+	}
+	
+	public void updateColonists(){
+		
+	}
+	
+	public void updateBoardGame(){
+		
+	}
 }
