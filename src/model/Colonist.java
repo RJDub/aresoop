@@ -40,6 +40,18 @@ public abstract class Colonist {
 	public Fatigue getFatigue() {
 		return FatigueLevel;
 	}
+	
+	public void setHunger(Hunger h) {
+		HungerLevel = h;
+	}
+	
+	public void setThirst(Thirst t) {
+		ThirstLevel = t;
+	}
+	
+	public void setFatigue(Fatigue f) {
+		FatigueLevel = f;
+	}
 
 	public int getXcoord() {
 		return x;
