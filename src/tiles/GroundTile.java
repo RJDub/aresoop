@@ -1,12 +1,44 @@
 package tiles;
 
-import java.awt.Point;
+
+
+import java.util.ArrayList;
+import enums.*;
+import model.*;
+
 
 public class GroundTile extends Tile {
-	public GroundTile(String path){
-		super(path);
+	
+
+
+private ArrayList<Colonist> occupants;
+private ArrayList<Building> buildings;	
+	public GroundTile(){
+		
+		terrainType = Terrain.Flat;
+
+		
+
+		occupants = new ArrayList<Colonist>();
+		buildings = new ArrayList<Building>();
 
 	}
+
+	public ArrayList<Colonist> getOccupants(){
+		return occupants;
+	}
 	
+	public ArrayList<Building> getBuildings(){
+		return buildings;
+	}
 	
+	public Colonist removeOccupant(Colonist person){
+		for (int i = 0; i < occupants.size(); i++){
+			if (occupants.get(i).getName().compareTo(person.getName()) == 0){
+				return occupants.remove(i);
+			}
+		}
+		return null;
+	}
+
 }

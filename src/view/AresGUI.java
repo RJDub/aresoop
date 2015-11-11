@@ -3,21 +3,19 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-<<<<<<< HEAD
 import javax.swing.JScrollPane;
+import javax.swing.Timer;
 
 import model.*;
-=======
->>>>>>> refs/remotes/origin/Mingcheng
 
 public class AresGUI extends JFrame{
 	
 	private Map board;
-<<<<<<< HEAD
 
-=======
 	private JPanel informationPanel;
 	private JPanel leftPanel;
 	private JPanel middlePanel;
@@ -34,23 +32,20 @@ public class AresGUI extends JFrame{
 	private Manager proj_manager;
 	private Manager res_manager;
 	*/
->>>>>>> refs/remotes/origin/Mingcheng
-	
-<<<<<<< HEAD
 	
 	private MotherBoard Logic;
-	public static void main (String[] args){
 
-=======
 	public static void main (String[] args){
->>>>>>> refs/remotes/origin/Mingcheng
 		AresGUI view = new AresGUI();
 		view.setVisible(true);
+
 	}
 	
 	public AresGUI(){
 		layoutGUI();
 		setupModel();
+		Timer timer = new Timer(1000, new UpdateGameStateActionListener());
+		timer.start();
 	}
 	
 	public void layoutGUI(){
@@ -63,12 +58,9 @@ public class AresGUI extends JFrame{
 		board.setSize(1200, 600);
 		board.setLocation(0, 0);
 		this.add(board);
+		board.drawBoard();
 		
-<<<<<<< HEAD
-		//informationPanel = new JPanel();
-		//informationPanel.setLayout(new GridLayout(1,3));
-		//informationPanel.add();
-=======
+
 		informationPanel = new JPanel();
 		informationPanel.setLayout(new GridLayout(1,2));
 		colonist = new ColonistPanel();
@@ -81,20 +73,20 @@ public class AresGUI extends JFrame{
 		// place info panel on the bottom of the gui
 		this.add(informationPanel);
 		
-		
->>>>>>> refs/remotes/origin/Mingcheng
+
 	}
 	
 	public void setupModel(){
-<<<<<<< HEAD
-		
-=======
-		/*build_manager = new BuildingManager();
-		col_manager = new ColonistManager();
-		goal_manager = new ColonyGoalManager();
-		proj_manager = new ColonyProjectManager();
-		res_manager = new ResourceManager();
-		*/
->>>>>>> refs/remotes/origin/Mingcheng
+		Logic = new MotherBoard();
+		Logic.addObserver(board);
+	}
+	
+	private class UpdateGameStateActionListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			Logic.update();
+			
+		}
 	}
 }

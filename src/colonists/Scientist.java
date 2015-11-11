@@ -4,7 +4,7 @@ public class Scientist extends ProfessionalColonist{
 
 	Research project;
 	
-	public Scientist(int input) {
+	public Scientist(String input) {
 		super(input);
 		// TODO Auto-generated constructor stub
 		project = Research.None;
