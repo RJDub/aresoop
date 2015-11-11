@@ -29,5 +29,10 @@ public class Farmer extends Colonist{
 	public int getmaxCapacity() {
 		return maxCapacity;
 	}
+	
+	
+	public Resource depositResources() {
+		return resources.remove(0);
+	}
 
 }

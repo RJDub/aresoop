@@ -13,6 +13,10 @@ public abstract class Tile {
 		imagePath = path;
 	}
 	
+	public ArrayList<Colonist> getOccupants(){
+		return occupants;
+	}
+	
 	public String getImagePath(){
 		return imagePath;
 	}
