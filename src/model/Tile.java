@@ -1,22 +1,16 @@
-package model;
 
-import java.awt.Point;
-import java.util.ArrayList;
+package model;
 
 import enums.Terrain;
 
 public abstract class Tile {
-	private ArrayList<Colonist> occupants;
+	
+	
+	private String imagePath;
 	public Terrain terrainType;
-	private Point location;
-
-	public Tile() {
-
+	public Tile(){
+		
 	}
-
-	public Tile(Point create, String path) {
-		location = create;
-
-	}
-
+	
+	
 }

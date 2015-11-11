@@ -34,32 +34,32 @@ public class MotherBoard {
 					break;
 
 				case 1:
-					tiles[i][j] = new ObstacleTile(new String("./obstacle.png"));
+					tiles[i][j] = new ObstacleTile();
 					break;
 
 				case 2:
 					int chance = random.nextInt(7);
 					switch (chance) {
 					case 0:
-						tiles[i][j] = new ResourceTile(new String("./resource.png"), Resource.Aquarius);
+						tiles[i][j] = new ResourceTile(Resource.Aquarius);
 						break;
 					case 1:
-						tiles[i][j] = new ResourceTile(new String("./resource.png"), Resource.Agrarian);
+						tiles[i][j] = new ResourceTile(Resource.Agrarian);
 						break;
 					case 2:
-						tiles[i][j] = new ResourceTile(new String("./resource.png"), Resource.Iron);
+						tiles[i][j] = new ResourceTile(Resource.Iron);
 						break;
 					case 3:
-						tiles[i][j] = new ResourceTile(new String("./resource.png"), Resource.Nickel);
+						tiles[i][j] = new ResourceTile(Resource.Nickel);
 						break;
 					case 4:
-						tiles[i][j] = new ResourceTile(new String("./resource.png"), Resource.Oxygen);
+						tiles[i][j] = new ResourceTile(Resource.Oxygen);
 						break;
 					case 5:
-						tiles[i][j] = new ResourceTile(new String("./resource.png"), Resource.Unobtanium);
+						tiles[i][j] = new ResourceTile(Resource.Unobtanium);
 						break;
 					case 6:
-						tiles[i][j] = new ResourceTile(new String("./resource.png"), Resource.Thorium);
+						tiles[i][j] = new ResourceTile(Resource.Thorium);
 						break;
 					default:
 						break;
