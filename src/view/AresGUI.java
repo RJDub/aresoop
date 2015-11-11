@@ -66,11 +66,13 @@ public class AresGUI extends JFrame{
 		colonist = new ColonistPanel();
 		hud = new HUD();
 		building = new BuildingPanel();
-		//informationPanel.add(colonist);
-		//informationPanel.add(hud);
-		//informationPanel.add(building);
+		informationPanel.add(colonist);
+		informationPanel.add(hud);
+		informationPanel.add(building);
 		
 		// place info panel on the bottom of the gui
+		informationPanel.setSize(1200,400);
+		informationPanel.setLocation(0, 600);
 		this.add(informationPanel);
 		
 
