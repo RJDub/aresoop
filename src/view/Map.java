@@ -15,6 +15,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import tiles.*;
 import colonists.*;
+import enums.Terrain;
 import model.Building;
 import model.Colonist;
 import model.Tile;
@@ -51,29 +52,12 @@ public class Map extends JPanel {
 		//temporary board construction
 		for (int x = 0; x < BOARD_X_SIZE; x ++){
 			for (int y = 0; y<BOARD_Y_SIZE; y++){
-				BoardModel[x][y] = new GroundTile(new Point(x,y));
+				BoardModel[x][y] = new GroundTile();
 			}
 		}
 		BoardModel[5][4] = new IceSheetTile(new Point(3,4));
 		//repaint();
 	}
-
-	// public void constructBoard(){
-	// Random rando = new Random();
-	// for (int r = 0; r < 100; r++){
-	// for (int c = 0; c < 100; c++){
-	// int chance = rando.nextInt(101);
-	// if (chance < 60){
-	// BoardModel[r][c] = new FarmingTile(new Point(r,c));
-	// } else if (chance < 85){
-	// BoardModel[r][c] = new ObstacleTile(new Point(r,c));
-	// } else {
-	// BoardModel[r][c] = new EnemyTile(new Point(r,c));
-	// }
-	// }
-	// }
-	//
-	// }
 
 	// draws the board
 	public void drawBoard() {
