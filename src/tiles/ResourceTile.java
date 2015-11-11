@@ -15,8 +15,8 @@ public class ResourceTile extends Tile {
 	private ArrayList<Colonist> occupants;
 	private ArrayList<ResourceBuilding> buildings;
 
-	public ResourceTile(String path, Resource in) {
-		super(path);
+	public ResourceTile(Resource in) {
+		
 		resources = new ArrayList<Resource>();
 		occupants = new ArrayList<Colonist>();
 		buildings = new ArrayList<ResourceBuilding>();
