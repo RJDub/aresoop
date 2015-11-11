@@ -5,7 +5,7 @@ public abstract class Tile {
 	
 	private String imagePath;
 	
-	public Tile(String path){
+	public Tile(){
 		
 	}
 	
