@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDateTime;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -17,9 +19,7 @@ public class AresGUI extends JFrame{
 	private Map board;
 
 	private JPanel informationPanel;
-	private JPanel leftPanel;
-	private JPanel middlePanel;
-	private JPanel rightPanel;
+	private JPanel hudPanel;
 	
 	private ColonistPanel colonist; // error
 	private HUD hud;
@@ -34,6 +34,7 @@ public class AresGUI extends JFrame{
 	*/
 	
 	private MotherBoard Logic;
+	private LocalDateTime time;
 
 	public static void main (String[] args){
 		AresGUI view = new AresGUI();
@@ -46,6 +47,8 @@ public class AresGUI extends JFrame{
 		setupModel();
 		Timer timer = new Timer(1000, new UpdateGameStateActionListener());
 		timer.start();
+		time = LocalDateTime.now();
+		System.out.println(time.toString());
 	}
 	
 	public void layoutGUI(){
@@ -66,16 +69,25 @@ public class AresGUI extends JFrame{
 		colonist = new ColonistPanel();
 		hud = new HUD();
 		building = new BuildingPanel();
+		
+		hudPanel = new JPanel();
+		hudPanel.setLayout(null);
+		hudPanel.setSize(400, 400);
+		hud.setSize(400, 300);
+		hud.setLocation(0, 0);
+		hudPanel.add(hud);
+		
+		
+		//hudPanel.add();
+		
 		informationPanel.add(colonist);
-		informationPanel.add(hud);
+		informationPanel.add(hudPanel);
 		informationPanel.add(building);
 		
 		// place info panel on the bottom of the gui
 		informationPanel.setSize(1200,400);
 		informationPanel.setLocation(0, 600);
 		this.add(informationPanel);
-		
-
 	}
 	
 	public void setupModel(){
@@ -88,7 +100,7 @@ public class AresGUI extends JFrame{
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			Logic.update();
-			
+			time = LocalDateTime.now();
 		}
 	}
 }
