@@ -22,6 +22,9 @@ public class MotherBoard extends Observable {
 		
 		
 	}
+	public ArrayList<Colonist> getColonists(){
+		return colonists;
+	}
 
 	private void setupBoard() {
 		// random random.nextint()
@@ -95,4 +98,5 @@ public class MotherBoard extends Observable {
 	public void updateBoardGame(){
 		
 	}
+	
 }
