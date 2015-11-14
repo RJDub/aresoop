@@ -90,7 +90,7 @@ public class Map extends JPanel implements Observer{
 	private void drawColonits(Graphics2D g2) {
 		for (Colonist c: colonists){
 			Image image = getBufferedImageColonist();
-			g2.drawImage(image, INCREMENT*(int)c.getXcoord(),INCREMENT*(int)c.getYcoord(), null);
+			g2.drawImage(image, INCREMENT*(int)c.getX(),INCREMENT*(int)c.getY(), null);
 		}
 		
 	}
@@ -125,7 +125,7 @@ public class Map extends JPanel implements Observer{
 		// do calculations
 		// colonists = newMB.colonists;
 		for(Colonist c : Mobo.getColonists()){
-			c.setXcoord(c.getXcoord()+1);
+			c.setX(c.getX()+1);
 //			c.setYcoord(c.getYcoord()+1);
 		}
 		repaint();

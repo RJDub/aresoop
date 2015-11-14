@@ -1,19 +1,18 @@
 
 package model;
 
-public abstract class Tile {
+import enums.*;
+
+public class Tile {
 	
+	private TileType type;
 	
-	private String imagePath;
-	public Tile(){
-		
+	public Tile(TileType type){
+		this.type = type;
 	}
 	
-	public String getImagePath(){
-		return imagePath;
+	public TileType getType(){
+		return type;
 	}
 	
-	public void update() {
-		
-	}
 }
