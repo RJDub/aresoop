@@ -31,9 +31,13 @@ public class TestMotherBoard {
 		assertEquals(Task.Mining, model.getArrColonists().get(0).getTask());
 		
 		assertEquals(Action.None, model.getArrColonists().get(0).getAction());
+		assertEquals(0, model.getArrColonists().get(0).getX());
+		
 		model.update();
 		
 		assertEquals(Action.Move, model.getArrColonists().get(0).getAction());
+		
+		assertEquals(1, model.getArrColonists().get(0).getX());
 	}
 
 }

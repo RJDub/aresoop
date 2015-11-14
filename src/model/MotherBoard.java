@@ -63,10 +63,46 @@ public class MotherBoard extends Observable {
 			System.out.println("Colonist " + col.getName() + " is mining.");
 			break;
 		case Move:
+			move(col);
 			System.out.println("Colonist " + col.getName() + " is moving.");
 		default:
 			System.out.println("Colonist " + col.getName() + " is ACTION_NONE.");
 			break;	
+		}
+	}
+	
+	public void move(Colonist col){
+		switch(col.getTask()){
+		case Mining:
+			int curr = -1;
+			int foundX = -1;
+			int foundY = -1;
+			for (int x = 0; x < map[0].length; x++){
+				for (int y = 0; y < map.length; y++){
+					if (map[x][y].getType() == TileType.Ice){
+						int xRange = Math.abs(x - col.getX());
+						int yRange = Math.abs(y - col.getY());
+						if (curr > (xRange + yRange) || curr == -1){
+							curr = xRange + yRange;
+							foundX = x;
+							foundY = y;
+						}
+					}
+				}
+			}
+			if (foundX > col.getX()){
+				col.setX(col.getX()+1);
+			} else if (foundX < col.getX()) {
+				col.setX(col.getX()-1);
+			}
+			
+			if (foundY > col.getY()){
+				col.setY(col.getY()+1);
+			} else if (foundX < col.getY()) {
+				col.setY(col.getY()-1);
+			}
+		default:
+			break;
 		}
 	}
 	

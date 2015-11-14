@@ -11,6 +11,7 @@ public class Generator {
 				map[x][y] = new Tile(TileType.Flat);
 			}
 		}
+		map[3][5] = new Tile(TileType.Ice);
 		return map;
 	}
 }
