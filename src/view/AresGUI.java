@@ -2,14 +2,20 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 import javax.swing.Timer;
 
 import model.*;
@@ -21,20 +27,14 @@ public class AresGUI extends JFrame{
 	private JPanel informationPanel;
 	private JPanel hudPanel;
 	
-	private ColonistPanel colonist; // error
+	private ColonistPanel colonist;
 	private HUD hud;
 	private BuildingPanel building;
 	
-	/*
-	private Manager build_manager;
-	private Manager col_manager;
-	private Manager goal_manager;
-	private Manager proj_manager;
-	private Manager res_manager;
-	*/
-	
 	private MotherBoard Logic;
-	private LocalDateTime time;
+	private LocalDateTime startTime;
+	private LocalDateTime timeNow;
+	private JTextField time;
 
 	public static void main (String[] args){
 		AresGUI view = new AresGUI();
@@ -47,38 +47,48 @@ public class AresGUI extends JFrame{
 		setupModel();
 		Timer timer = new Timer(1000, new UpdateGameStateActionListener());
 		timer.start();
-		time = LocalDateTime.now();
-		System.out.println(time.toString());
+		startTime = LocalDateTime.now();
 	}
 	
 	public void layoutGUI(){
-		this.setSize(1200, 1000);
+		this.setSize(1200, 850);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setLayout(null);
 		
 		// place map on the top of the gui
-		board = new Map();
-		board.setSize(1200, 600);
-		board.setLocation(0, 0);
-		this.add(board);
-		board.drawBoard();
-		
+		//board = new Map();
+		//board.setSize(1200, 600);
+		//board.setLocation(0, 0);
+		//this.add(board);
+		//board.drawBoard();
 
 		informationPanel = new JPanel();
-		informationPanel.setLayout(new GridLayout(1,2));
+		informationPanel.setLayout(new GridLayout(1,3));
+		
 		colonist = new ColonistPanel();
-		hud = new HUD();
+		colonist.table.addMouseListener(new RowSelectListener());
 		building = new BuildingPanel();
 		
 		hudPanel = new JPanel();
 		hudPanel.setLayout(null);
-		hudPanel.setSize(400, 400);
-		hud.setSize(400, 300);
+		
+		hud = new HUD();
+		hud.setSize(400, 180);
 		hud.setLocation(0, 0);
 		hudPanel.add(hud);
 		
+		HUD hud2 = new HUD();
+		hud2.setSize(400, 180);
+		hud2.setLocation(0, 0);
+		hud2.setVisible(false);
+		hudPanel.add(hud2);
 		
-		//hudPanel.add();
+		time = new JTextField();
+		time.setSize(400, 50);
+		time.setLocation(0, 175);
+		time.setEditable(false);
+		time.setHorizontalAlignment(JTextField.CENTER);
+		hudPanel.add(time);
 		
 		informationPanel.add(colonist);
 		informationPanel.add(hudPanel);
@@ -90,9 +100,58 @@ public class AresGUI extends JFrame{
 		this.add(informationPanel);
 	}
 	
+	private class RowSelectListener implements MouseListener {
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			int rowSelected = colonist.table.getSelectedRow();
+			if (rowSelected < 0) {
+				
+			}
+			else{
+				setInfo(colonist.data[rowSelected][0]);
+			}
+		}
+
+		private void setInfo(String n) {
+		JPanel colonistSelected;
+		Colonist refColonist = null;
+		for (Colonist thisColonist: colonist.colonists) {
+			if (thisColonist.getName().equals(n))
+				refColonist = thisColonist;
+		}
+		hud.setInfo(refColonist);
+	}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}
+	
 	public void setupModel(){
 		Logic = new MotherBoard();
-		Logic.addObserver(board);
+		//Logic.addObserver(board);
 	}
 	
 	private class UpdateGameStateActionListener implements ActionListener{
@@ -100,7 +159,32 @@ public class AresGUI extends JFrame{
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			Logic.update();
-			time = LocalDateTime.now();
+			calculateTime();
+		}
+
+		private void calculateTime() {
+			timeNow = LocalDateTime.now();
+			int day;
+			int hour;
+			if (timeNow.getMinute() >= startTime.getMinute()) {
+				if (timeNow.getSecond() >= startTime.getSecond())
+					day = timeNow.getMinute() - startTime.getMinute() + 1;
+				else
+					day = timeNow.getMinute() - startTime.getMinute();
+			}
+			else {
+				if (timeNow.getSecond() >= startTime.getSecond())
+					day = timeNow.getMinute() + 60 - startTime.getMinute() + 1;
+				else
+					day = timeNow.getMinute() + 60 - startTime.getMinute();
+			}
+
+			if(timeNow.getSecond() >= startTime.getSecond())
+				hour = (timeNow.getSecond() - startTime.getSecond()) * 24 / 60;
+			else 
+				hour = (timeNow.getSecond() + 60 - startTime.getSecond()) * 24 / 60;
+			time.setText("Day: " + day + "  Hour: " + hour);
+			
 		}
 	}
 }

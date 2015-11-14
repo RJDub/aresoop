@@ -19,14 +19,12 @@ public class ColonistPanel extends JPanel{
 	
 	public ArrayList<Colonist> colonists;
 	private String[] columnNames;
-	private String[][] data;
-	private JTable table;
+	public String[][] data;
+	public JTable table;
 	private Farmer farmer;
-	private HUD hud;
 	
 	public ColonistPanel() {
 		colonists = new ArrayList<Colonist>();
-		hud = new HUD();
 		farmer = new Farmer("Farmer1");
 		farmer.setHunger(Hunger.Full);
 		farmer.setThirst(Thirst.Quenched);
@@ -63,50 +61,10 @@ public class ColonistPanel extends JPanel{
 		}
 		table = new JTable(new ColonistTableModel(data,columnNames,colonists.size()));
 		table.setAutoCreateRowSorter(true);
-		table.setPreferredSize(new Dimension(400,400));
-		table.addMouseListener(new RowSelectListener());
+		table.setPreferredSize(new Dimension(400,350));
 		JScrollPane scrollPane = new JScrollPane(table);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		scrollPane.setPreferredSize(new Dimension(400,400));
+		scrollPane.setPreferredSize(new Dimension(400,220));
 		this.add(scrollPane);
-	}
-	
-	private class RowSelectListener implements MouseListener {
-
-		@Override
-		public void mouseClicked(MouseEvent e) {
-			int rowSelected = table.getSelectedRow();
-			if (rowSelected < 0) {
-				
-			}
-			else{
-				hud.setInfo(data[rowSelected][0], data[rowSelected][1], data[rowSelected][2], data[rowSelected][3]);
-			}
-		}
-
-		@Override
-		public void mousePressed(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void mouseReleased(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void mouseEntered(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void mouseExited(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-		
 	}
 }

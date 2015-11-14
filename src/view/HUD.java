@@ -1,35 +1,41 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.util.ArrayList;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
+
+import model.Colonist;
 
 public class HUD extends JPanel{
 	
-	private JLabel name;
-	private JLabel hunger;
-	private JLabel thirst;
-	private JLabel fatigue;
-	private JTextField nameField;
-	private JTextField hungerField;
-	private JTextField thirstField;
-	private JTextField fatigueField;
+	private JTextArea temp;
+	private JPanel colonistSelected;
+	
+	private ArrayList<Colonist> colonists;
 	
 	public HUD() {
 		layoutGUI();
 	}
 
 	private void layoutGUI() {
-		this.setLayout(new BorderLayout());
-		
+		temp = new JTextArea("Game Start Info");
+		temp.setEditable(false);
+		temp.setPreferredSize(new Dimension(390,180));
+		this.add(temp);
 	}
 
-	public void setInfo(String n, String h, String t, String f) {
-		name = new JLabel("Name");
-		hunger = new JLabel("Hunger");
-		thirst = new JLabel("Thirst");
-		
+	public void setInfo(Colonist c) {
+		temp.setText("Name:   " + c.getName()
+		+ "\nHunger:   " + c.getHunger().toString()
+		+ "\nThirst:   " + c.getThirst().toString()
+		+ "\nFatigue:   " + c.getFatigue().toString()
+		+ "\nX:   " + c.getXcoord()
+		+ "\nY:   " + c.getYcoord());
 	}
 }
