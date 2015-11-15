@@ -43,8 +43,8 @@ public class AresGUI extends JFrame{
 	}
 	
 	public AresGUI(){
-		layoutGUI();
 		setupModel();
+		layoutGUI();
 		Timer timer = new Timer(1000, new UpdateGameStateActionListener());
 		timer.start();
 		startTime = LocalDateTime.now();
@@ -65,7 +65,7 @@ public class AresGUI extends JFrame{
 		informationPanel = new JPanel();
 		informationPanel.setLayout(new GridLayout(1,3));
 		
-		colonist = new ColonistPanel();
+		colonist = new ColonistPanel(Logic.getArrColonists());
 		colonist.table.addMouseListener(new RowSelectListener());
 		building = new BuildingPanel();
 		
