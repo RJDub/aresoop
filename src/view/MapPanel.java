@@ -31,10 +31,10 @@ public class MapPanel extends JPanel implements Observer{
 		mobo = boardIn;
 		try {
 			sheet = ImageIO.read(new File("images" + File.separator
-					+ "SpriteSheet.gif"));
+					+ "SpriteSheet.png"));
 
 		} catch (IOException e) {
-			System.out.println("Could not find 'SpriteSheet.gif'");
+			System.out.println("Could not find 'SpriteSheet.png'");
 		}
 		drawBoard();
 	}

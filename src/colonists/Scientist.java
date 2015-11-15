@@ -1,5 +1,7 @@
 package colonists;
 
+import enums.Research;
+
 public class Scientist extends ProfessionalColonist{
 
 	Research project;
