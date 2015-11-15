@@ -23,30 +23,8 @@ public class ColonistPanel extends JPanel{
 	public JTable table;
 	private Farmer farmer;
 	
-	public ColonistPanel() {
-		colonists = new ArrayList<Colonist>();
-		farmer = new Farmer("Farmer1");
-		farmer.setHunger(Hunger.Full);
-		farmer.setThirst(Thirst.Quenched);
-		farmer.setFatigue(Fatigue.Energized);
-		colonists.add(farmer);
-		colonists.add(farmer);
-		colonists.add(farmer);
-		colonists.add(farmer);
-		colonists.add(farmer);
-		colonists.add(farmer);
-		colonists.add(farmer);
-		colonists.add(farmer);
-		colonists.add(farmer);
-		colonists.add(farmer);
-		colonists.add(farmer);
-		colonists.add(farmer);
-		colonists.add(farmer);
-		colonists.add(farmer);
-		colonists.add(farmer);
-		colonists.add(farmer);
-		colonists.add(farmer);
-		colonists.add(farmer);
+	public ColonistPanel(ArrayList<Colonist> c) {
+		colonists = c;
 		layoutGUI();
 	}
 
