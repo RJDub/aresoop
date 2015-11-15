@@ -3,9 +3,9 @@ package model;
 import enums.*;
 
 public class Colonist {
-//	Hunger HungerLevel;
-//	Thirst ThirstLevel;
-//	Fatigue FatigueLevel;
+	private int hunger;
+	private int thirst;
+	private int fatigue;
 	private String name;
 	private Task task;
 	private Action action;
@@ -17,6 +17,7 @@ public class Colonist {
 		action = Action.None;
 		x = xIn;
 		y = yIn;
+		thirst = 1000;
 	}
 
 	public String getName() {
@@ -38,6 +39,18 @@ public class Colonist {
 	public Action getAction(){
 		return action;
 	}
+	
+	public int getThirstLevel(){
+		return thirst;
+	}
+	
+	public int getHungerLevel(){
+		return hunger;
+	}
+	
+	public int getFatigueLevel(){
+		return fatigue;
+	}
 
 	public void setX(int x){
 		this.x = x;
@@ -55,70 +68,27 @@ public class Colonist {
 		action = input;
 	}
 	
+	public void incThirstLevel(int in){
+		thirst += in;
+	}
 	
+	public void incHungerLevel(int in){
+		hunger += in;
+	}
+	
+	public void incFatigueLevel(int in){
+		fatigue += in;
+	}
 	
 	
 	
 	@Override
 	public String toString(){
-		return ("Colonist: " + getName() + "; Location: (" + getX() + ", " + getY() + "); Task: " + getTask() + "; Action: " + getAction());
+		return ("Colonist: " + getName() + "\nLocation: (" + getX() + ", " + getY() + ")\nTask: " + getTask() + "\nAction: " + getAction() + "\nThirst: " + getThirstLevel());
 	}
 
-//	public Hunger getHunger() {
-//		return HungerLevel;
-//	}
-//
-//	public Thirst getThirst() {
-//		return ThirstLevel;
-//	}
-//	
-//
-//	public Fatigue getFatigue() {
-//		return FatigueLevel;
-//	}
-//
-//	
-//	
-//	public void makeThirsty(){
-//		if (getThirst() == Thirst.Quenched){
-//			ThirstLevel = Thirst.Normal;
-//		} else if (getThirst() == Thirst.Normal){
-//			ThirstLevel = Thirst.Parched;
-//		} else if (getThirst() == Thirst.Parched){
-//			ThirstLevel = Thirst.Dead;
-//		}
-//	}
-//	
-//	public void makeHungry(){
-//		if (getHunger() == Hunger.Full){
-//			HungerLevel = Hunger.Normal;
-//		} else if (getHunger() == Hunger.Normal){
-//			HungerLevel = Hunger.Hungry;
-//		} else if (getHunger() == Hunger.Hungry){
-//			HungerLevel = Hunger.Starving;
-//		} else if (getHunger() == Hunger.Starving){
-//			HungerLevel = Hunger.Dead;
-//		}
-//	}
-//	
-//	public void makeQuenched(){
-//		if (getThirst() == Thirst.Parched){
-//			ThirstLevel = Thirst.Normal;
-//		} else if (getThirst() == Thirst.Normal){
-//			ThirstLevel = Thirst.Quenched;
-//		}
-//	}
-//	
-//	public void makeFull(){
-//		if (getHunger() == Hunger.Starving){
-//			HungerLevel = Hunger.Hungry;
-//		} else if (getHunger() == Hunger.Hungry){
-//			HungerLevel = Hunger.Normal;
-//		} else if (getHunger() == Hunger.Normal){
-//			HungerLevel = Hunger.Full;
-//		}
-//	}
-//
+
+
 //	public boolean isAlive() {
 //		if (HungerLevel == Hunger.Dead || ThirstLevel == Thirst.Dead || FatigueLevel == Fatigue.Dead) {
 //			return false;
@@ -127,35 +97,7 @@ public class Colonist {
 //		}
 //	}
 //
-////	public void moveToDestination(Point dest) {
-////		double destx = dest.getX();
-////		double desty = dest.getY();
-////
-////		while (true) {
-////			if (Location.getX() < destx && Location.getY() < desty) {
-////				Location.setLocation(Location.getX() + 1, Location.getY() + 1);
-////			} else if (Location.getX() < destx && Location.getY() == desty) {
-////				Location.setLocation(Location.getX() + 1, Location.getY());
-////			} else if (Location.getX() < destx && Location.getY() > desty) {
-////				Location.setLocation(Location.getX() + 1, Location.getY() - 1);
-////			} else if (Location.getX() == destx && Location.getY() < desty) {
-////				Location.setLocation(Location.getX(), Location.getY() + 1);
-////			} else if (Location.getX() == destx && Location.getY() == desty) {
-////				Location.setLocation(Location.getX(), Location.getY());
-////			} else if (Location.getX() == destx && Location.getY() > desty) {
-////				Location.setLocation(Location.getX(), Location.getY() - 1);
-////			} else if (Location.getX() > destx && Location.getY() < desty) {
-////				Location.setLocation(Location.getX() - 1, Location.getY() + 1);
-////			} else if (Location.getX() > destx && Location.getY() == desty) {
-////				Location.setLocation(Location.getX() - 1, Location.getY());
-////			} else if (Location.getX() > destx && Location.getY() > desty) {
-////				Location.setLocation(Location.getX() - 1, Location.getY() - 1);
-////			} else {
-////				break;
-////			}
-////		}
-////	}
-//
+
 //	public Colonist switchOccupation(String decision, String identification) {
 //		if (decision.compareTo("Worker") == 0){
 //			return new Worker(identification);

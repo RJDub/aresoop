@@ -45,11 +45,18 @@ public class MotherBoard extends Observable {
 
 	public void update() {
 		for (Colonist colonist : colonists) {
+			updateNeeds(colonist);
 			assignAction(colonist);
 			executeAction(colonist);
 		}
 		setChanged();
 		notifyObservers(this);
+	}
+	
+	private void updateNeeds(Colonist col){
+		col.incThirstLevel(-1);
+		col.incHungerLevel(-1);
+		
 	}
 
 	public void assignAction(Colonist col) {
