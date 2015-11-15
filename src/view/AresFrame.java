@@ -33,6 +33,7 @@ public class AresFrame extends JFrame {
 
 	public AresFrame() {
 		this.setVisible(true);
+		this.setLayout(null);
 		this.setLocation(100, 200);
 		this.setSize(5000, 3000);
 		this.setBackground(Color.RED);
