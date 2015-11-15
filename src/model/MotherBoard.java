@@ -54,15 +54,21 @@ public class MotherBoard extends Observable {
 	}
 	
 	private void updateNeeds(Colonist col){
-		col.incThirstLevel(-1);
-		col.incHungerLevel(-1);
-		
+		if (map[col.getX()][col.getY()].getType() == TileType.Ice){
+			col.incHungerLevel(-1);
+		} else {
+			col.incThirstLevel(-1);
+			col.incHungerLevel(-1);
+		}
 	}
 
 	public void assignAction(Colonist col) {
 		switch (col.getTask()) {
-		case Mining:
-			col.setAction(makeDecisionOnMining(col));
+		case MiningIce:
+			col.setAction(makeDecisionOnMining(col, TileType.Ice));
+			break;
+		case MiningIronOre:
+			col.setAction(makeDecisionOnMining(col, TileType.IronOre));
 			break;
 		default:
 			col.setAction(Action.None);
@@ -70,10 +76,12 @@ public class MotherBoard extends Observable {
 		}
 	}
 
-	private Action makeDecisionOnMining(Colonist col) {
-		if (map[col.getX()][col.getY()].getType() == TileType.Ice) {
+	private Action makeDecisionOnMining(Colonist col, TileType resource) {
+		if (map[col.getX()][col.getY()].getType() == resource) {
+			collectResource(col, resource);
 			return Action.Mine;
 		} else {
+			moveToResource(col, resource);
 			return Action.Move;
 		}
 	}
@@ -83,52 +91,53 @@ public class MotherBoard extends Observable {
 	}
 
 	public void executeAction(Colonist col) {
+		//TODO: effectively null, doesnt produce any output other than sysout
 		switch (col.getAction()) {
 		case Mine:
 			System.out.println("Colonist " + col.getName() + " is mining.");
 			break;
 		case Move:
-			move(col);
+			//move(col);
 			System.out.println("Colonist " + col.getName() + " is moving.");
+			break;
 		default:
 			System.out.println("Colonist " + col.getName() + " is ACTION_NONE.");
 			break;
 		}
 	}
 
-	public void move(Colonist col) {
-		switch (col.getTask()) {
-		case Mining:
-			int curr = -1;
-			int foundX = -1;
-			int foundY = -1;
-			for (int x = 0; x < map[0].length; x++) {
-				for (int y = 0; y < map.length; y++) {
-					if (map[x][y].getType() == TileType.Ice) {
-						int xRange = Math.abs(x - col.getX());
-						int yRange = Math.abs(y - col.getY());
-						if (curr > (xRange + yRange) || curr == -1) {
-							curr = xRange + yRange;
-							foundX = x;
-							foundY = y;
-						}
+	public void moveToResource(Colonist col, TileType res) {
+		int curr = -1;
+		int foundX = -1;
+		int foundY = -1;
+		for (int x = 0; x < map[0].length; x++) {
+			for (int y = 0; y < map.length; y++) {
+				if (map[x][y].getType() == res) {
+					int xRange = Math.abs(x - col.getX());
+					int yRange = Math.abs(y - col.getY());
+					if (curr > (xRange + yRange) || curr == -1) {
+						curr = xRange + yRange;
+						foundX = x;
+						foundY = y;
 					}
 				}
 			}
-			if (foundX > col.getX()) {
-				col.setX(col.getX() + 1);
-			} else if (foundX < col.getX()) {
-				col.setX(col.getX() - 1);
-			}
-
-			if (foundY > col.getY()) {
-				col.setY(col.getY() + 1);
-			} else if (foundX < col.getY()) {
-				col.setY(col.getY() - 1);
-			}
-		default:
-			break;
 		}
+		if (foundX > col.getX()) {
+			col.setX(col.getX() + 1);
+		} else if (foundX < col.getX()) {
+			col.setX(col.getX() - 1);
+		}
+
+		if (foundY > col.getY()) {
+			col.setY(col.getY() + 1);
+		} else if (foundX < col.getY()) {
+			col.setY(col.getY() - 1);
+		}
+	}
+	
+	private void collectResource(Colonist col, TileType res){
+		//TODO: we need to add code to get a colonist to extract resources
 	}
 
 	public void printModel() {

@@ -90,7 +90,8 @@ public class AresFrame extends JFrame {
 	
 	private void setupModelAndTimer(){
 		model.addObserver(map);
-		model.assignTask(model.getArrColonists().get(0), Task.Mining);
+		model.assignTask(model.getArrColonists().get(0), Task.MiningIce);
+		model.assignTask(model.getArrColonists().get(1), Task.MiningIronOre);
 		
 		timer = new Timer(1000, new OurTimerListener());
 		timer.start();
