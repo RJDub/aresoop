@@ -122,7 +122,7 @@ public class AresFrame extends JFrame {
 	private void setupMapPanel(){
 		map.setVisible(true);
 		map.setLocation(0, 0);
-		map.setSize(1000, 1000);
+		map.setPreferredSize(new Dimension(4000,4000));
 		map.setBackground(Color.BLUE);
 	}
 	
