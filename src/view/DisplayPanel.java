@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
@@ -12,15 +13,20 @@ import javax.swing.JTextField;
 
 import model.Colonist;
 
-public class HUD extends JPanel{
+public class DisplayPanel extends JPanel{
 	
 	private JTextArea temp;
 	private JPanel colonistSelected;
+	private JButton play;
 	
 	private ArrayList<Colonist> colonists;
 	
-	public HUD() {
+	public DisplayPanel() {
 		layoutGUI();
+	}
+	
+	public JButton getPlay(){
+		return play;
 	}
 
 	private void layoutGUI() {
@@ -31,11 +37,11 @@ public class HUD extends JPanel{
 	}
 
 	public void setInfo(Colonist c) {
-		temp.setText("Name:   " + c.getName()
-		+ "\nHunger:   " + c.getHunger().toString()
-		+ "\nThirst:   " + c.getThirst().toString()
-		+ "\nFatigue:   " + c.getFatigue().toString()
-		+ "\nX:   " + c.getXcoord()
-		+ "\nY:   " + c.getYcoord());
+//		temp.setText("Name:   " + c.getName()
+//		+ "\nHunger:   " + c.getHunger().toString()
+//		+ "\nThirst:   " + c.getThirst().toString()
+//		+ "\nFatigue:   " + c.getFatigue().toString()
+//		+ "\nX:   " + c.getXcoord()
+//		+ "\nY:   " + c.getYcoord());
 	}
 }

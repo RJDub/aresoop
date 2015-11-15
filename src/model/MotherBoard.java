@@ -26,6 +26,18 @@ public class MotherBoard extends Observable {
 	public ArrayList<Colonist> getArrColonists() {
 		return colonists;
 	}
+	
+	public int getBoardWidth(){
+		return map[0].length;
+	}
+	
+	public int getBoardHeight(){
+		return map.length;
+	}
+	
+	public Tile getTileAtLocation(int x, int y){
+		return map[x][y];
+	}
 
 	public void start() {
 

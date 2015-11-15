@@ -28,7 +28,7 @@ public class AresGUI extends JFrame{
 	private JPanel hudPanel;
 	
 	private ColonistPanel colonist;
-	private HUD hud;
+	private DisplayPanel hud;
 	private BuildingPanel building;
 	
 	private MotherBoard Logic;
@@ -72,12 +72,12 @@ public class AresGUI extends JFrame{
 		hudPanel = new JPanel();
 		hudPanel.setLayout(null);
 		
-		hud = new HUD();
+		hud = new DisplayPanel();
 		hud.setSize(400, 180);
 		hud.setLocation(0, 0);
 		hudPanel.add(hud);
 		
-		HUD hud2 = new HUD();
+		DisplayPanel hud2 = new DisplayPanel();
 		hud2.setSize(400, 180);
 		hud2.setLocation(0, 0);
 		hud2.setVisible(false);

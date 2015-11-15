@@ -32,10 +32,10 @@ public class ColonistPanel extends JPanel{
 		columnNames = new String[]{"Name", "Hunger", "Thirst", "Fatigue"};
 		data = new String[colonists.size()][4];
 		for(int i =0; i < colonists.size(); i++){
-			data[i][0] = colonists.get(i).getName();
-			data[i][1] = colonists.get(i).getHunger().toString();
-			data[i][2] = colonists.get(i).getThirst().toString();
-			data[i][3] = colonists.get(i).getFatigue().toString();
+//			data[i][0] = colonists.get(i).getName();
+//			data[i][1] = colonists.get(i).getHunger().toString();
+//			data[i][2] = colonists.get(i).getThirst().toString();
+//			data[i][3] = colonists.get(i).getFatigue().toString();
 		}
 		table = new JTable(new ColonistTableModel(data,columnNames,colonists.size()));
 		table.setAutoCreateRowSorter(true);
