@@ -63,17 +63,23 @@ public class MotherBoard extends Observable {
 	}
 
 	public void assignAction(Colonist col) {
-		switch (col.getTask()) {
-		case MiningIce:
-			col.setAction(makeDecisionOnMining(col, TileType.Ice));
-			break;
-		case MiningIronOre:
-			col.setAction(makeDecisionOnMining(col, TileType.IronOre));
-			break;
-		default:
-			col.setAction(Action.None);
-			break;
+		if (col.areColonistsNeedsMet()) {
+			switch (col.getTask()) {
+			case MiningIce:
+				col.setAction(makeDecisionOnMining(col, TileType.Ice));
+				break;
+			case MiningIronOre:
+				col.setAction(makeDecisionOnMining(col, TileType.IronOre));
+				break;
+			default:
+				col.setAction(Action.None);
+				break;
+			}
+			
 		}
+		
+		else
+			col.setAction(Action.None);
 	}
 
 	private Action makeDecisionOnMining(Colonist col, TileType resource) {

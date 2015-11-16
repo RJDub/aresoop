@@ -42,5 +42,26 @@ public class TestMotherBoard {
 		//assertEquals(1, model.getArrColonists().get(0).getX());
 		assertEquals(999, paul.getThirstLevel());
 	}
+	
+	@Test
+	public void testNeeds() {
+		ArrayList<Colonist> colonists = new ArrayList<Colonist>();
+		Tile[][] tiles = Generator.generateNeedsTestMap(new Tile[10][10]);
+		MotherBoard model = new MotherBoard(colonists, tiles);
+		Colonist paul = new Colonist("Paul", 0, 0);
+
+		model.getArrColonists().add(paul);
+		
+		paul.incrementThirstLevel(10);
+		
+		assertEquals(1010, paul.getThirstLevel());
+		
+		paul.incrementThirstLevel(-20);
+		
+		assertEquals(990, paul.getThirstLevel());
+		
+		assertTrue(paul.areColonistsNeedsMet());
+		
+	}
 
 }

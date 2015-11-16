@@ -76,11 +76,16 @@ public class Colonist {
 		hunger += in;
 	}
 	
-	public void incFatigueLevel(int in){
+	public void incrementFatigueLevel(int in){
 		fatigue += in;
 	}
 	
-	
+	public boolean areColonistsNeedsMet(){
+		boolean thirstNeedsMetFlag = true;
+		thirstNeedsMetFlag = (getThirstLevel() > 0);
+		
+		return thirstNeedsMetFlag;
+	}
 	
 	@Override
 	public String toString(){
