@@ -65,6 +65,8 @@ public class MapPanel extends JPanel implements Observer{
 			return sheet.getSubimage(0, 0, 50, 50);
 		case Ice:
 			return sheet.getSubimage(100, 0, 50, 50);
+		case IronOre:
+			return sheet.getSubimage(50, 50, 50, 50);
 		default:
 			return null;
 		}
