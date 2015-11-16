@@ -68,11 +68,11 @@ public class Colonist {
 		action = input;
 	}
 	
-	public void incThirstLevel(int in){
+	public void incrementThirstLevel(int in){
 		thirst += in;
 	}
 	
-	public void incHungerLevel(int in){
+	public void incrementHungerLevel(int in){
 		hunger += in;
 	}
 	

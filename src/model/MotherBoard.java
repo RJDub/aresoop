@@ -55,10 +55,10 @@ public class MotherBoard extends Observable {
 	
 	private void updateNeeds(Colonist col){
 		if (map[col.getX()][col.getY()].getType() == TileType.Ice){
-			col.incHungerLevel(-1);
+			col.incrementHungerLevel(-1);
 		} else {
-			col.incThirstLevel(-1);
-			col.incHungerLevel(-1);
+			col.incrementThirstLevel(-1);
+			col.incrementHungerLevel(-1);
 		}
 	}
 
