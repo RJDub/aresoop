@@ -13,14 +13,14 @@ public class MotherBoard extends Observable {
 	// private Tile[][] tiles;
 	private ArrayList<Colonist> colonists;
 	private Tile[][] map;
+	private ArrayList<Building> buildings;
 	// private ArrayList<Building> buldings;
 
 	public MotherBoard(ArrayList<Colonist> cols, Tile[][] tiles) {
 		// tiles = new Tile[10][10];
 		colonists = cols;
 		map = tiles;
-		// buldings = new ArrayList<>();
-		// setupBoard();
+		buildings = new ArrayList<Building>();
 	}
 
 	public ArrayList<Colonist> getArrColonists() {
