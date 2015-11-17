@@ -15,6 +15,7 @@ public class MotherBoard extends Observable {
 	private Tile[][] map;
 	private ArrayList<Building> buildings;
 
+
 	public MotherBoard(ArrayList<Colonist> cols, Tile[][] tiles) {
 		// tiles = new Tile[10][10];
 		colonists = cols;
@@ -148,6 +149,10 @@ public class MotherBoard extends Observable {
 		}
 	}
 	
+	private void moveTowardsBuilding(Colonist col){
+		//TODO: add code that moves this colonist towards a building (to drop off storage or to
+		// fulfill need.
+	}
 	private void collectResource(Colonist col, TileType res){
 		//TODO: we need to add code to get a colonist to extract resources
 	}
