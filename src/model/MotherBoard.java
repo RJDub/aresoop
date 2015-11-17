@@ -23,6 +23,9 @@ public class MotherBoard extends Observable {
 		buildings = new ArrayList<Building>();
 	}
 
+	public void addBuidling(Building b){
+		buildings.add(b);
+	}
 	public ArrayList<Colonist> getArrColonists() {
 		return colonists;
 	}
@@ -49,10 +52,20 @@ public class MotherBoard extends Observable {
 			assignAction(colonist);
 			executeAction(colonist);
 		}
+		
+		updateBuildings();  //TODO: finish this method.
 		setChanged();
 		notifyObservers(this);
 	}
 	
+	// this is where the building checks if a colonist is on it.
+	// if there is a colonist on this building, increase the 
+	// appropriate need.
+	private void updateBuildings() {
+		
+		
+	}
+
 	private void updateNeeds(Colonist col){
 		if (map[col.getX()][col.getY()].getType() == TileType.Ice){
 			col.incHungerLevel(-1);
