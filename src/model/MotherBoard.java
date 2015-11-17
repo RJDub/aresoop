@@ -124,7 +124,8 @@ public class MotherBoard extends Observable {
 		int curr = -1;
 		int foundX = -1;
 		int foundY = -1;
-		// this code will get replaced by the move method that Paul is writing,
+		
+		// this code will get replaced by the pathfinding code that Paul is writing,
 		// which will contain the pathfinding code.
 		
 		// WEAK PATHFINDING CODE:
@@ -143,7 +144,7 @@ public class MotherBoard extends Observable {
 		}
 		// END OF WEAK PATHFINDING CODE that will get replaced by the move().
 		
-		// moved the code that was here into the move method; 
+		// code that was here into the move method; 
 		move (col, foundX, foundY);
 		
 	}
@@ -163,13 +164,12 @@ public class MotherBoard extends Observable {
 	}
 
 	// This is a very important method that Paul is working on.
-	// All decisions are made prior to this method call. 
 	// 
 	// this method receives a colonist (which has their own x and y) 
 	// and a destination x and destination y.  This code will find 
 	// the best path for the colonist to take towards this destination
 	// and the actually move the colonist towards that location.
-	public void move(Colonist c, int x, int y){
+	public void move(Colonist col, int foundX, int foundY){
 		if (foundX > col.getX()) {
 			col.setX(col.getX() + 1);
 		} else if (foundX < col.getX()) {
