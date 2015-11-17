@@ -142,7 +142,7 @@ public class MotherBoard extends Observable {
 				}
 			}
 		}
-		// END OF WEAK PATHFINDING CODE that will get replaced by the move().
+		// END OF WEAK PATHFINDING CODE that will get recoded by Paul.
 		
 		// code that was here into the move method; 
 		move (col, foundX, foundY);
