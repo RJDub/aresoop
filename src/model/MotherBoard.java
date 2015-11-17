@@ -14,7 +14,6 @@ public class MotherBoard extends Observable {
 	private ArrayList<Colonist> colonists;
 	private Tile[][] map;
 	private ArrayList<Building> buildings;
-	// private ArrayList<Building> buldings;
 
 	public MotherBoard(ArrayList<Colonist> cols, Tile[][] tiles) {
 		// tiles = new Tile[10][10];
@@ -158,6 +157,8 @@ public class MotherBoard extends Observable {
 			System.out.println(col.toString());
 		}
 	}
+
+
 
 	// private void setupBoard() {
 	// // random random.nextint()

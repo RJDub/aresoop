@@ -58,8 +58,9 @@ public class TestMotherBoard {
 		assertEquals(1000,dorm.fatigueBonus);
 		assertEquals(1000,mess.hungerBonus);
 		
-		buildings.add(dorm);
-		buildings.add(mess);
+		model.addBuidling(dorm);
+		model.addBuidling(mess);
+		
 		Colonist paul = new Colonist("Paul", 0, 0);
 		
 	}
