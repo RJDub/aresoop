@@ -53,10 +53,13 @@ public class TestMotherBoard {
 		Tile[][] tiles = Generator.generateNeedsTestMap(new Tile[10][10]);
 		MotherBoard model = new MotherBoard(colonists, tiles);
 		
-		Building dorm = new Dormitory();
-		Building mess = new Mess();
+		Building dorm = new Dormitory(5,5);
+		Building mess = new Mess(5,6);
 		assertEquals(1000,dorm.fatigueBonus);
 		assertEquals(1000,mess.hungerBonus);
+		
+		buildings.add(dorm);
+		buildings.add(mess);
 		Colonist paul = new Colonist("Paul", 0, 0);
 		
 	}
