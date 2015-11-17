@@ -60,7 +60,8 @@ public class MotherBoard extends Observable {
 	
 	// this is where the building checks if a colonist is on it.
 	// if there is a colonist on this building, increase the 
-	// appropriate need.
+	// appropriate need or unload all of the colonists cargo into
+	// the building if it is a storage building.
 	private void updateBuildings() {
 		
 		
