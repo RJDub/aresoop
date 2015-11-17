@@ -6,6 +6,8 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 
+import buildings.Dormitory;
+import buildings.Mess;
 import enums.Action;
 import enums.Task;
 import model.*;
@@ -41,6 +43,22 @@ public class TestMotherBoard {
 		
 		//assertEquals(1, model.getArrColonists().get(0).getX());
 		assertEquals(999, paul.getThirstLevel());
+	}
+	
+	@Test
+	public void testBuildingsInMotherBoard(){
+		ArrayList<Colonist> colonists = new ArrayList<Colonist>();
+		ArrayList<Building> buildings = new ArrayList<Building>();
+		
+		Tile[][] tiles = Generator.generateNeedsTestMap(new Tile[10][10]);
+		MotherBoard model = new MotherBoard(colonists, tiles);
+		
+		Building dorm = new Dormitory();
+		Building mess = new Mess();
+		assertEquals(1000,dorm.fatigueBonus);
+		assertEquals(1000,mess.hungerBonus);
+		Colonist paul = new Colonist("Paul", 0, 0);
+		
 	}
 
 }
