@@ -3,11 +3,25 @@ import enums.BuildingType;
 import model.Building;
 
 public class StorageBuilding extends Building {
+	
+	private int resourceAmount;
 
 	public StorageBuilding(int x, int y) {
 		super(x, y);
 		super.buildingType = BuildingType.Storage;
+		resourceAmount = 0;
+	
 	}
+	
+	public int getResourceAmount() {
+		return resourceAmount;
+	}
+	
+	public void depositResource(int amount) {
+		resourceAmount+=amount;
+	}
+	
+	
 //
 //	private Resource type;
 //	private int capacity;
