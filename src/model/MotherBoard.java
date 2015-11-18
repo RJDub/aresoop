@@ -47,15 +47,18 @@ public class MotherBoard extends Observable {
 	}
 
 	public void update() {
+		updateColonists();
+		updateBuildings();  //TODO: finish this method.
+		setChanged();
+		notifyObservers(this);
+	}
+	
+	public void updateColonists(){
 		for (Colonist colonist : colonists) {
 			updateNeeds(colonist);
 			assignAction(colonist);
 			executeAction(colonist);
 		}
-		
-		updateBuildings();  //TODO: finish this method.
-		setChanged();
-		notifyObservers(this);
 	}
 	
 	// this is where the building checks if a colonist is on it.
@@ -63,7 +66,17 @@ public class MotherBoard extends Observable {
 	// appropriate need or unload all of the colonists cargo into
 	// the building if it is a storage building.
 	private void updateBuildings() {
-		
+		for (Building building : buildings) {
+			if (building.buildingType == BuildingType.Storage){
+				for (Colonist colonist : colonists) {
+					if (colonist.getX() == building.xLoc && colonist.getY() == building.yLoc) {
+						int amount = colonist.withdrawResources();
+						Task task = colonist.getTask();
+						((StorageBuilding) building).depositResource(amount, task);
+					}
+				}
+			}
+		}
 		
 	}
 
