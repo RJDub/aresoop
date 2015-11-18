@@ -102,6 +102,10 @@ public class Colonist {
 		
 	}
 
+	public boolean hasCapacityToMineResources() {
+		return resourceAmount < capacity;
+	}
+
 
 
 //	public boolean isAlive() {
