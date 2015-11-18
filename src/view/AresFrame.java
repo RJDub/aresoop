@@ -45,8 +45,8 @@ public class AresFrame extends JFrame {
 		model.getArrColonists().add(new Colonist("Paul", 0, 0));
 		model.getArrColonists().add(new Colonist("Mingcheng", 0, 0));
 		
-		model.addBuidling(new Dormitory(4,4));
-		model.addBuidling(new Mess(4,5));
+		model.addBuilding(new Dormitory(4,4));
+		model.addBuilding(new Mess(4,5));
 		AresFrame window = new AresFrame();
 		window.setVisible(true);
 	}
