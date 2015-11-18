@@ -10,6 +10,7 @@ public class Colonist {
 	private Task task;
 	private Action action;
 	private int x,y;
+	private int amountOfResource;
 
 	public Colonist(String input, int xIn, int yIn) {
 		name = input;
