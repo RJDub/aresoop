@@ -20,6 +20,8 @@ public class Colonist {
 		x = xIn;
 		y = yIn;
 		thirst = 1000;
+		hunger = 1000;
+		fatigue = 1000;
 		resourceAmount = 0;
 		capacity = 5;
 		
@@ -91,10 +93,14 @@ public class Colonist {
 	}
 	
 	public boolean areColonistsNeedsMet(){
-		boolean thirstNeedsMetFlag = true;
-		thirstNeedsMetFlag = (getThirstLevel() > 0);
+	
+		if (getThirstLevel() > 0 && getHungerLevel() > 0 && getFatigueLevel() > 0) {
+			return true;
+		}
 		
-		return thirstNeedsMetFlag;
+		else
+			return false;
+		
 	}
 	
 	@Override
