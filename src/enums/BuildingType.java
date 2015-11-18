@@ -1,5 +1,5 @@
 package enums;
 
 public enum BuildingType {
-	Dormitory,Mess;
+	Dormitory,Mess,Storage;
 }
