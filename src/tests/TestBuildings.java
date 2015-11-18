@@ -20,6 +20,11 @@ public class TestBuildings {
 		building2.depositResource(3, Task.MiningIronOre);
 		assertEquals(3, building2.getIronOreAmount());
 		
+		building2.depositResource(5, Task.MiningIronOre);
+		assertEquals(8, building2.getIronOreAmount());
+		building2.depositResource(1000, Task.MiningIce);
+		assertEquals(1000, building2.getWaterAmount());
+		assertEquals(8, building2.getIronOreAmount());
 	}
 
 }
