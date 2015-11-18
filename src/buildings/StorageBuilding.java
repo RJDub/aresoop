@@ -1,26 +1,40 @@
 package buildings;
 import enums.BuildingType;
+import enums.Task;
 import model.Building;
 
 public class StorageBuilding extends Building {
 	
-	private int resourceAmount;
+	private int waterAmount;
+	private int ironOreAmount;
 
 	public StorageBuilding(int x, int y) {
 		super(x, y);
 		super.buildingType = BuildingType.Storage;
-		resourceAmount = 0;
+		waterAmount = 0;
+		ironOreAmount = 0;
 	
 	}
 	
-	public int getResourceAmount() {
-		return resourceAmount;
+	public int getIronOreAmount() {
+		return ironOreAmount;
 	}
 	
-	public void depositResource(int amount) {
-		resourceAmount+=amount;
+	public int getWaterAmount() {
+		return waterAmount;
 	}
 	
+	
+	public void depositResource(int amount, Task task) {
+		if (task == Task.MiningIce){
+			waterAmount += amount;
+		}
+		
+		else if (task == Task.MiningIronOre){
+			ironOreAmount += amount;
+		}
+	}
+
 	
 //
 //	private Resource type;
