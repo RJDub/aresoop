@@ -23,7 +23,7 @@ public class MotherBoard extends Observable {
 		buildings = new ArrayList<Building>();
 	}
 
-	public void addBuidling(Building b){
+	public void addBuilding(Building b){
 		buildings.add(b);
 	}
 	public ArrayList<Colonist> getArrColonists() {
@@ -95,6 +95,9 @@ public class MotherBoard extends Observable {
 	}
 
 	private Action makeDecisionOnMining(Colonist col, TileType resource) {
+		if (!col.hasCapacityToMineResources()){
+			return Action.UnloadCargo;
+		}
 		if (map[col.getX()][col.getY()].getType() == resource) {
 			collectResource(col, resource);
 			return Action.Mine;
@@ -103,6 +106,7 @@ public class MotherBoard extends Observable {
 			return Action.Move;
 		}
 	}
+
 
 	public void assignTask(Colonist col, Task t) {
 		col.setTask(t);
@@ -118,6 +122,10 @@ public class MotherBoard extends Observable {
 		case Move:
 			//move(col);
 			System.out.println("Colonist " + col.getName() + " is moving.");
+			break;
+		case UnloadCargo:
+			System.out.println("Colonist " + col.getName() + " needs to unload cargo");
+			moveTowardsBuilding(col, BuildingType.Storage);
 			break;
 		default:
 			System.out.println("Colonist " + col.getName() + " is ACTION_NONE.");
@@ -157,9 +165,19 @@ public class MotherBoard extends Observable {
 		colonists.add(c);
 	}
 	
-	private void moveTowardsBuilding(Colonist col){
+	private void moveTowardsBuilding(Colonist col, BuildingType bt){
 		//TODO: add code that moves this colonist towards a building (to drop off storage or to
 		// fulfill need.
+		
+		// find nearest storage
+		// weak pathfinding code:
+		// this just finds the first building of bt x,y.
+		for (Building b: buildings){
+			if (b.buildingType == bt){
+				move (col, b.xLoc, b.yLoc);
+			}
+		}
+		
 	}
 	private void collectResource(Colonist col, TileType res){
 		//TODO: we need to add code to get a colonist to extract resources
