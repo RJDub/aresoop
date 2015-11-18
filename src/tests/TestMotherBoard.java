@@ -77,6 +77,34 @@ public class TestMotherBoard {
 		model.addColonist(paul);
 		model.addColonist(mingcheng);
 		model.printModel();
+		model.update();
+		assertEquals(0,paul.getResourceAmount());
+		model.update();
+		assertEquals(Action.None, paul.getAction());
+		assertEquals(998,paul.getThirstLevel());
+		paul.setTask(Task.MiningIce);
+		model.update();
+		assertEquals(997, paul.getThirstLevel());
+		model.update();
+		assertEquals(996, paul.getThirstLevel());
+		assertEquals(2,paul.getX());
+		model.update();
+		assertEquals(3,paul.getX());
+		assertEquals(995, paul.getThirstLevel());
+		model.update();
+		model.update();
+		model.update();
+		model.update();
+		assertEquals(3,paul.getX());
+		assertEquals(5,paul.getY());
+		assertEquals(993, paul.getThirstLevel());
+		model.update();
+		assertEquals(993, paul.getThirstLevel());
+		assertEquals(3,paul.getResourceAmount());
+		model.update();
+		assertEquals(4,paul.getResourceAmount());
+		
+			
 	}
 
 }

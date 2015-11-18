@@ -3,6 +3,7 @@ package model;
 import enums.*;
 
 public class Colonist {
+	
 	private int hunger;
 	private int thirst;
 	private int fatigue;
@@ -10,8 +11,8 @@ public class Colonist {
 	private Task task;
 	private Action action;
 	private int x,y;
-	private int amountOfResource;
-
+	private int resourceAmount;
+	int capacity; // need to think what this will do!
 	public Colonist(String input, int xIn, int yIn) {
 		name = input;
 		task = Task.None;
@@ -19,6 +20,14 @@ public class Colonist {
 		x = xIn;
 		y = yIn;
 		thirst = 1000;
+		resourceAmount = 0;
+		capacity = 5;
+		
+		
+	}
+	
+	public int getResourceAmount(){
+		return resourceAmount;
 	}
 
 	public String getName() {
@@ -89,7 +98,7 @@ public class Colonist {
 	}
 
 	public void execute() {
-		amountOfResource++;
+		resourceAmount++;
 		
 	}
 
