@@ -88,6 +88,11 @@ public class Colonist {
 		return ("Colonist: " + getName() + "\nLocation: (" + getX() + ", " + getY() + ")\nTask: " + getTask() + "\nAction: " + getAction() + "\nThirst: " + getThirstLevel());
 	}
 
+	public void execute() {
+		amountOfResource++;
+		
+	}
+
 
 
 //	public boolean isAlive() {

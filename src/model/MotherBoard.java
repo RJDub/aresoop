@@ -113,6 +113,7 @@ public class MotherBoard extends Observable {
 		switch (col.getAction()) {
 		case Mine:
 			System.out.println("Colonist " + col.getName() + " is mining.");
+			col.execute();
 			break;
 		case Move:
 			//move(col);
@@ -151,6 +152,9 @@ public class MotherBoard extends Observable {
 		// code that was here into the move method; 
 		move (col, foundX, foundY);
 		
+	}
+	public void addColonist(Colonist c){
+		colonists.add(c);
 	}
 	
 	private void moveTowardsBuilding(Colonist col){
