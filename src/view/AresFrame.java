@@ -16,6 +16,7 @@ import javax.swing.Timer;
 
 import buildings.Dormitory;
 import buildings.Mess;
+import buildings.StorageBuilding;
 import enums.Task;
 import enums.TileType;
 import model.*;
@@ -47,6 +48,7 @@ public class AresFrame extends JFrame {
 		
 		model.addBuilding(new Dormitory(4,4));
 		model.addBuilding(new Mess(4,5));
+		model.addBuilding(new StorageBuilding(8, 1));
 		AresFrame window = new AresFrame();
 		window.setVisible(true);
 	}

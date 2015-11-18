@@ -78,6 +78,8 @@ public class MapPanel extends JPanel implements Observer{
 			return sheet.getSubimage(50	, 150, 50, 50);
 		case Dormitory:
 			return sheet.getSubimage(0	, 150, 50, 50);
+		case Storage:
+			return sheet.getSubimage(100, 100, 50, 50);
 		default:
 			return null;
 		}
