@@ -13,16 +13,19 @@ public class MotherBoard extends Observable {
 	// private Tile[][] tiles;
 	private ArrayList<Colonist> colonists;
 	private Tile[][] map;
-	// private ArrayList<Building> buldings;
+	private ArrayList<Building> buildings;
+
 
 	public MotherBoard(ArrayList<Colonist> cols, Tile[][] tiles) {
 		// tiles = new Tile[10][10];
 		colonists = cols;
 		map = tiles;
-		// buldings = new ArrayList<>();
-		// setupBoard();
+		buildings = new ArrayList<Building>();
 	}
 
+	public void addBuilding(Building b){
+		buildings.add(b);
+	}
 	public ArrayList<Colonist> getArrColonists() {
 		return colonists;
 	}
@@ -49,11 +52,26 @@ public class MotherBoard extends Observable {
 			assignAction(colonist);
 			executeAction(colonist);
 		}
+		
+		updateBuildings();  //TODO: finish this method.
 		setChanged();
 		notifyObservers(this);
 	}
 	
+	// this is where the building checks if a colonist is on it.
+	// if there is a colonist on this building, increase the 
+	// appropriate need or unload all of the colonists cargo into
+	// the building if it is a storage building.
+	private void updateBuildings() {
+		
+		
+	}
+
+	public ArrayList<Building> getArrBuildings(){
+		return buildings;
+	}
 	private void updateNeeds(Colonist col){
+		
 		if (map[col.getX()][col.getY()].getType() == TileType.Ice){
 			col.incrementHungerLevel(-1);
 		} else {
@@ -83,6 +101,9 @@ public class MotherBoard extends Observable {
 	}
 
 	private Action makeDecisionOnMining(Colonist col, TileType resource) {
+		if (!col.hasCapacityToMineResources()){
+			return Action.UnloadCargo;
+		}
 		if (map[col.getX()][col.getY()].getType() == resource) {
 			collectResource(col, resource);
 			return Action.Mine;
@@ -91,6 +112,7 @@ public class MotherBoard extends Observable {
 			return Action.Move;
 		}
 	}
+
 
 	public void assignTask(Colonist col, Task t) {
 		col.setTask(t);
@@ -101,10 +123,15 @@ public class MotherBoard extends Observable {
 		switch (col.getAction()) {
 		case Mine:
 			System.out.println("Colonist " + col.getName() + " is mining.");
+			col.execute();
 			break;
 		case Move:
 			//move(col);
 			System.out.println("Colonist " + col.getName() + " is moving.");
+			break;
+		case UnloadCargo:
+			System.out.println("Colonist " + col.getName() + " needs to unload cargo");
+			moveTowardsBuilding(col, BuildingType.Storage);
 			break;
 		default:
 			System.out.println("Colonist " + col.getName() + " is ACTION_NONE.");
@@ -116,6 +143,11 @@ public class MotherBoard extends Observable {
 		int curr = -1;
 		int foundX = -1;
 		int foundY = -1;
+		
+		// this code will get replaced by the pathfinding code that Paul is writing,
+		// which will contain the pathfinding code.
+		
+		// WEAK PATHFINDING CODE:
 		for (int x = 0; x < map[0].length; x++) {
 			for (int y = 0; y < map.length; y++) {
 				if (map[x][y].getType() == res) {
@@ -129,6 +161,47 @@ public class MotherBoard extends Observable {
 				}
 			}
 		}
+		// END OF WEAK PATHFINDING CODE that will get recoded by Paul.
+		
+		// code that was here into the move method; 
+		move (col, foundX, foundY);
+		
+	}
+	public void addColonist(Colonist c){
+		colonists.add(c);
+	}
+	
+	private void moveTowardsBuilding(Colonist col, BuildingType bt){
+		//TODO: add code that moves this colonist towards a building (to drop off storage or to
+		// fulfill need.
+		
+		// find nearest storage
+		// weak pathfinding code:
+		// this just finds the first building of bt x,y.
+		for (Building b: buildings){
+			if (b.buildingType == bt){
+				move (col, b.xLoc, b.yLoc);
+			}
+		}
+		
+	}
+	private void collectResource(Colonist col, TileType res){
+		//TODO: we need to add code to get a colonist to extract resources
+	}
+
+	public void printModel() {
+		for (Colonist col : colonists) {
+			System.out.println(col.toString());
+		}
+	}
+
+	// This is a very important method that Paul is working on.
+	// 
+	// this method receives a colonist (which has their own x and y) 
+	// and a destination x and destination y.  This code will find 
+	// the best path for the colonist to take towards this destination
+	// and the actually move the colonist towards that location.
+	public void move(Colonist col, int foundX, int foundY){
 		if (foundX > col.getX()) {
 			col.setX(col.getX() + 1);
 		} else if (foundX < col.getX()) {
@@ -140,17 +213,9 @@ public class MotherBoard extends Observable {
 		} else if (foundX < col.getY()) {
 			col.setY(col.getY() - 1);
 		}
-	}
-	
-	private void collectResource(Colonist col, TileType res){
-		//TODO: we need to add code to get a colonist to extract resources
+		
 	}
 
-	public void printModel() {
-		for (Colonist col : colonists) {
-			System.out.println(col.toString());
-		}
-	}
 
 	// private void setupBoard() {
 	// // random random.nextint()

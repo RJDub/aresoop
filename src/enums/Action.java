@@ -1,5 +1,5 @@
 package enums;
 
 public enum Action {
-	Move, Mine, None;
+	Move, Mine, UnloadCargo, FindFood, FindSleep, FindWater, None;
 }
