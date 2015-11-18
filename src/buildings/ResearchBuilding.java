@@ -6,5 +6,10 @@ import model.Building;
 
 public class ResearchBuilding extends Building{
 
+	public ResearchBuilding(int x, int y) {
+		super(x, y);
+		// TODO Auto-generated constructor stub
+	}
+
 
 }

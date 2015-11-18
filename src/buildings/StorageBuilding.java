@@ -7,15 +7,20 @@ import model.Building;
 
 public class StorageBuilding extends Building {
 
+	public StorageBuilding(int x, int y) {
+		super(x, y);
+		// TODO Auto-generated constructor stub
+	}
+
 	private Resource type;
 	private int capacity;
 	private ArrayList<Resource> resources;
 	
-	public StorageBuilding(Resource input, int cap) {
-		type = input;
-		resources = new ArrayList<Resource>();
-		capacity = cap;
-	}
+//	public StorageBuilding(Resource input, int cap) {
+//		type = input;
+//		resources = new ArrayList<Resource>();
+//		capacity = cap;
+//	}
 	
 	public Resource getType(){
 		return type;

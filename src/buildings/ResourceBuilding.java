@@ -7,16 +7,21 @@ import enums.*;
 
 public class ResourceBuilding extends Building{
 	
+	public ResourceBuilding(int x, int y) {
+		super(x, y);
+		// TODO Auto-generated constructor stub
+	}
+
 	private Resource type;
 	private int capacity;
 	private int level;
 
-	public ResourceBuilding(Resource input, int cap) {
-		type = input;
-		capacity = cap;
-		level = 1;
-	}
 	
+//		type = input;
+//		capacity = cap;
+//		level = 1;
+//	}
+//	
 	public Resource getType(){
 		return type;
 	}
