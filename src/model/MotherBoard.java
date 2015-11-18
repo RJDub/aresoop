@@ -210,7 +210,7 @@ public class MotherBoard extends Observable {
 
 		if (foundY > col.getY()) {
 			col.setY(col.getY() + 1);
-		} else if (foundX < col.getY()) {
+		} else if (foundY < col.getY()) {
 			col.setY(col.getY() - 1);
 		}
 		
@@ -285,6 +285,7 @@ public class MotherBoard extends Observable {
 	// public void updateColonists(){
 	//
 	// }
+	
 	//
 	// public void updateBoardGame(){
 	//
