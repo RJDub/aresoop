@@ -53,10 +53,11 @@ public class MapPanel extends JPanel implements Observer{
 				g2.drawImage(drawTile(x,y), x*INCREMENT, y*INCREMENT, null);
 			}
 		}
+		drawArrBuildings(g2);
 		drawArrColonists(g2);
 		
 		
-		drawArrBuildings(g2);
+		
 		
 	}
 	
