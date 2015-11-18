@@ -8,7 +8,9 @@ import org.junit.Test;
 
 import buildings.Dormitory;
 import buildings.Mess;
+import buildings.StorageBuilding;
 import enums.Action;
+import enums.BuildingType;
 import enums.Task;
 import model.*;
 
@@ -58,8 +60,8 @@ public class TestMotherBoard {
 		assertEquals(1000,dorm.fatigueBonus);
 		assertEquals(1000,mess.hungerBonus);
 		
-		model.addBuidling(dorm);
-		model.addBuidling(mess);
+		model.addBuilding(dorm);
+		model.addBuilding(mess);
 		
 		Colonist paul = new Colonist("Paul", 0, 0);
 		
@@ -78,6 +80,7 @@ public class TestMotherBoard {
 		model.addColonist(mingcheng);
 		model.printModel();
 		model.update();
+		model.addBuilding(new StorageBuilding(5,8));
 		assertEquals(0,paul.getResourceAmount());
 		model.update();
 		assertEquals(Action.None, paul.getAction());
@@ -103,6 +106,17 @@ public class TestMotherBoard {
 		assertEquals(3,paul.getResourceAmount());
 		model.update();
 		assertEquals(4,paul.getResourceAmount());
+		model.update();
+		assertEquals(5,paul.getResourceAmount());
+		model.update();
+		assertEquals(5,paul.getResourceAmount());
+		assertEquals(Action.UnloadCargo,paul.getAction());
+		assertEquals(4, paul.getX());
+		model.update();
+		model.update();
+		assertEquals(5,paul.getX());
+		assertEquals(8,paul.getY());
+		assertEquals(model.getArrBuildings().get(0).buildingType, BuildingType.Storage);
 		
 			
 	}
