@@ -64,5 +64,19 @@ public class TestMotherBoard {
 		Colonist paul = new Colonist("Paul", 0, 0);
 		
 	}
+	
+	@Test
+	public void testResourceMining(){
+		ArrayList<Colonist> colonists = new ArrayList<Colonist>();
+		ArrayList<Building> buildings = new ArrayList<Building>();
+		
+		Tile[][] tiles = Generator.generateMap2();
+		MotherBoard model = new MotherBoard(colonists, tiles);
+		Colonist paul = new Colonist("Paul", 0, 0);
+		Colonist mingcheng = new Colonist("Mingcheng", 2, 2);
+		model.addColonist(paul);
+		model.addColonist(mingcheng);
+		model.printModel();
+	}
 
 }

@@ -27,12 +27,12 @@ public Farmer(String input, int xIn, int yIn) {
 //		resources.add(input);
 //	}
 	
-	public ArrayList<Resource> getResource() {
-		return resources;
-	}
-	
-	public int getmaxCapacity() {
-		return maxCapacity;
-	}
+//	public ArrayList<Resource> getResource() {
+//		return resources;
+//	}
+//	
+//	public int getmaxCapacity() {
+//		return maxCapacity;
+//	}
 
 }
