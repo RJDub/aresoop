@@ -67,6 +67,9 @@ public class MotherBoard extends Observable {
 		
 	}
 
+	public ArrayList<Building> getArrBuildings(){
+		return buildings;
+	}
 	private void updateNeeds(Colonist col){
 		
 		if (map[col.getX()][col.getY()].getType() == TileType.Ice){
