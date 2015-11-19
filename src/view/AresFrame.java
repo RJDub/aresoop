@@ -6,6 +6,8 @@ import java.awt.ScrollPane;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -105,8 +107,9 @@ public class AresFrame extends JFrame {
 	}
 	
 	private void registerListeners() {
-		// TODO Auto-generated method stub
-		
+		// TODO Under construction 
+		// add colonistPanelSelectedListener
+		colonistPanel.getTable().addMouseListener(new RowSelectListener());
 	}
 	
 	private void setupAresFrame(){
@@ -152,7 +155,6 @@ public class AresFrame extends JFrame {
 		selector.setBackground(Color.CYAN);
 		
 		buildings = new BuildingPanel();
-		
 	}
 	
 	
@@ -164,8 +166,76 @@ public class AresFrame extends JFrame {
 			// TODO Auto-generated method stub
 			if (timer.isRunning()) {
 				model.update();
+				
+				//TODO Under construction(update panels)
+				updateView();
 			}
 		}
 
+		private void updateView() {
+			colonistPanel.update(model.getArrColonists());
+			updateHud();
+		}
+
+		private void updateHud() {
+			int rowSelected = colonistPanel.getTable().getSelectedRow();
+			if (rowSelected < 0) {
+				// Do nothing 
+			}
+			else{
+				Colonist refColonist = null;
+				for (Colonist thisColonist: model.getArrColonists()) {
+					if (thisColonist.getName().equals(colonistPanel.getData()[rowSelected][0]))
+						refColonist = thisColonist;
+				}
+				hud.colonistSelected(refColonist);
+			}
+		}
+
+	}
+	
+	private class RowSelectListener implements MouseListener {
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			int rowSelected = colonistPanel.getTable().getSelectedRow();
+			if (rowSelected < 0) {
+				// Do nothing 
+			}
+			else{
+				Colonist refColonist = null;
+				for (Colonist thisColonist: model.getArrColonists()) {
+					if (thisColonist.getName().equals(colonistPanel.getData()[rowSelected][0]))
+						refColonist = thisColonist;
+				}
+				hud.colonistSelected(refColonist);
+			}
+			
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		
 	}
 }
