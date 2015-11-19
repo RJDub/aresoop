@@ -66,7 +66,7 @@ public class AresGUI extends JFrame{
 		informationPanel.setLayout(new GridLayout(1,3));
 		
 		colonist = new ColonistPanel(Logic.getArrColonists());
-		colonist.table.addMouseListener(new RowSelectListener());
+//		colonist.table.addMouseListener(new RowSelectListener());
 		building = new BuildingPanel();
 		
 		hudPanel = new JPanel();
@@ -104,23 +104,23 @@ public class AresGUI extends JFrame{
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			int rowSelected = colonist.table.getSelectedRow();
-			if (rowSelected < 0) {
-				
-			}
-			else{
-				setInfo(colonist.data[rowSelected][0]);
-			}
+//			int rowSelected = colonist.table.getSelectedRow();
+//			if (rowSelected < 0) {
+//				
+//			}
+//			else{
+//				setInfo(colonist.data[rowSelected][0]);
+//			}
 		}
 
 		private void setInfo(String n) {
 		JPanel colonistSelected;
 		Colonist refColonist = null;
-		for (Colonist thisColonist: colonist.colonists) {
-			if (thisColonist.getName().equals(n))
-				refColonist = thisColonist;
-		}
-		hud.setInfo(refColonist);
+//		for (Colonist thisColonist: colonist.colonists) {
+//			if (thisColonist.getName().equals(n))
+//				refColonist = thisColonist;
+//		}
+//		hud.setInfo(refColonist);
 	}
 
 		@Override
