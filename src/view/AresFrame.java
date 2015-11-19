@@ -98,7 +98,7 @@ public class AresFrame extends JFrame {
 		model.assignTask(model.getArrColonists().get(0), Task.MiningIce);
 		model.assignTask(model.getArrColonists().get(1), Task.MiningIronOre);
 		
-		timer = new Timer(1000, new OurTimerListener());
+		timer = new Timer(500, new OurTimerListener());
 		timer.start();
 //		model.start();
 //		model.printModel();
