@@ -1,8 +1,10 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -16,10 +18,7 @@ import model.Colonist;
 public class DisplayPanel extends JPanel{
 	
 	private JTextArea temp;
-	private JPanel colonistSelected;
 	private JButton play;
-	
-	private ArrayList<Colonist> colonists;
 	
 	public DisplayPanel() {
 		layoutGUI();
@@ -32,16 +31,18 @@ public class DisplayPanel extends JPanel{
 	private void layoutGUI() {
 		temp = new JTextArea("Game Start Info");
 		temp.setEditable(false);
-		temp.setPreferredSize(new Dimension(390,180));
+		temp.setPreferredSize(new Dimension((int) (Toolkit.getDefaultToolkit().getScreenSize().width * .333),(int) (Toolkit.getDefaultToolkit().getScreenSize().height * .27)));
 		this.add(temp);
 	}
 
-	public void setInfo(Colonist c) {
-//		temp.setText("Name:   " + c.getName()
-//		+ "\nHunger:   " + c.getHunger().toString()
-//		+ "\nThirst:   " + c.getThirst().toString()
-//		+ "\nFatigue:   " + c.getFatigue().toString()
-//		+ "\nX:   " + c.getXcoord()
-//		+ "\nY:   " + c.getYcoord());
+	public void colonistSelected(Colonist c) {
+		temp.setText("\n\n\n\n\tName:   " + c.getName()
+		+ "\n\tHunger:   " + c.getHungerLevel()
+		+ "\n\tThirst:   " + c.getThirstLevel()
+		+ "\n\tFatigue:   " + c.getFatigueLevel()
+		+ "\n\tTask:   " + c.getTask()
+		+ "\n\tAction:   " + c.getAction()
+		+ "\n\tX:   " + c.getX()
+		+ "\n\tY:   " + c.getY());
 	}
 }
