@@ -16,6 +16,9 @@ import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.Timer;
 
+import buildings.Dormitory;
+import buildings.Mess;
+import buildings.StorageBuilding;
 import enums.Task;
 import enums.TileType;
 import model.*;
@@ -40,12 +43,14 @@ public class AresFrame extends JFrame {
 
 		ArrayList<Colonist> colonists = new ArrayList<Colonist>();
 		Tile[][] tiles = new Tile[10][10];
-		model = new MotherBoard(colonists, Generator.generateMap(tiles));
-
+//		model = new MotherBoard(colonists, Generator.generateMap(tiles));
+		model = new MotherBoard(colonists, Generator.generateMap2());
 		model.getArrColonists().add(new Colonist("Paul", 0, 0));
 		model.getArrColonists().add(new Colonist("Mingcheng", 0, 0));
 		
-
+		model.addBuilding(new Dormitory(4,4));
+		model.addBuilding(new Mess(4,5));
+		model.addBuilding(new StorageBuilding(8, 1));
 		AresFrame window = new AresFrame();
 		window.setVisible(true);
 	}

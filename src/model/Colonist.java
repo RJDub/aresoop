@@ -3,6 +3,7 @@ package model;
 import enums.*;
 
 public class Colonist {
+	
 	private int hunger;
 	private int thirst;
 	private int fatigue;
@@ -10,7 +11,8 @@ public class Colonist {
 	private Task task;
 	private Action action;
 	private int x,y;
-
+	private int resourceAmount;
+	int capacity; // need to think what this will do!
 	public Colonist(String input, int xIn, int yIn) {
 		name = input;
 		task = Task.None;
@@ -18,6 +20,16 @@ public class Colonist {
 		x = xIn;
 		y = yIn;
 		thirst = 1000;
+		hunger = 1000;
+		fatigue = 1000;
+		resourceAmount = 0;
+		capacity = 5;
+		
+		
+	}
+	
+	public int getResourceAmount(){
+		return resourceAmount;
 	}
 
 	public String getName() {
@@ -68,25 +80,49 @@ public class Colonist {
 		action = input;
 	}
 	
-	public void incThirstLevel(int in){
+	public void incrementThirstLevel(int in){
 		thirst += in;
 	}
 	
-	public void incHungerLevel(int in){
+	public void incrementHungerLevel(int in){
 		hunger += in;
 	}
 	
-	public void incFatigueLevel(int in){
+	public void incrementFatigueLevel(int in){
 		fatigue += in;
 	}
 	
+	public boolean areColonistsNeedsMet(){
 	
+		if (getThirstLevel() > 0 && getHungerLevel() > 0 && getFatigueLevel() > 0) {
+			return true;
+		}
+		
+		else
+			return false;
+		
+	}
 	
 	@Override
 	public String toString(){
 		return ("Colonist: " + getName() + "\nLocation: (" + getX() + ", " + getY() + ")\nTask: " + getTask() + "\nAction: " + getAction() + "\nThirst: " + getThirstLevel());
 	}
 
+	public void execute() {
+		resourceAmount++;
+		
+	}
+
+	public boolean hasCapacityToMineResources() {
+		return resourceAmount < capacity;
+	}
+	
+	public int withdrawResources(){
+		int retAmount = resourceAmount;
+		resourceAmount = 0;
+		return retAmount;
+		
+	}
 
 
 //	public boolean isAlive() {

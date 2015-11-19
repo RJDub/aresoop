@@ -16,6 +16,7 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
+import enums.BuildingType;
 import enums.TileType;
 import model.*;
 
@@ -52,10 +53,37 @@ public class MapPanel extends JPanel implements Observer{
 				g2.drawImage(drawTile(x,y), x*INCREMENT, y*INCREMENT, null);
 			}
 		}
+		drawArrBuildings(g2);
+		drawArrColonists(g2);
+		
+		
+		
+		
+	}
+	
+	private void drawArrBuildings(Graphics2D g2){
+		for(Building b: mobo.getArrBuildings()){
+			BuildingType bt = b.buildingType;
+			g2.drawImage(drawBuilding(bt), b.xLoc*INCREMENT, b.yLoc*INCREMENT, null);
+		}
+	}
+	private void drawArrColonists(Graphics2D g2){
 		for (int x = 0; x < mobo.getArrColonists().size(); x++){
 			g2.drawImage(drawColonist(), mobo.getArrColonists().get(x).getX()*INCREMENT, mobo.getArrColonists().get(x).getY()*INCREMENT, null);
 		}
-		
+	}
+	
+	private BufferedImage drawBuilding(BuildingType b){
+		switch (b){
+		case Mess:
+			return sheet.getSubimage(50	, 150, 50, 50);
+		case Dormitory:
+			return sheet.getSubimage(0	, 150, 50, 50);
+		case Storage:
+			return sheet.getSubimage(100, 100, 50, 50);
+		default:
+			return null;
+		}
 	}
 	
 	private BufferedImage drawTile(int x, int y){
@@ -67,6 +95,10 @@ public class MapPanel extends JPanel implements Observer{
 			return sheet.getSubimage(100, 0, 50, 50);
 		case IronOre:
 			return sheet.getSubimage(50, 50, 50, 50);
+		case Volcano:
+			return sheet.getSubimage(100, 50, 50, 50);
+		case Crater:
+			return sheet.getSubimage(0, 100, 50, 50);
 		default:
 			return null;
 		}

@@ -22,7 +22,7 @@ import model.*;
 
 public class AresGUI extends JFrame{
 	
-	private Map board;
+//	private Map board;
 
 	private JPanel informationPanel;
 	private JPanel hudPanel;
@@ -150,7 +150,7 @@ public class AresGUI extends JFrame{
 	}
 	
 	public void setupModel(){
-		Logic = new MotherBoard();
+//		Logic = new MotherBoard();
 		//Logic.addObserver(board);
 	}
 	
