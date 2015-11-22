@@ -1,16 +1,16 @@
 package model;
 
-import java.awt.Point;
+import enums.Task;
 
 public abstract class Item {
-
-	private Point location;
 	
-	public Item(Point input){
-		location = input;
+	Colonist owner;
+	public Task task;
+	public int bonus_amount;
+	
+	public Item(){
+		
 	}
 	
-	public Point getLocation(){
-		return location;
-	}
+	
 }
