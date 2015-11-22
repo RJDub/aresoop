@@ -73,8 +73,8 @@ public class TestMotherBoard {
 		
 		Building dorm = new Dormitory(5,5);
 		Building mess = new Mess(5,6);
-		assertEquals(1000,dorm.fatigueBonus);
-		assertEquals(1000,mess.hungerBonus);
+		assertEquals(1000,dorm.getFatigueBonus());
+		assertEquals(1000,mess.getHungerBonus());
 		
 		model.addBuilding(dorm);
 		model.addBuilding(mess);

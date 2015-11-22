@@ -32,6 +32,15 @@ public abstract class Building {
 	public int getHungerBonus(){
 		return hungerBonus;
 	}
+	
+	public int getThirstBonus(){
+		return thirstBonus;
+	}
+	
+	public int getFatigueBonus(){
+		return fatigueBonus;
+	}
+	
 	public void setHungerBonus(int b){
 		hungerBonus = b;
 	}
