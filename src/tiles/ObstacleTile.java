@@ -9,9 +9,9 @@ import model.Tile;
 
 public class ObstacleTile extends Tile{
 	
-	public ObstacleTile(TileType type) {
-		super(type);
-		// TODO Auto-generated constructor stub
+	public ObstacleTile(TileType type, int r, int c) {
+		super(type, r, c);
+		
 	}
 
 	private ArrayList<Building> buildings;	
