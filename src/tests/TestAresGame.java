@@ -56,7 +56,7 @@ public class TestAresGame {
 		assertEquals(Task.MiningIce, model.getArrColonists().get(0).getTask());
 		
 		assertEquals(Action.None, model.getArrColonists().get(0).getAction());
-		assertEquals(0, model.getArrColonists().get(0).getX());
+		assertEquals(0, model.getArrColonists().get(0).getC());
 		
 		model.update();
 		model.update();
@@ -130,16 +130,16 @@ public class TestAresGame {
 		assertEquals(997, paul.getThirstLevel());
 		model.update();
 		assertEquals(996, paul.getThirstLevel());
-		assertEquals(2,paul.getX());
+		assertEquals(2,paul.getC());
 		model.update();
-		assertEquals(3,paul.getX());
+		assertEquals(3,paul.getC());
 		assertEquals(995, paul.getThirstLevel());
 		model.update();
 		model.update();
 		model.update();
 		model.update();
-		assertEquals(3,paul.getX());
-		assertEquals(5,paul.getY());
+		assertEquals(3,paul.getC());
+		assertEquals(5,paul.getR());
 		assertEquals(993, paul.getThirstLevel());
 		model.update();
 		assertEquals(993, paul.getThirstLevel());
@@ -151,11 +151,11 @@ public class TestAresGame {
 		model.update();
 		assertEquals(5,paul.getResourceAmount());
 		assertEquals(Action.UnloadCargo,paul.getAction());
-		assertEquals(4, paul.getX());
+		assertEquals(4, paul.getC());
 		model.update();
 		model.update();
-		assertEquals(5,paul.getX());
-		assertEquals(8,paul.getY());
+		assertEquals(5,paul.getC());
+		assertEquals(8,paul.getR());
 		assertEquals(model.getArrBuildings().get(0).buildingType, BuildingType.Storage);
 		
 	}
@@ -192,8 +192,8 @@ public class TestAresGame {
 			assertEquals(998,c.getFatigueLevel());
 			assertEquals(998,c.getHungerLevel());
 			assertEquals(999,c.getThirstLevel());
-			assertEquals(1,c.getX());
-			assertEquals(1,c.getY());
+			assertEquals(1,c.getC());
+			assertEquals(1,c.getR());
 		}
 	
 }
