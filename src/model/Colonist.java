@@ -165,7 +165,7 @@ public class Colonist {
 		item = i;
 	}
 	
-	public Item getItem(Item i){
+	public Item getItem(){
 		return item;
 		
 	}
