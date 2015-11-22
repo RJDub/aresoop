@@ -29,7 +29,7 @@ public class AresGUI extends JFrame{
 	
 	private ColonistPanel colonist;
 	private DisplayPanel hud;
-	private BuildingPanel building;
+	private BuildingPanelTemp building;
 	
 	private MotherBoard Logic;
 	private LocalDateTime startTime;
@@ -67,7 +67,7 @@ public class AresGUI extends JFrame{
 		
 		colonist = new ColonistPanel(Logic.getArrColonists());
 		colonist.table.addMouseListener(new RowSelectListener());
-		building = new BuildingPanel();
+		building = new BuildingPanelTemp();
 		
 		hudPanel = new JPanel();
 		hudPanel.setLayout(null);

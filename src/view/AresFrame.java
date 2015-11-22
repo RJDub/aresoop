@@ -31,7 +31,7 @@ public class AresFrame extends JFrame {
 	private MapPanel map;
 	private ColonistPanel colonistPanel;
 	private DisplayPanel hud;
-	private SelectorPanel selector;
+	private JPanel selector;
 	private BuildingPanel buildings;
 	private ItemPanel items;
 	
@@ -85,8 +85,14 @@ public class AresFrame extends JFrame {
 		hud = new DisplayPanel();
 		setupHud();
 		
-		selector = new SelectorPanel();
+		selector = new JPanel();
 		setupSelectorPanel();
+		
+		//TODO under construction (set up Layout and size)
+		buildings = new BuildingPanel();
+		selector.add(buildings);
+		selector.add(items);
+		
 		
 		view.add(selector);
 		view.add(hud);
@@ -153,8 +159,6 @@ public class AresFrame extends JFrame {
 		selector.setLocation((int) (screenSize.width * .666), (int) (screenSize.height * .666));
 		selector.setSize((int) (screenSize.width * .333), (int) (screenSize.height * .333));
 		selector.setBackground(Color.CYAN);
-		
-		buildings = new BuildingPanel();
 	}
 	
 	
