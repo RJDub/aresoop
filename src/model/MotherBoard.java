@@ -185,26 +185,26 @@ public class MotherBoard extends Observable {
 		int colR = col.getR();
 		tempP.add(map[colR][colC]);
 		while (true) {
-			if (colC > c && colR > r) {
-				if (map[colR][colC - 1].getType().getWeight() < map[colR][colC - 1].getType().getWeight()) {
+			if (colC > c && colR > r) { // SE  quadrant
+				if (map[colR][colC - 1].getType().getWeight() <= map[colR-1][colC].getType().getWeight()) {
 					colC--;
 				} else {
 					colR--;
 				}
 			} else if (colC < c && colR < r) {
-				if (map[colR][colC + 1].getType().getWeight() < map[colR][colC + 1].getType().getWeight()) {
+				if (map[colR][colC + 1].getType().getWeight() <= map[colR+1][colC].getType().getWeight()) {
 					colC++;
 				} else {
 					colR++;
 				}
-			} else if (colC > c && colR < r) {
-				if (map[colR][colC - 1].getType().getWeight() < map[colR][colC + 1].getType().getWeight()) {
+			} else if (colC > c && colR < r) { //NE
+				if (map[colR][colC - 1].getType().getWeight() <= map[colR+ 1][colC ].getType().getWeight()) {
 					colC--;
 				} else {
 					colR++;
 				}
-			} else if (colC < c && colR > r) {
-				if (map[colR][colC + 1].getType().getWeight() < map[colR][colC - 1].getType().getWeight()) {
+			} else if (colC < c && colR > r) { //SW
+				if (map[colR][colC + 1].getType().getWeight() <= map[colR-1][colC].getType().getWeight()) {
 					colC++;
 				} else {
 					colR--;

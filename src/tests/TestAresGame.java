@@ -61,11 +61,23 @@ public class TestAresGame {
 		model.update();
 		model.update();
 		model.update();
+
 		
 		//assertEquals(Action.Move, model.getArrColonists().get(0).getAction());
 		
 		//assertEquals(1, model.getArrColonists().get(0).getX());
-		assertEquals(999, paul.getThirstLevel());
+		assertEquals(997, paul.getThirstLevel());
+		
+		model.update();
+		model.update();
+		model.update();
+		
+		assertEquals(994, paul.getThirstLevel());
+		model.update();
+		model.update();
+		model.update();
+		assertEquals(993, paul.getThirstLevel());
+		
 	}
 	
 	@Test
@@ -127,9 +139,15 @@ public class TestAresGame {
 		assertEquals(998,paul.getThirstLevel());
 		paul.setTask(Task.MiningIce);
 		model.update();
+		//paul Should be at 0,1 or 1, 0
+		
 		assertEquals(997, paul.getThirstLevel());
 		model.update();
+		assertEquals(Action.Move, paul.getAction());
+		assertTrue(!(paul.getPath()==null));
 		assertEquals(996, paul.getThirstLevel());
+		assertEquals(0,paul.getR());
+		
 		assertEquals(2,paul.getC());
 		model.update();
 		assertEquals(3,paul.getC());
