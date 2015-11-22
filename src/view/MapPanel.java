@@ -70,6 +70,7 @@ public class MapPanel extends JPanel implements Observer{
 	private void drawArrColonists(Graphics2D g2){
 		for (int x = 0; x < mobo.getArrColonists().size(); x++){
 			g2.drawImage(drawColonist(), mobo.getArrColonists().get(x).getC()*INCREMENT, mobo.getArrColonists().get(x).getR()*INCREMENT, null);
+
 		}
 	}
 	

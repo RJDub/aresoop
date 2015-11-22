@@ -24,8 +24,8 @@ public class TestColonists {
 		assertEquals(998,c.getFatigueLevel());
 		assertEquals(998,c.getHungerLevel());
 		assertEquals(999,c.getThirstLevel());
-		assertEquals(1,c.getX());
-		assertEquals(1,c.getY());
+		assertEquals(1,c.getC());
+		assertEquals(1,c.getR());
 	}
 
 }

@@ -42,6 +42,7 @@ public class DisplayPanel extends JPanel{
 		+ "\n\tFatigue:   " + c.getFatigueLevel()
 		+ "\n\tTask:   " + c.getTask()
 		+ "\n\tAction:   " + c.getAction()
+
 		+ "\n\tResource Amount:   " + c.getResourceAmount()
 		+ "\n\tItem:   " + c.getItem()
 		+ "\n\tColumn:   " + c.getC()

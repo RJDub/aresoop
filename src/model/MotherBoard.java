@@ -186,25 +186,25 @@ public class MotherBoard extends Observable {
 		tempP.add(map[colR][colC]);
 		while (true) {
 			if (colC > c && colR > r) {
-				if (map[colR][colC - 1].getType().getWeight() < map[colC][colR - 1].getType().getWeight()) {
+				if (map[colR][colC - 1].getType().getWeight() < map[colR][colC - 1].getType().getWeight()) {
 					colC--;
 				} else {
 					colR--;
 				}
 			} else if (colC < c && colR < r) {
-				if (map[colR][colC + 1].getType().getWeight() < map[colC][colR + 1].getType().getWeight()) {
+				if (map[colR][colC + 1].getType().getWeight() < map[colR][colC + 1].getType().getWeight()) {
 					colC++;
 				} else {
 					colR++;
 				}
 			} else if (colC > c && colR < r) {
-				if (map[colR][colC - 1].getType().getWeight() < map[colC][colR + 1].getType().getWeight()) {
+				if (map[colR][colC - 1].getType().getWeight() < map[colR][colC + 1].getType().getWeight()) {
 					colC--;
 				} else {
 					colR++;
 				}
 			} else if (colC < c && colR > r) {
-				if (map[colR][colC + 1].getType().getWeight() < map[colC][colR - 1].getType().getWeight()) {
+				if (map[colR][colC + 1].getType().getWeight() < map[colR][colC - 1].getType().getWeight()) {
 					colC++;
 				} else {
 					colR--;
