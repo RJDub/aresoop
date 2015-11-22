@@ -38,8 +38,8 @@ public class MotherBoard extends Observable {
 		return map.length;
 	}
 	
-	public Tile getTileAtLocation(int x, int y){
-		return map[x][y];
+	public Tile getTileAtLocation(int r, int c){
+		return map[r][c];
 	}
 
 	public void start() {
@@ -67,9 +67,9 @@ public class MotherBoard extends Observable {
 	// the building if it is a storage building.
 	private void updateBuildings() {
 		for (Building building : buildings) {
-			if (building.buildingType == BuildingType.Storage){
+			if (building.getType() == BuildingType.Storage){
 				for (Colonist colonist : colonists) {
-					if (colonist.getX() == building.xLoc && colonist.getY() == building.yLoc) {
+					if (colonist.getR() == building.getR() && colonist.getC() == building.getC()) {
 						int amount = colonist.withdrawResources();
 						Task task = colonist.getTask();
 						((StorageBuilding) building).depositResource(amount, task);
@@ -84,7 +84,7 @@ public class MotherBoard extends Observable {
 		return buildings;
 	}
 	private void updateNeeds(Colonist col){
-		col.update(map[col.getX()][col.getY()].getType());
+		col.update(map[col.getR()][col.getC()].getType());
 //		if (map[col.getX()][col.getY()].getType() == TileType.Ice){
 //			col.incrementHungerLevel(-1);
 //		} else {
@@ -117,11 +117,15 @@ public class MotherBoard extends Observable {
 		if (!col.hasCapacityToMineResources()){
 			return Action.UnloadCargo;
 		}
-		if (map[col.getX()][col.getY()].getType() == resource) {
+		if (map[col.getR()][col.getC()].getType() == resource) {
 			collectResource(col, resource);
 			return Action.Mine;
 		} else {
-			moveToResource(col, resource);
+			if (col.getPath() == null){
+				constructResourcePath(col, resource);
+			} else {
+				moveColonist(col);
+			}
 			return Action.Move;
 		}
 	}
@@ -152,117 +156,73 @@ public class MotherBoard extends Observable {
 		}
 	}
 
-	public void moveToResource(Colonist col, TileType res) {
-//		int[] dist = new int[map.length];
-//		int[] visited = new int[map.length];
-//		int[] preD = new int[map.length];
-//		int min;
-//		int next = 0;
+	private void constructResourcePath(Colonist col, TileType res) {
 		ArrayList<Tile> path = new ArrayList<Tile>();
 		ArrayList<Tile> tempP = new ArrayList<Tile>();
-		int currP= 999;
 		for (int y = 0; y < map.length; y++){
 			for (int x = 0; x < map[0].length; x++){
 				if (map[y][x].getType() == res){
-					int colX = col.getX();
-					int colY = col.getY();
-					int newP = 0;
+					int colC = col.getC();
+					int colR = col.getR();
+					tempP.add(map[colR][colC]);
 					while (true){
-						if (colX > x && colY > y){
+						if (colC > x && colR > y){
 							//TODO: inside of here I will save the tiles of the parts of the best path to visit
-							if (map[colY][colX-1].getType().getWeight() < map[colX][colY-1].getType().getWeight()){
-								colX --;
+							if (map[colR][colC-1].getType().getWeight() < map[colC][colR-1].getType().getWeight()){
+								colC --;
 							} else {
-								colY --;
+								colR --;
 							}
-						} else if (colX < x && colY < y){
-							if (map[colY][colX+1].getType().getWeight() < map[colX][colY+1].getType().getWeight()){
-								colX ++;
+						} else if (colC < x && colR < y){
+							if (map[colR][colC+1].getType().getWeight() < map[colC][colR+1].getType().getWeight()){
+								colC ++;
 							} else {
-								colY ++;
+								colR ++;
 							}
-						} else if (colX > x && colY < y){
-							if (map[colY][colX-1].getType().getWeight() < map[colX][colY+1].getType().getWeight()){
-								colX --;
+						} else if (colC > x && colR < y){
+							if (map[colR][colC-1].getType().getWeight() < map[colC][colR+1].getType().getWeight()){
+								colC --;
 							} else {
-								colY ++;
+								colR ++;
 							}
-						} else if (colX < x && colY > y){
-							if (map[colY][colX+1].getType().getWeight() < map[colX][colY-1].getType().getWeight()){
-								colX ++;
+						} else if (colC < x && colR > y){
+							if (map[colR][colC+1].getType().getWeight() < map[colC][colR-1].getType().getWeight()){
+								colC ++;
 							} else {
-								colY --;
+								colR --;
 							}
-						} else if (colX > x){
-							colX --;
-						} else if (colX < x){
-							colX ++;
-						} else if (colY > y){
-							colY --;
-						} else if (colY < y) {
-							colY ++;
+						} else if (colC > x){
+							colC --;
+						} else if (colC < x){
+							colC ++;
+						} else if (colR > y){
+							colR --;
+						} else if (colR < y) {
+							colR ++;
 						} else {
 							break;
 						}
-						newP++;
+						tempP.add(map[colR][colC]);
 					}
-					if (newP < currP){
-						currP = newP;
+					if (tempP.size() < path.size() || path.size() == 0){
+						for (int i = 0; i < path.size(); i++){
+							path.remove(i);
+						}
+						for (int i = 0; i < tempP.size(); i++){
+							path.add(tempP.get(i));
+						}
 					}
 				}
 			}
 		}
-		
-//		for (int i = 0; i < map.length; i++){
-//			visited[i] = 0;
-//			preD[i] = 0;
-//			dist[i] = map[i][0].getType().getWeight();
-//		}
-//		
-//		dist[0] = 0;
-//		visited[0] = 1;
-//		
-//		for (int i = 0; i < map.length; i++){
-//			min = 999;
-//			for (int j = 0; j < map.length; j++){
-//				if (min > dist[j] && visited[j] != 1){
-//					min = dist[j];
-//					next = j;
-//				}
-//			}
-//			visited[next] = 1;
-//			for (int k = 0; k < map.length; k++){
-//				if (visited[k] != 1){
-//					if (min + map[next][k].getType().getWeight() < dist[k]){
-//						dist[k] = min + map[next][k].getType().getWeight();
-//						preD[k] = next;
-//					}
-//				}
-//			}
-//		}
-		// this code will get replaced by the pathfinding code that Paul is writing,
-		// which will contain the pathfinding code.
-		
-		// WEAK PATHFINDING CODE:
-//		for (int x = 0; x < map[0].length; x++) {
-//			for (int y = 0; y < map.length; y++) {
-//				if (map[x][y].getType() == res) {
-//					int xRange = Math.abs(x - col.getX());
-//					int yRange = Math.abs(y - col.getY());
-//					if (curr > (xRange + yRange) || curr == -1) {
-//						curr = xRange + yRange;
-//						foundX = x;
-//						foundY = y;
-//					}
-//				}
-//			}
-//		}
-		// END OF WEAK PATHFINDING CODE that will get recoded by Paul.
-		
-		// code that was here into the move method; 
-		//move (col, foundX, foundY);
-		
 	}
+	
+	private void moveColonist(Colonist col){
+		Tile newL = col.updatePath();
+		col.setR(newL.getR());
+		col.setC(newL.getC());
+	}
+	
 	public void addColonist(Colonist c){
 		colonists.add(c);
 	}
@@ -275,8 +235,8 @@ public class MotherBoard extends Observable {
 		// weak pathfinding code:
 		// this just finds the first building of bt x,y.
 		for (Building b: buildings){
-			if (b.buildingType == bt){
-				move (col, b.xLoc, b.yLoc);
+			if (b.getType() == bt){
+				//TODO: Paul implement a pathfinder for buildings here
 			}
 		}
 		
@@ -298,17 +258,7 @@ public class MotherBoard extends Observable {
 	// the best path for the colonist to take towards this destination
 	// and the actually move the colonist towards that location.
 	public void move(Colonist col, int foundX, int foundY){
-		if (foundX > col.getX()) {
-			col.setX(col.getX() + 1);
-		} else if (foundX < col.getX()) {
-			col.setX(col.getX() - 1);
-		}
-
-		if (foundY > col.getY()) {
-			col.setY(col.getY() + 1);
-		} else if (foundY < col.getY()) {
-			col.setY(col.getY() - 1);
-		}
+		
 		
 	}
 

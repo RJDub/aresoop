@@ -6,24 +6,24 @@ import enums.*;
 public class Tile {
 	
 	private TileType type;
-	private int x;
-	private int y;
+	private int c;
+	private int r;
 	
-	public Tile(TileType type, int xIn, int yIn){
+	public Tile(TileType type, int row, int column){
 		this.type = type;
-		x = xIn;
-		y = yIn;
+		r = row;
+		c = column;
 	}
 	
 	public TileType getType(){
 		return type;
 	}
 	
-	public int getX(){
-		return x;
+	public int getC(){
+		return c;
 	}
 	
-	public int getY(){
-		return y;
+	public int getR(){
+		return r;
 	}
 }
