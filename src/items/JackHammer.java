@@ -5,11 +5,10 @@ import enums.Task;
 import model.*;
 
 public class JackHammer extends Item{
-	public Task task_bonus;
-	public int bonus_amount;
+
 	public JackHammer() {
 		super();
-		task_bonus = Task.MiningIronOre;
+		task= Task.MiningIronOre;
 		bonus_amount = 1;
 		
 	}
