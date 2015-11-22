@@ -10,9 +10,9 @@ import model.*;
 public class GroundTile extends Tile {
 	
 
-public GroundTile(TileType type) {
-		super(type);
-		// TODO Auto-generated constructor stub
+public GroundTile(TileType type, int x, int y) {
+		super(type, x,y);
+
 	}
 private ArrayList<Colonist> occupants;
 private ArrayList<Building> buildings;	

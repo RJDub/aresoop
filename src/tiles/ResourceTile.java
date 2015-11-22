@@ -11,8 +11,8 @@ import colonists.*;
 
 public class ResourceTile extends Tile {
 
-	public ResourceTile(TileType type) {
-		super(type);
+	public ResourceTile(TileType type, int r, int c) {
+		super(type, r, c);
 		// TODO Auto-generated constructor stub
 	}
 

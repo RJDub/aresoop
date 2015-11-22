@@ -63,13 +63,14 @@ public class MapPanel extends JPanel implements Observer{
 	
 	private void drawArrBuildings(Graphics2D g2){
 		for(Building b: mobo.getArrBuildings()){
-			BuildingType bt = b.buildingType;
-			g2.drawImage(drawBuilding(bt), b.xLoc*INCREMENT, b.yLoc*INCREMENT, null);
+			BuildingType bt = b.getType();
+			g2.drawImage(drawBuilding(bt), b.getC()*INCREMENT, b.getR()*INCREMENT, null);
 		}
 	}
 	private void drawArrColonists(Graphics2D g2){
 		for (int x = 0; x < mobo.getArrColonists().size(); x++){
-			g2.drawImage(drawColonist(), mobo.getArrColonists().get(x).getC()*INCREMENT, mobo.getArrColonists().get(x).getY()*INCREMENT, null);
+			g2.drawImage(drawColonist(), mobo.getArrColonists().get(x).getC()*INCREMENT, mobo.getArrColonists().get(x).getR()*INCREMENT, null);
+
 		}
 	}
 	

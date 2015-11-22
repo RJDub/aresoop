@@ -89,9 +89,15 @@ public class AresFrame extends JFrame {
 		setupSelectorPanel();
 		
 		//TODO under construction (set up Layout and size)
-		buildings = new BuildingPanel();
+		buildings = new BuildingPanel(model.getArrBuildings());
+		setupBuildingPanel();
+		
+		// need Motherboard to return an ItemList
+		//items = new ItemPanel();
+		
+		
 		selector.add(buildings);
-		selector.add(items);
+		//selector.add(items);
 		
 		
 		view.add(selector);
@@ -159,6 +165,12 @@ public class AresFrame extends JFrame {
 		selector.setLocation((int) (screenSize.width * .666), (int) (screenSize.height * .666));
 		selector.setSize((int) (screenSize.width * .333), (int) (screenSize.height * .333));
 		selector.setBackground(Color.CYAN);
+	}
+	
+	private void setupBuildingPanel() {
+		buildings.setVisible(true);
+		buildings.setLocation(0, 0);
+		buildings.setSize((int) (screenSize.width * .333), (int) (screenSize.height * .17));
 	}
 	
 	
