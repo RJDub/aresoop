@@ -4,11 +4,16 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import enums.TileType;
+import model.Colonist;
+import model.Tile;
+
 public class TestColonists {
 
 	@Test
 	public void test() {
-		fail("Not yet implemented");
+		Colonist c = new Colonist("George",1,1);
+		c.update(TileType.Ice);
 	}
 
 }
