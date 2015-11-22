@@ -10,7 +10,7 @@ public class StorageBuilding extends Building {
 
 	public StorageBuilding(int x, int y) {
 		super(x, y);
-		super.buildingType = BuildingType.Storage;
+		super.setType(BuildingType.Storage);
 		waterAmount = 0;
 		ironOreAmount = 0;
 	

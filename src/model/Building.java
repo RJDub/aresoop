@@ -4,15 +4,29 @@ import enums.BuildingType;
 
 public abstract class Building {
 
-	public int thirstBonus;
-	public int fatigueBonus;
-	public int hungerBonus;
-	public int xLoc, yLoc;
-	public BuildingType buildingType;
-	public Building(int x, int y){
-		xLoc = x;
-		yLoc = y;
+	private int thirstBonus;
+	private int fatigueBonus;
+	private int hungerBonus;
+	private int r,c;
+	private BuildingType type;
+	public Building(int row, int column){
+		r = row;
+		c = column;
 	}
 	
+	public BuildingType getType(){
+		return type;
+	}
 	
+	public int getR(){
+		return r;
+	}
+	
+	public int getC(){
+		return c;
+	}
+	
+	public void setType(BuildingType in){
+		type = in;
+	}
 }

@@ -6,9 +6,8 @@ import model.*;
 
 public class SleepingPod extends Item {
 
-	public SleepingPod(Point input) {
-		super(input);
-		// TODO Auto-generated constructor stub
+	public SleepingPod() {
+		
 	}
 
 }

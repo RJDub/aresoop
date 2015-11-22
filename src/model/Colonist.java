@@ -1,5 +1,7 @@
 package model;
 
+import java.util.ArrayList;
+
 import enums.*;
 
 public class Colonist {
@@ -10,22 +12,38 @@ public class Colonist {
 	private String name;
 	private Task task;
 	private Action action;
-	private int x,y;
+	private int r,c;
 	private int resourceAmount;
+	private Item item;
 	int capacity; // need to think what this will do!
-	public Colonist(String input, int xIn, int yIn) {
+	
+	private ArrayList<Tile> path;
+	public Colonist(String input, int row, int column) {
 		name = input;
 		task = Task.None;
 		action = Action.None;
-		x = xIn;
-		y = yIn;
+		r = row;
+		c = column;
 		thirst = 1000;
 		hunger = 1000;
 		fatigue = 1000;
 		resourceAmount = 0;
 		capacity = 5;
+		item = null;
+		path = null;
 		
+	}
+	
+	public void update(TileType tileType){
+		// this will evaluate what needs are lowered during the update call.
+		if (tileType==TileType.Ice){
+			//dont decrement thirst level.
+		}else{
+			incrementThirstLevel(-1);
+		}
 		
+		incrementHungerLevel(-1);
+		incrementFatigueLevel(-1);
 	}
 	
 	public int getResourceAmount(){
@@ -36,12 +54,12 @@ public class Colonist {
 		return name;
 	}
 	
-	public int getX() {
-		return x;
+	public int getC() {
+		return c;
 	}
 	
-	public int getY() {
-		return y;
+	public int getR() {
+		return r;
 	}
 	
 	public Task getTask(){
@@ -63,13 +81,17 @@ public class Colonist {
 	public int getFatigueLevel(){
 		return fatigue;
 	}
+	
+	public ArrayList<Tile> getPath(){
+		return path;
+	}
 
-	public void setX(int x){
-		this.x = x;
+	public void setC(int col){
+		this.c = col;
 	}
 	
-	public void setY(int y) {
-		this.y = y;
+	public void setR(int row) {
+		this.r = row;
 	}
 	
 	public void setTask(Task input){
@@ -78,6 +100,18 @@ public class Colonist {
 	
 	public void setAction(Action input){
 		action = input;
+	}
+	
+	public void setPath(ArrayList<Tile> in){
+		path = in;
+	}
+	
+	public Tile updatePath(){
+		Tile result = path.remove(0);
+		if(path.size() == 0){
+			path = null;
+		}
+		return result;
 	}
 	
 	public void incrementThirstLevel(int in){
@@ -105,11 +139,14 @@ public class Colonist {
 	
 	@Override
 	public String toString(){
-		return ("Colonist: " + getName() + "\nLocation: (" + getX() + ", " + getY() + ")\nTask: " + getTask() + "\nAction: " + getAction() + "\nThirst: " + getThirstLevel());
+		return ("Colonist: " + getName() + "\nLocation: (" + getC() + ", " + getR() + ")\nTask: " + getTask() + "\nAction: " + getAction() + "\nThirst: " + getThirstLevel());
 	}
 
 	public void execute() {
-		resourceAmount++;
+		int standard_amount = 1;
+		if(item != null && task == item.task)
+			standard_amount+=item.bonus_amount;
+		resourceAmount+=standard_amount;
 		
 	}
 
@@ -121,6 +158,15 @@ public class Colonist {
 		int retAmount = resourceAmount;
 		resourceAmount = 0;
 		return retAmount;
+		
+	}
+	
+	public void setItem(Item i){
+		item = i;
+	}
+	
+	public Item getItem(Item i){
+		return item;
 		
 	}
 

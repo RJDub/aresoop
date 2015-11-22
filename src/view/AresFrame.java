@@ -42,9 +42,9 @@ public class AresFrame extends JFrame {
 	public static void main(String[] args) {
 
 		ArrayList<Colonist> colonists = new ArrayList<Colonist>();
-		Tile[][] tiles = new Tile[10][10];
+		Tile[][] tiles = new Tile[100][100];
 //		model = new MotherBoard(colonists, Generator.generateMap(tiles));
-		model = new MotherBoard(colonists, Generator.generateMap2());
+		model = new MotherBoard(colonists, Generator.generateEasyMap(tiles));
 		model.getArrColonists().add(new Colonist("Paul", 0, 0));
 		model.getArrColonists().add(new Colonist("Mingcheng", 0, 0));
 		
@@ -106,7 +106,7 @@ public class AresFrame extends JFrame {
 		model.assignTask(model.getArrColonists().get(0), Task.MiningIce);
 		model.assignTask(model.getArrColonists().get(1), Task.MiningIronOre);
 		
-		timer = new Timer(1000, new OurTimerListener());
+		timer = new Timer(500, new OurTimerListener());
 		timer.start();
 //		model.start();
 //		model.printModel();
