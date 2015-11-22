@@ -153,31 +153,114 @@ public class MotherBoard extends Observable {
 	}
 
 	public void moveToResource(Colonist col, TileType res) {
-		int curr = -1;
-		int foundX = -1;
-		int foundY = -1;
-		
-		// this code will get replaced by the pathfinding code that Paul is writing,
-		// which will contain the pathfinding code.
-		
-		// WEAK PATHFINDING CODE:
-		for (int x = 0; x < map[0].length; x++) {
-			for (int y = 0; y < map.length; y++) {
-				if (map[x][y].getType() == res) {
-					int xRange = Math.abs(x - col.getX());
-					int yRange = Math.abs(y - col.getY());
-					if (curr > (xRange + yRange) || curr == -1) {
-						curr = xRange + yRange;
-						foundX = x;
-						foundY = y;
+//		int[] dist = new int[map.length];
+//		int[] visited = new int[map.length];
+//		int[] preD = new int[map.length];
+//		int min;
+//		int next = 0;
+		ArrayList<Tile> path = new ArrayList<Tile>();
+		ArrayList<Tile> tempP = new ArrayList<Tile>();
+		int currP= 999;
+		for (int y = 0; y < map.length; y++){
+			for (int x = 0; x < map[0].length; x++){
+				if (map[y][x].getType() == res){
+					int colX = col.getX();
+					int colY = col.getY();
+					int newP = 0;
+					while (true){
+						if (colX > x && colY > y){
+							//TODO: inside of here I will save the tiles of the parts of the best path to visit
+							if (map[colY][colX-1].getType().getWeight() < map[colX][colY-1].getType().getWeight()){
+								colX --;
+							} else {
+								colY --;
+							}
+						} else if (colX < x && colY < y){
+							if (map[colY][colX+1].getType().getWeight() < map[colX][colY+1].getType().getWeight()){
+								colX ++;
+							} else {
+								colY ++;
+							}
+						} else if (colX > x && colY < y){
+							if (map[colY][colX-1].getType().getWeight() < map[colX][colY+1].getType().getWeight()){
+								colX --;
+							} else {
+								colY ++;
+							}
+						} else if (colX < x && colY > y){
+							if (map[colY][colX+1].getType().getWeight() < map[colX][colY-1].getType().getWeight()){
+								colX ++;
+							} else {
+								colY --;
+							}
+						} else if (colX > x){
+							colX --;
+						} else if (colX < x){
+							colX ++;
+						} else if (colY > y){
+							colY --;
+						} else if (colY < y) {
+							colY ++;
+						} else {
+							break;
+						}
+						newP++;
+					}
+					if (newP < currP){
+						currP = newP;
 					}
 				}
 			}
 		}
+		
+//		for (int i = 0; i < map.length; i++){
+//			visited[i] = 0;
+//			preD[i] = 0;
+//			dist[i] = map[i][0].getType().getWeight();
+//		}
+//		
+//		dist[0] = 0;
+//		visited[0] = 1;
+//		
+//		for (int i = 0; i < map.length; i++){
+//			min = 999;
+//			for (int j = 0; j < map.length; j++){
+//				if (min > dist[j] && visited[j] != 1){
+//					min = dist[j];
+//					next = j;
+//				}
+//			}
+//			visited[next] = 1;
+//			for (int k = 0; k < map.length; k++){
+//				if (visited[k] != 1){
+//					if (min + map[next][k].getType().getWeight() < dist[k]){
+//						dist[k] = min + map[next][k].getType().getWeight();
+//						preD[k] = next;
+//					}
+//				}
+//			}
+//		}
+		// this code will get replaced by the pathfinding code that Paul is writing,
+		// which will contain the pathfinding code.
+		
+		// WEAK PATHFINDING CODE:
+//		for (int x = 0; x < map[0].length; x++) {
+//			for (int y = 0; y < map.length; y++) {
+//				if (map[x][y].getType() == res) {
+//					int xRange = Math.abs(x - col.getX());
+//					int yRange = Math.abs(y - col.getY());
+//					if (curr > (xRange + yRange) || curr == -1) {
+//						curr = xRange + yRange;
+//						foundX = x;
+//						foundY = y;
+//					}
+//				}
+//			}
+//		}
 		// END OF WEAK PATHFINDING CODE that will get recoded by Paul.
 		
 		// code that was here into the move method; 
-		move (col, foundX, foundY);
+		//move (col, foundX, foundY);
 		
 	}
 	public void addColonist(Colonist c){
