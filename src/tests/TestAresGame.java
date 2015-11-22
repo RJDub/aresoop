@@ -18,8 +18,25 @@ import model.Colonist;
 import model.Generator;
 import model.MotherBoard;
 import model.Tile;
-
+import items.*;
 public class TestAresGame {
+	
+	@Test
+	public void testItems(){
+		Colonist c = new Colonist("Jackhammer Jim",0,0);
+		c.setItem(new JackHammer());
+		assertEquals(0, c.getResourceAmount());
+		c.execute();
+		assertEquals(1, c.getResourceAmount());
+		c.setTask(Task.MiningIce);
+		c.execute();
+		assertEquals(2, c.getResourceAmount());
+		c.setTask(Task.MiningIronOre);
+		c.execute();
+		assertEquals(4, c.getResourceAmount());
+		
+		
+	}
 	@Test
 	public void testStartInMotherboard() {
 		ArrayList<Colonist> colonists = new ArrayList<Colonist>();
