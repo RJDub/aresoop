@@ -28,6 +28,17 @@ public class Colonist {
 		
 	}
 	
+	public void update(TileType tileType){
+		// this will evaluate what needs are lowered during the update call.
+		if (tileType==TileType.Ice){
+			//dont decrement thirst level.
+		}else{
+			incrementThirstLevel(-1);
+		}
+		incrementHungerLevel(-1);
+		incrementFatigueLevel(-1);
+	}
+	
 	public int getResourceAmount(){
 		return resourceAmount;
 	}
