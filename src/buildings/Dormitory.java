@@ -9,9 +9,9 @@ public class Dormitory extends Building{
 	public Dormitory(int r, int c){
 		super(r, c);
 		super.setType(BuildingType.Dormitory);
-		super.thirstBonus = 0;
-		super.fatigueBonus = 1000;
-		super.hungerBonus = 0;
+		super.setThirstBonus(0);
+		super.setFatigueBonus(1000);
+		super.setHungerBonus(0);
 	}
 	
 	
