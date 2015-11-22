@@ -84,13 +84,13 @@ public class MotherBoard extends Observable {
 		return buildings;
 	}
 	private void updateNeeds(Colonist col){
-		
-		if (map[col.getX()][col.getY()].getType() == TileType.Ice){
-			col.incrementHungerLevel(-1);
-		} else {
-			col.incrementThirstLevel(-1);
-			col.incrementHungerLevel(-1);
-		}
+		col.update(map[col.getX()][col.getY()].getType());
+//		if (map[col.getX()][col.getY()].getType() == TileType.Ice){
+//			col.incrementHungerLevel(-1);
+//		} else {
+//			col.incrementThirstLevel(-1);
+//			col.incrementHungerLevel(-1);
+//		}
 	}
 
 	public void assignAction(Colonist col) {

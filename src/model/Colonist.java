@@ -35,6 +35,7 @@ public class Colonist {
 		}else{
 			incrementThirstLevel(-1);
 		}
+		
 		incrementHungerLevel(-1);
 		incrementFatigueLevel(-1);
 	}
