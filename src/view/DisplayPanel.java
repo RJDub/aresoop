@@ -42,7 +42,7 @@ public class DisplayPanel extends JPanel{
 		+ "\n\tFatigue:   " + c.getFatigueLevel()
 		+ "\n\tTask:   " + c.getTask()
 		+ "\n\tAction:   " + c.getAction()
-		+ "\n\tX:   " + c.getX()
-		+ "\n\tY:   " + c.getY());
+		+ "\n\tColumn:   " + c.getC()
+		+ "\n\tRow:   " + c.getR());
 	}
 }
