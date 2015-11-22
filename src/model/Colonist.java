@@ -12,6 +12,7 @@ public class Colonist {
 	private Action action;
 	private int x,y;
 	private int resourceAmount;
+	private Item item;
 	int capacity; // need to think what this will do!
 	public Colonist(String input, int xIn, int yIn) {
 		name = input;
@@ -24,6 +25,7 @@ public class Colonist {
 		fatigue = 1000;
 		resourceAmount = 0;
 		capacity = 5;
+		item = null;
 		
 		
 	}
@@ -121,7 +123,10 @@ public class Colonist {
 	}
 
 	public void execute() {
-		resourceAmount++;
+		int standard_amount = 1;
+		if(item != null && task == item.task)
+			standard_amount+=item.bonus_amount;
+		resourceAmount+=standard_amount;
 		
 	}
 
@@ -133,6 +138,15 @@ public class Colonist {
 		int retAmount = resourceAmount;
 		resourceAmount = 0;
 		return retAmount;
+		
+	}
+	
+	public void setItem(Item i){
+		item = i;
+	}
+	
+	public Item getItem(Item i){
+		return item;
 		
 	}
 
