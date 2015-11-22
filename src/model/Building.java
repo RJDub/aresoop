@@ -29,4 +29,20 @@ public abstract class Building {
 	public void setType(BuildingType in){
 		type = in;
 	}
+	public int getHungerBonus(){
+		return hungerBonus;
+	}
+	public void setHungerBonus(int b){
+		hungerBonus = b;
+	}
+
+	public void setFatigueBonus(int i) {
+		fatigueBonus = i;
+		
+	}
+
+	public void setThirstBonus(int i) {
+		thirstBonus = i;
+		
+	}
 }

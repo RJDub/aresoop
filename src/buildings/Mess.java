@@ -7,8 +7,8 @@ public class Mess extends Building{
 	public Mess(int r, int c){
 		super(r,c);
 		super.setType(BuildingType.Mess);
-		super.thirstBonus = 0;
-		super.fatigueBonus = 0;
-		super.hungerBonus = 1000;
+		super.setThirstBonus(0);
+		super.setFatigueBonus(0);
+		super.setHungerBonus(1000);
 	}
 }
