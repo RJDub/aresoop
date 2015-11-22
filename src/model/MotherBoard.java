@@ -175,6 +175,7 @@ public class MotherBoard extends Observable {
 				}
 			}
 		}
+		path.remove(0);
 		col.setPath(path);
 	}
 
