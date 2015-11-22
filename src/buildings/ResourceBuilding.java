@@ -22,9 +22,9 @@ public class ResourceBuilding extends Building{
 //		level = 1;
 //	}
 //	
-	public Resource getType(){
-		return type;
-	}
+//	public Resource getType(){
+//		return type;
+//	}
 	
 	public int getCapacity(){
 		return capacity;
