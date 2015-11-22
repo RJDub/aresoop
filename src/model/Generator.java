@@ -24,7 +24,7 @@ public class Generator {
 				map[r][c] = new Tile(TileType.Flat, r, c);
 			}
 		}
-		map[0][1] = new Tile(TileType.Ice, 1, 0);
+		map[3][2] = new Tile(TileType.Ice, 3, 2);
 		return map;
 	}
 	

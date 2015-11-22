@@ -15,7 +15,6 @@ public class MotherBoard extends Observable {
 	private Tile[][] map;
 	private ArrayList<Building> buildings;
 
-
 	public MotherBoard(ArrayList<Colonist> cols, Tile[][] tiles) {
 		// tiles = new Tile[10][10];
 		colonists = cols;
@@ -23,22 +22,23 @@ public class MotherBoard extends Observable {
 		buildings = new ArrayList<Building>();
 	}
 
-	public void addBuilding(Building b){
+	public void addBuilding(Building b) {
 		buildings.add(b);
 	}
+
 	public ArrayList<Colonist> getArrColonists() {
 		return colonists;
 	}
-	
-	public int getBoardWidth(){
+
+	public int getBoardWidth() {
 		return map[0].length;
 	}
-	
-	public int getBoardHeight(){
+
+	public int getBoardHeight() {
 		return map.length;
 	}
-	
-	public Tile getTileAtLocation(int r, int c){
+
+	public Tile getTileAtLocation(int r, int c) {
 		return map[r][c];
 	}
 
@@ -48,26 +48,26 @@ public class MotherBoard extends Observable {
 
 	public void update() {
 		updateColonists();
-		updateBuildings();  //TODO: finish this method.
+		updateBuildings(); // TODO: finish this method.
 		setChanged();
 		notifyObservers(this);
 	}
-	
-	public void updateColonists(){
+
+	public void updateColonists() {
 		for (Colonist colonist : colonists) {
 			updateNeeds(colonist);
 			assignAction(colonist);
 			executeAction(colonist);
 		}
 	}
-	
+
 	// this is where the building checks if a colonist is on it.
-	// if there is a colonist on this building, increase the 
+	// if there is a colonist on this building, increase the
 	// appropriate need or unload all of the colonists cargo into
 	// the building if it is a storage building.
 	private void updateBuildings() {
 		for (Building building : buildings) {
-			if (building.getType() == BuildingType.Storage){
+			if (building.getType() == BuildingType.Storage) {
 				for (Colonist colonist : colonists) {
 					if (colonist.getR() == building.getR() && colonist.getC() == building.getC()) {
 						int amount = colonist.withdrawResources();
@@ -77,20 +77,21 @@ public class MotherBoard extends Observable {
 				}
 			}
 		}
-		
+
 	}
 
-	public ArrayList<Building> getArrBuildings(){
+	public ArrayList<Building> getArrBuildings() {
 		return buildings;
 	}
-	private void updateNeeds(Colonist col){
+
+	private void updateNeeds(Colonist col) {
 		col.update(map[col.getR()][col.getC()].getType());
-//		if (map[col.getX()][col.getY()].getType() == TileType.Ice){
-//			col.incrementHungerLevel(-1);
-//		} else {
-//			col.incrementThirstLevel(-1);
-//			col.incrementHungerLevel(-1);
-//		}
+		// if (map[col.getX()][col.getY()].getType() == TileType.Ice){
+		// col.incrementHungerLevel(-1);
+		// } else {
+		// col.incrementThirstLevel(-1);
+		// col.incrementHungerLevel(-1);
+		// }
 	}
 
 	public void assignAction(Colonist col) {
@@ -106,22 +107,22 @@ public class MotherBoard extends Observable {
 				col.setAction(Action.None);
 				break;
 			}
-			
+
 		}
-		
+
 		else
 			col.setAction(Action.None);
 	}
 
 	private Action makeDecisionOnMining(Colonist col, TileType resource) {
-		if (!col.hasCapacityToMineResources()){
+		if (!col.hasCapacityToMineResources()) {
 			return Action.UnloadCargo;
 		}
 		if (map[col.getR()][col.getC()].getType() == resource) {
 			collectResource(col, resource);
 			return Action.Mine;
 		} else {
-			if (col.getPath() == null){
+			if (col.getPath() == null) {
 				constructResourcePath(col, resource);
 			} else {
 				moveColonist(col);
@@ -130,20 +131,19 @@ public class MotherBoard extends Observable {
 		}
 	}
 
-
 	public void assignTask(Colonist col, Task t) {
 		col.setTask(t);
 	}
 
 	public void executeAction(Colonist col) {
-		//TODO: effectively null, doesnt produce any output other than sysout
+		// TODO: effectively null, doesnt produce any output other than sysout
 		switch (col.getAction()) {
 		case Mine:
 			System.out.println("Colonist " + col.getName() + " is mining.");
 			col.execute();
 			break;
 		case Move:
-			//move(col);
+			// move(col);
 			System.out.println("Colonist " + col.getName() + " is moving.");
 			break;
 		case UnloadCargo:
@@ -156,93 +156,111 @@ public class MotherBoard extends Observable {
 		}
 	}
 
+	private void constructBuildingPath(Colonist col, BuildingType build) {
+		ArrayList<Tile> path = new ArrayList<Tile>();
+		for (Building building : buildings) {
+			if (building.getType() == build) {
+
+			}
+		}
+		col.setPath(path);
+	}
+
 	private void constructResourcePath(Colonist col, TileType res) {
 		ArrayList<Tile> path = new ArrayList<Tile>();
-		ArrayList<Tile> tempP = new ArrayList<Tile>();
-		for (int y = 0; y < map.length; y++){
-			for (int x = 0; x < map[0].length; x++){
-				if (map[y][x].getType() == res){
-					int colC = col.getC();
-					int colR = col.getR();
-					tempP.add(map[colR][colC]);
-					while (true){
-						if (colC > x && colR > y){
-							//TODO: inside of here I will save the tiles of the parts of the best path to visit
-							if (map[colR][colC-1].getType().getWeight() < map[colC][colR-1].getType().getWeight()){
-								colC --;
-							} else {
-								colR --;
-							}
-						} else if (colC < x && colR < y){
-							if (map[colR][colC+1].getType().getWeight() < map[colC][colR+1].getType().getWeight()){
-								colC ++;
-							} else {
-								colR ++;
-							}
-						} else if (colC > x && colR < y){
-							if (map[colR][colC-1].getType().getWeight() < map[colC][colR+1].getType().getWeight()){
-								colC --;
-							} else {
-								colR ++;
-							}
-						} else if (colC < x && colR > y){
-							if (map[colR][colC+1].getType().getWeight() < map[colC][colR-1].getType().getWeight()){
-								colC ++;
-							} else {
-								colR --;
-							}
-						} else if (colC > x){
-							colC --;
-						} else if (colC < x){
-							colC ++;
-						} else if (colR > y){
-							colR --;
-						} else if (colR < y) {
-							colR ++;
-						} else {
-							break;
-						}
-						tempP.add(map[colR][colC]);
-					}
-					if (tempP.size() < path.size() || path.size() == 0){
-						for (int i = 0; i < path.size(); i++){
-							path.remove(i);
-						}
-						for (int i = 0; i < tempP.size(); i++){
-							path.add(tempP.get(i));
-						}
-					}
+		for (int r = 0; r < map.length; r++) {
+			for (int c = 0; c < map[0].length; c++) {
+				if (map[r][c].getType() == res) {
+					path = constructPath(col, r, c, path);
 				}
 			}
 		}
+		col.setPath(path);
 	}
-	
-	private void moveColonist(Colonist col){
+
+	private ArrayList<Tile> constructPath(Colonist col, int r, int c, ArrayList<Tile> inital) {
+		ArrayList<Tile> path = inital;
+		ArrayList<Tile> tempP = new ArrayList<Tile>();
+		int colC = col.getC();
+		int colR = col.getR();
+		tempP.add(map[colR][colC]);
+		while (true) {
+			if (colC > c && colR > r) {
+				if (map[colR][colC - 1].getType().getWeight() < map[colC][colR - 1].getType().getWeight()) {
+					colC--;
+				} else {
+					colR--;
+				}
+			} else if (colC < c && colR < r) {
+				if (map[colR][colC + 1].getType().getWeight() < map[colC][colR + 1].getType().getWeight()) {
+					colC++;
+				} else {
+					colR++;
+				}
+			} else if (colC > c && colR < r) {
+				if (map[colR][colC - 1].getType().getWeight() < map[colC][colR + 1].getType().getWeight()) {
+					colC--;
+				} else {
+					colR++;
+				}
+			} else if (colC < c && colR > r) {
+				if (map[colR][colC + 1].getType().getWeight() < map[colC][colR - 1].getType().getWeight()) {
+					colC++;
+				} else {
+					colR--;
+				}
+			} else if (colC > c) {
+				colC--;
+			} else if (colC < c) {
+				colC++;
+			} else if (colR > r) {
+				colR--;
+			} else if (colR < r) {
+				colR++;
+			} else {
+				break;
+			}
+			tempP.add(map[colR][colC]);
+		}
+		if (tempP.size() < path.size() || path.size() == 0) {
+			for (int i = 0; i < path.size(); i++) {
+				path.remove(i);
+			}
+			for (int i = 0; i < tempP.size(); i++) {
+				path.add(tempP.get(i));
+			}
+		}
+		return path;
+	}
+
+	private void moveColonist(Colonist col) {
 		Tile newL = col.updatePath();
 		col.setR(newL.getR());
 		col.setC(newL.getC());
 	}
-	
-	public void addColonist(Colonist c){
+
+	public void addColonist(Colonist c) {
 		colonists.add(c);
 	}
-	
-	private void moveTowardsBuilding(Colonist col, BuildingType bt){
-		//TODO: add code that moves this colonist towards a building (to drop off storage or to
+
+	private void moveTowardsBuilding(Colonist col, BuildingType bt) {
+		// TODO: add code that moves this colonist towards a building (to drop
+		// off storage or to
 		// fulfill need.
-		
+
 		// find nearest storage
 		// weak pathfinding code:
 		// this just finds the first building of bt x,y.
-		for (Building b: buildings){
-			if (b.getType() == bt){
-				//TODO: Paul implement a pathfinder for buildings here
+		for (Building b : buildings) {
+			if (b.getType() == bt) {
+				// TODO: Paul implement a pathfinder for buildings here
 			}
 		}
-		
+
 	}
-	private void collectResource(Colonist col, TileType res){
-		//TODO: we need to add code to get a colonist to extract resources
+
+	private void collectResource(Colonist col, TileType res) {
+		// TODO: we need to add code to get a colonist to extract resources
 	}
 
 	public void printModel() {
@@ -252,16 +270,14 @@ public class MotherBoard extends Observable {
 	}
 
 	// This is a very important method that Paul is working on.
-	// 
-	// this method receives a colonist (which has their own x and y) 
-	// and a destination x and destination y.  This code will find 
+	//
+	// this method receives a colonist (which has their own x and y)
+	// and a destination x and destination y. This code will find
 	// the best path for the colonist to take towards this destination
 	// and the actually move the colonist towards that location.
-	public void move(Colonist col, int foundX, int foundY){
-		
-		
-	}
+	public void move(Colonist col, int foundX, int foundY) {
 
+	}
 
 	// private void setupBoard() {
 	// // random random.nextint()
@@ -331,7 +347,7 @@ public class MotherBoard extends Observable {
 	// public void updateColonists(){
 	//
 	// }
-	
+
 	//
 	// public void updateBoardGame(){
 	//

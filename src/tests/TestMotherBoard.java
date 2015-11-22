@@ -32,7 +32,7 @@ public class TestMotherBoard {
 		assertEquals(Task.MiningIce, model.getArrColonists().get(0).getTask());
 		
 		assertEquals(Action.None, model.getArrColonists().get(0).getAction());
-		assertEquals(0, model.getArrColonists().get(0).getX());
+		assertEquals(0, model.getArrColonists().get(0).getC());
 		
 		model.update();
 		model.update();
@@ -106,16 +106,16 @@ public class TestMotherBoard {
 		assertEquals(997, paul.getThirstLevel());
 		model.update();
 		assertEquals(996, paul.getThirstLevel());
-		assertEquals(2,paul.getX());
+		assertEquals(2,paul.getC());
 		model.update();
-		assertEquals(3,paul.getX());
+		assertEquals(3,paul.getC());
 		assertEquals(995, paul.getThirstLevel());
 		model.update();
 		model.update();
 		model.update();
 		model.update();
-		assertEquals(3,paul.getX());
-		assertEquals(5,paul.getY());
+		assertEquals(3,paul.getC());
+		assertEquals(5,paul.getR());
 		assertEquals(993, paul.getThirstLevel());
 		model.update();
 		assertEquals(993, paul.getThirstLevel());
@@ -127,12 +127,34 @@ public class TestMotherBoard {
 		model.update();
 		assertEquals(5,paul.getResourceAmount());
 		assertEquals(Action.UnloadCargo,paul.getAction());
-		assertEquals(4, paul.getX());
+		assertEquals(4, paul.getC());
 		model.update();
 		model.update();
-		assertEquals(5,paul.getX());
-		assertEquals(8,paul.getY());
-		assertEquals(model.getArrBuildings().get(0).buildingType, BuildingType.Storage);
+		assertEquals(5,paul.getC());
+		assertEquals(8,paul.getR());
+		assertEquals(model.getArrBuildings().get(0).getType(), BuildingType.Storage);
+		
+	}
+	
+	@Test
+	public void testResourcePathFinding(){
+		ArrayList<Colonist> colonists = new ArrayList<Colonist>();
+		Tile[][] tiles = Generator.generateNeedsTestMap(new Tile[10][10]);
+		MotherBoard model = new MotherBoard(colonists, tiles);
+		Colonist paul = new Colonist("Paul", 0, 0);
+		
+		model.getArrColonists().add(paul);
+		model.getArrColonists().add(new Colonist("Mingcheng", 0, 0));
+		
+		model.assignTask(model.getArrColonists().get(0), Task.MiningIce);
+		assertEquals(Task.MiningIce, model.getArrColonists().get(0).getTask());
+		
+		model.update();
+		
+		assertEquals(6, model.getArrColonists().get(0).getPath().size());
+		
+		model.update();
+		assertEquals(5, model.getArrColonists().get(0).getPath().size());
 		
 	}
 
