@@ -81,6 +81,7 @@ public class ColonistPanel extends JPanel{
 	}
 }
 
+
 class ColonistTableModel extends AbstractTableModel {
 
 	private String[][] data;

@@ -14,20 +14,38 @@ public class MotherBoard extends Observable {
 	private ArrayList<Colonist> colonists;
 	private Tile[][] map;
 	private ArrayList<Building> buildings;
+	private ArrayList<Item> items;
 
 	public MotherBoard(ArrayList<Colonist> cols, Tile[][] tiles) {
 		// tiles = new Tile[10][10];
 		colonists = cols;
 		map = tiles;
 		buildings = new ArrayList<Building>();
+		items = new ArrayList<Item>();
 	}
 
 	public void addBuilding(Building b) {
 		buildings.add(b);
 	}
+	
+	public void addItem(Item i) {
+		items.add(i);
+	}
+	
+	public void removeItem(Item i) {
+		items.remove(i);
+	}
 
 	public ArrayList<Colonist> getArrColonists() {
 		return colonists;
+	}
+	
+	public ArrayList<Building> getArrBuildings() {
+		return buildings;
+	}
+	
+	public ArrayList<Item> getArrItems() {
+		return items;
 	}
 
 	public int getBoardWidth() {
@@ -78,10 +96,6 @@ public class MotherBoard extends Observable {
 			}
 		}
 
-	}
-
-	public ArrayList<Building> getArrBuildings() {
-		return buildings;
 	}
 
 	private void updateNeeds(Colonist col) {

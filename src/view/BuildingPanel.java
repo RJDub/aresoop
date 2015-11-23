@@ -17,7 +17,7 @@ import buildings.*;
 public class BuildingPanel extends JPanel{
 	
 	private ArrayList<Building> buildingArray;
-	private JList buildingList;
+	private static JList buildingList;
 	
 	public BuildingPanel(ArrayList<Building> b) {
 		buildingArray = b;
@@ -40,6 +40,14 @@ public class BuildingPanel extends JPanel{
 			temp[i] = b.get(i).getType().toString();
 		}
 		return temp;
+	}
+
+	public static JList getBuildingList() {
+		return buildingList;
+	}
+
+	public ArrayList<Building> getArrBuildings() {
+		return buildingArray;
 	}
 
 	

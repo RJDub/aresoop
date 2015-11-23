@@ -121,7 +121,8 @@ public class AresFrame extends JFrame {
 	private void registerListeners() {
 		// TODO Under construction 
 		// add colonistPanelSelectedListener
-		colonistPanel.getTable().addMouseListener(new RowSelectListener());
+		colonistPanel.getTable().addMouseListener(new ColonistRowSelectListener());
+		buildings.getBuildingList().addMouseListener(new BuildingRowSelectListener());
 	}
 	
 	private void setupAresFrame(){
@@ -210,7 +211,7 @@ public class AresFrame extends JFrame {
 
 	}
 	
-	private class RowSelectListener implements MouseListener {
+	private class ColonistRowSelectListener implements MouseListener {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
@@ -254,4 +255,50 @@ public class AresFrame extends JFrame {
 		}
 		
 	}
+	
+	private class BuildingRowSelectListener implements MouseListener {
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			int rowSelected = BuildingPanel.getBuildingList().getSelectedIndex();
+			Building refBuilding = null;
+			if (rowSelected < 0) {
+				// Do nothing 
+			}
+			else{
+				for (Building thisBuilding: model.getArrBuildings()) {
+					if (thisBuilding.getType().equals(buildings.getArrBuildings().get(rowSelected)))
+						refBuilding = thisBuilding;
+				}
+			}
+			System.out.println();
+				hud.buildingSelected(refBuilding);
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}
+	
 }
