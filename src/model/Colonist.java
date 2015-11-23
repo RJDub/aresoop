@@ -14,7 +14,7 @@ public class Colonist {
 	private Action action;
 	private int r,c;
 	private int resourceAmount;
-	private ArrayList<Item> items;
+	private Item items;
 	int capacity; // need to think what this will do!
 	
 	private ArrayList<Tile> path;
@@ -29,7 +29,7 @@ public class Colonist {
 		fatigue = 1000;
 		resourceAmount = 0;
 		capacity = 5;
-		items = new ArrayList<Item>();
+		items = null;
 		path = null;
 		
 	}
@@ -144,11 +144,11 @@ public class Colonist {
 
 	public void execute() {
 		int standard_amount = 1;
-		//TODO go through Items 
-//		if(items != null && task == items.task)
-//			standard_amount+=items.bonus_amount;
-//		resourceAmount+=standard_amount;
-//		
+//		TODO go through Items 
+		if(items != null && task == items.task)
+			standard_amount+=items.bonus_amount;
+		resourceAmount+=standard_amount;
+		
 	}
 
 	public boolean hasCapacityToMineResources() {
@@ -163,14 +163,14 @@ public class Colonist {
 	}
 	
 	public void addItem(Item i){
-		items.add(i);
+		items=i;
 	}
 	
 	public void removeItem(Item i){
-		items.remove(i);
+		items=null;
 	}	
 	
-	public ArrayList<Item> getItems(){
+	public Item getItems(){
 		return items;
 		
 	}
