@@ -93,11 +93,11 @@ public class AresFrame extends JFrame {
 		setupBuildingPanel();
 		
 		// need Motherboard to return an ItemList
-		//items = new ItemPanel();
+		items = new ItemPanel(model.getArrItems());
 		
 		
 		selector.add(buildings);
-		//selector.add(items);
+		selector.add(items);
 		
 		
 		view.add(selector);
@@ -171,10 +171,14 @@ public class AresFrame extends JFrame {
 	private void setupBuildingPanel() {
 		buildings.setVisible(true);
 		buildings.setLocation(0, 0);
-		buildings.setSize((int) (screenSize.width * .333), (int) (screenSize.height * .17));
+		buildings.setSize((int) (screenSize.width * .333), (int) (screenSize.height * .13));
 	}
 	
-	
+	private void setupItemPanel() {
+		items.setVisible(true);
+		items.setLocation(0, (int) (screenSize.height * .17));
+		items.setSize((int) (screenSize.width * .333), (int) (screenSize.height * .13));
+	}	
 
 	private class OurTimerListener implements ActionListener {
 
