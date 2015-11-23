@@ -24,7 +24,7 @@ public class TestAresGame {
 	@Test
 	public void testItems(){
 		Colonist c = new Colonist("Jackhammer Jim",0,0);
-		c.setItem(new JackHammer());
+		c.addItem(new JackHammer());
 		assertEquals(0, c.getResourceAmount());
 		c.execute();
 		assertEquals(1, c.getResourceAmount());

@@ -64,11 +64,11 @@ public class DisplayPanel extends JPanel{
 
 	public void buildingSelected(Building b) {
 		temp.setText("\n\n\tBuilding Type:   " + b.getType().toString()
-		+ "\tRow:   " + b.getR() 
-		+ "\tColumn:   " +b.getC()
-		+ "\tHungerBonus:   " + b.getHungerBonus()
-		+ "\tThirstBonus:   " + b.getThirstBonus()
-		+ "\tFAtigueBonus:   " + b.getFatigueBonus()
-		+ "\tThis building has (those facilities)");
+		+ "\n\tRow:   " + b.getR() 
+		+ "\n\tColumn:   " +b.getC()
+		+ "\n\tHungerBonus:   " + b.getHungerBonus()
+		+ "\n\tThirstBonus:   " + b.getThirstBonus()
+		+ "\n\tFAtigueBonus:   " + b.getFatigueBonus()
+		+ "\n\tThis building has (those facilities)");
 	}
 }

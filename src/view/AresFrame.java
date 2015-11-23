@@ -267,11 +267,11 @@ public class AresFrame extends JFrame {
 			}
 			else{
 				for (Building thisBuilding: model.getArrBuildings()) {
-					if (thisBuilding.getType().equals(buildings.getArrBuildings().get(rowSelected)))
+					if (thisBuilding.getType().equals(buildings.getArrBuildings().get(rowSelected).getType()))
 						refBuilding = thisBuilding;
 				}
 			}
-			System.out.println();
+			System.out.println(refBuilding.toString());
 				hud.buildingSelected(refBuilding);
 		}
 
