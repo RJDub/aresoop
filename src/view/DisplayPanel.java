@@ -47,7 +47,7 @@ public class DisplayPanel extends JPanel{
 		+ "\n\tTask:   " + c.getTask()
 		+ "\n\tAction:   " + c.getAction()
 		+ "\n\tResource Amount:   " + c.getResourceAmount()
-		+ "\n\tItem:   " + getItems(c.getItems())
+		+ "\n\tItem:   " + c.getItems().toString()
 		+ "\n\tColumn:   " + c.getC()
 		+ "\n\tRow:   " + c.getR());
 	}
