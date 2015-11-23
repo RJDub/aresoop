@@ -204,6 +204,10 @@ public class TestMotherBoard {
 	
 		assertEquals(1, model.getArrItems().size());
 		
+		model.giveItem(paul, model.getArrItems().get(0));
+		assertEquals("Jackhammer", paul.getItems().toString());
+		assertEquals(0, model.getArrItems().size());
+		
 	}
 
 }
