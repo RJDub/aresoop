@@ -9,6 +9,7 @@ import buildings.StorageBuilding;
 import enums.Action;
 import enums.BuildingType;
 import enums.Task;
+import items.JackHammer;
 import model.*;
 
 public class TestMotherBoard {
@@ -155,6 +156,18 @@ public class TestMotherBoard {
 		
 		model.update();
 		assertEquals(5, model.getArrColonists().get(0).getPath().size());
+		
+	}
+	
+	@Test
+	public void testGiveItem(){
+		ArrayList<Colonist> colonists = new ArrayList<Colonist>();
+		Tile[][] tiles = Generator.generateNeedsTestMap(new Tile[10][10]);
+		MotherBoard model = new MotherBoard(colonists, tiles);
+		Colonist paul = new Colonist("Paul", 0, 0);
+		model.addItem(new JackHammer());
+	
+		assertEquals(1, model.getArrItems().size());
 		
 	}
 

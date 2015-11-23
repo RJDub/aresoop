@@ -35,6 +35,15 @@ public class MotherBoard extends Observable {
 	public void removeItem(Item i) {
 		items.remove(i);
 	}
+	
+	public void giveItem(Colonist col, Item item) {
+		for (int i = 0; i<items.size(); i++) {
+			if (items.get(i)==item) {
+				col.addItem(item);
+				items.remove(i);
+			}
+		}
+	}
 
 	public ArrayList<Colonist> getArrColonists() {
 		return colonists;
