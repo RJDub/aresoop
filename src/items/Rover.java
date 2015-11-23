@@ -8,5 +8,8 @@ public class Rover extends Item{
 	public Rover() {
 		
 	}
-
+	@Override
+	public String toString(){
+		return "Rover";
+	}
 }

@@ -12,5 +12,9 @@ public class JackHammer extends Item{
 		bonus_amount = 1;
 		
 	}
+	@Override
+	public String toString(){
+		return "Jackhammer";
+	}
 
 }

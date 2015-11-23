@@ -9,5 +9,9 @@ public class SleepingPod extends Item {
 	public SleepingPod() {
 		
 	}
+	@Override
+	public String toString(){
+		return "Sleeping Pod";
+	}
 
 }
