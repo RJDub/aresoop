@@ -61,11 +61,23 @@ public class TestAresGame {
 		model.update();
 		model.update();
 		model.update();
+
 		
 		//assertEquals(Action.Move, model.getArrColonists().get(0).getAction());
 		
 		//assertEquals(1, model.getArrColonists().get(0).getX());
-		assertEquals(999, paul.getThirstLevel());
+		assertEquals(997, paul.getThirstLevel());
+		
+		model.update();
+		model.update();
+		model.update();
+		
+		assertEquals(995, paul.getThirstLevel());
+		model.update();
+		model.update();
+		model.update();
+		assertEquals(995, paul.getThirstLevel());
+		
 	}
 	
 	@Test
@@ -127,9 +139,14 @@ public class TestAresGame {
 		assertEquals(998,paul.getThirstLevel());
 		paul.setTask(Task.MiningIce);
 		model.update();
+		//paul Should be at 0,1 or 1, 0
+		
 		assertEquals(997, paul.getThirstLevel());
 		model.update();
+		assertEquals(Action.Move, paul.getAction());
+		assertTrue(!(paul.getPath()==null));
 		assertEquals(996, paul.getThirstLevel());
+		assertEquals(0,paul.getR());
 		assertEquals(2,paul.getC());
 		model.update();
 		assertEquals(3,paul.getC());
@@ -138,24 +155,42 @@ public class TestAresGame {
 		model.update();
 		model.update();
 		model.update();
-		assertEquals(3,paul.getC());
-		assertEquals(5,paul.getR());
-		assertEquals(993, paul.getThirstLevel());
-		model.update();
-		assertEquals(993, paul.getThirstLevel());
-		assertEquals(3,paul.getResourceAmount());
-		model.update();
-		assertEquals(4,paul.getResourceAmount());
-		model.update();
-		assertEquals(5,paul.getResourceAmount());
-		model.update();
-		assertEquals(5,paul.getResourceAmount());
-		assertEquals(Action.UnloadCargo,paul.getAction());
-		assertEquals(4, paul.getC());
 		model.update();
 		model.update();
 		assertEquals(5,paul.getC());
-		assertEquals(8,paul.getR());
+		assertEquals(3,paul.getR());
+		assertEquals(990, paul.getThirstLevel());
+		model.update();
+		
+		assertEquals(990, paul.getThirstLevel());
+		assertEquals(2, paul.getResourceAmount());
+		model.update();
+		assertEquals(3,paul.getResourceAmount());
+		model.update();
+		model.update();
+		// moving to storage? hopefully? storage at 5, 8
+		//Currently at 3,5
+	
+		model.update();
+		assertEquals(3, paul.getR());
+		assertEquals(6, paul.getC());		
+		assertEquals(5 ,paul.getResourceAmount());
+
+		model.update();
+		assertEquals(4, paul.getR());
+		assertEquals(6, paul.getC());
+		
+		assertEquals(5, paul.getResourceAmount());
+		assertEquals(Action.UnloadCargo, paul.getAction());
+		
+		model.update();
+		assertEquals(5, paul.getR());
+		assertEquals(6, paul.getC());
+		
+		
+		model.update();
+		assertEquals(7,paul.getC());
+		assertEquals(5,paul.getR());
 		assertEquals(model.getArrBuildings().get(0).getType(), BuildingType.Storage);
 		
 	}

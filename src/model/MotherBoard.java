@@ -130,6 +130,8 @@ public class MotherBoard extends Observable {
 
 	private Action makeDecisionOnMining(Colonist col, TileType resource) {
 		if (!col.hasCapacityToMineResources()) {
+			if (col.getPath()==null)
+				constructBuildingPath(col, BuildingType.Storage);
 			return Action.UnloadCargo;
 		}
 		if (map[col.getR()][col.getC()].getType() == resource) {
@@ -137,9 +139,8 @@ public class MotherBoard extends Observable {
 			return Action.Mine;
 		} else {
 			if (col.getPath() == null) {
+				
 				constructResourcePath(col, resource);
-			} else {
-				moveColonist(col);
 			}
 			return Action.Move;
 		}
@@ -158,11 +159,13 @@ public class MotherBoard extends Observable {
 			break;
 		case Move:
 			// move(col);
+			moveColonist(col);
 			System.out.println("Colonist " + col.getName() + " is moving.");
 			break;
 		case UnloadCargo:
 			System.out.println("Colonist " + col.getName() + " needs to unload cargo");
-			moveTowardsBuilding(col, BuildingType.Storage);
+			moveColonist(col);
+//	depreciated		moveTowardsBuilding(col, BuildingType.Storage);
 			break;
 		default:
 			System.out.println("Colonist " + col.getName() + " is ACTION_NONE.");
@@ -174,9 +177,10 @@ public class MotherBoard extends Observable {
 		ArrayList<Tile> path = new ArrayList<Tile>();
 		for (Building building : buildings) {
 			if (building.getType() == build) {
-
+				path = constructPath(col, building.getR(), building.getC(), path);
 			}
 		}
+		path.remove(0);
 		col.setPath(path);
 	}
 
@@ -189,6 +193,7 @@ public class MotherBoard extends Observable {
 				}
 			}
 		}
+		path.remove(0);
 		col.setPath(path);
 	}
 
@@ -199,26 +204,26 @@ public class MotherBoard extends Observable {
 		int colR = col.getR();
 		tempP.add(map[colR][colC]);
 		while (true) {
-			if (colC > c && colR > r) {
-				if (map[colR][colC - 1].getType().getWeight() < map[colR][colC - 1].getType().getWeight()) {
+			if (colC > c && colR > r) { // SE  quadrant
+				if (map[colR][colC - 1].getType().getWeight() <= map[colR-1][colC].getType().getWeight()) {
 					colC--;
 				} else {
 					colR--;
 				}
 			} else if (colC < c && colR < r) {
-				if (map[colR][colC + 1].getType().getWeight() < map[colR][colC + 1].getType().getWeight()) {
+				if (map[colR][colC + 1].getType().getWeight() <= map[colR+1][colC].getType().getWeight()) {
 					colC++;
 				} else {
 					colR++;
 				}
-			} else if (colC > c && colR < r) {
-				if (map[colR][colC - 1].getType().getWeight() < map[colR][colC + 1].getType().getWeight()) {
+			} else if (colC > c && colR < r) { //NE
+				if (map[colR][colC - 1].getType().getWeight() <= map[colR+ 1][colC ].getType().getWeight()) {
 					colC--;
 				} else {
 					colR++;
 				}
-			} else if (colC < c && colR > r) {
-				if (map[colR][colC + 1].getType().getWeight() < map[colR][colC - 1].getType().getWeight()) {
+			} else if (colC < c && colR > r) { //SW
+				if (map[colR][colC + 1].getType().getWeight() <= map[colR-1][colC].getType().getWeight()) {
 					colC++;
 				} else {
 					colR--;
@@ -258,6 +263,7 @@ public class MotherBoard extends Observable {
 	}
 
 	private void moveTowardsBuilding(Colonist col, BuildingType bt) {
+		// This is going away because a colonist just MOVES.
 		// TODO: add code that moves this colonist towards a building (to drop
 		// off storage or to
 		// fulfill need.
