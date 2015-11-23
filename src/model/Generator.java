@@ -44,6 +44,7 @@ public class Generator {
 		map2[4][8] = new Tile(TileType.Crater, 4, 8);
 		map2[4][9] = new Tile(TileType.Crater, 4, 9);
 		
+		
 		return map2;
 	}
 	
