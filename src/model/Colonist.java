@@ -17,7 +17,7 @@ public class Colonist {
 	private Item items;
 	int capacity; // need to think what this will do!
 	
-	private ArrayList<Tile> path;
+	private ArrayList<int[]> path;
 	public Colonist(String input, int row, int column) {
 		name = input;
 		task = Task.None;
@@ -82,7 +82,7 @@ public class Colonist {
 		return fatigue;
 	}
 	
-	public ArrayList<Tile> getPath(){
+	public ArrayList<int[]> getPath(){
 		return path;
 	}
 
@@ -102,12 +102,12 @@ public class Colonist {
 		action = input;
 	}
 	
-	public void setPath(ArrayList<Tile> in){
+	public void setPath(ArrayList<int[]> in){
 		path = in;
 	}
 	
-	public Tile updatePath(){
-		Tile result = path.remove(0);
+	public int[] updatePath(){
+		int[] result = path.remove(0);
 		if(path.size() == 0){
 			path = null;
 		}

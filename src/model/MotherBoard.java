@@ -27,18 +27,18 @@ public class MotherBoard extends Observable {
 	public void addBuilding(Building b) {
 		buildings.add(b);
 	}
-	
+
 	public void addItem(Item i) {
 		items.add(i);
 	}
-	
+
 	public void removeItem(Item i) {
 		items.remove(i);
 	}
-	
+
 	public void giveItem(Colonist col, Item item) {
-		for (int i = 0; i<items.size(); i++) {
-			if (items.get(i)==item) {
+		for (int i = 0; i < items.size(); i++) {
+			if (items.get(i) == item) {
 				col.addItem(item);
 				items.remove(i);
 			}
@@ -48,11 +48,11 @@ public class MotherBoard extends Observable {
 	public ArrayList<Colonist> getArrColonists() {
 		return colonists;
 	}
-	
+
 	public ArrayList<Building> getArrBuildings() {
 		return buildings;
 	}
-	
+
 	public ArrayList<Item> getArrItems() {
 		return items;
 	}
@@ -138,21 +138,37 @@ public class MotherBoard extends Observable {
 	}
 
 	private Action makeDecisionOnMining(Colonist col, TileType resource) {
-		if (!col.hasCapacityToMineResources()) {
-			if (col.getPath()==null)
-				constructBuildingPath(col, BuildingType.Storage);
+		if (col.getPath() == null && col.hasCapacityToMineResources()) {
+			constructResourcePath(col, resource);
+			return Action.Move_To_Ice;
+		} else if (col.getAction() == Action.Mine && !col.hasCapacityToMineResources()) {
+			constructBuildingPath(col, BuildingType.Storage);
+			return Action.Move_To_Storage;
+		} else if (col.getPath() == null && !col.hasCapacityToMineResources()) {
 			return Action.UnloadCargo;
-		}
-		if (map[col.getR()][col.getC()].getType() == resource) {
-			collectResource(col, resource);
-			return Action.Mine;
 		} else {
-			if (col.getPath() == null) {
-				
-				constructResourcePath(col, resource);
-			}
-			return Action.Move;
+			return Action.Mine;
 		}
+		// if (!col.hasCapacityToMineResources()) {
+		// if (col.getPath()==null)
+		// constructBuildingPath(col, BuildingType.Storage);
+		// return Action.UnloadCargo;
+		// }
+		// if (map[col.getR()][col.getC()].getType() == resource) {
+		// collectResource(col, resource);
+		// return Action.Mine;
+		// }else if (){
+		//
+		// }else {
+		// if (col.getPath() == null) {
+		// if (!col.hasCapacityToMineResources()){
+		// constructBuildingPath(col, BuildingType.Storage);
+		// } else {
+		// constructResourcePath(col, resource);
+		// }
+		// }
+		// return Action.Move;
+		// }
 	}
 
 	public void assignTask(Colonist col, Task t) {
@@ -166,15 +182,18 @@ public class MotherBoard extends Observable {
 			System.out.println("Colonist " + col.getName() + " is mining.");
 			col.execute();
 			break;
-		case Move:
+		case Move_To_Ice:
 			// move(col);
 			moveColonist(col);
-			System.out.println("Colonist " + col.getName() + " is moving.");
+			System.out.println("Colonist " + col.getName() + " is moving to ice");
+			break;
+		case Move_To_Storage:
+			moveColonist(col);
+			System.out.println("Colonist " + col.getName() + " is moving to storage");
 			break;
 		case UnloadCargo:
 			System.out.println("Colonist " + col.getName() + " needs to unload cargo");
-			moveColonist(col);
-//	depreciated		moveTowardsBuilding(col, BuildingType.Storage);
+			// depreciated moveTowardsBuilding(col, BuildingType.Storage);
 			break;
 		default:
 			System.out.println("Colonist " + col.getName() + " is ACTION_NONE.");
@@ -183,110 +202,39 @@ public class MotherBoard extends Observable {
 	}
 
 	private void constructBuildingPath(Colonist col, BuildingType build) {
-		ArrayList<Tile> path = new ArrayList<Tile>();
-		for (Building building : buildings) {
-			if (building.getType() == build) {
-				path = constructPath(col, building.getR(), building.getC(), path);
-			}
-		}
-		path.remove(0);
-		col.setPath(path);
+		col.setPath(Map.findPathToBuilding(col.getR(), col.getC(), build, buildings, map));
 	}
 
 	private void constructResourcePath(Colonist col, TileType res) {
-		ArrayList<Tile> path = new ArrayList<Tile>();
-		for (int r = 0; r < map.length; r++) {
-			for (int c = 0; c < map[0].length; c++) {
-				if (map[r][c].getType() == res) {
-					path = constructPath(col, r, c, path);
-				}
-			}
-		}
-		path.remove(0);
-		col.setPath(path);
-	}
-
-	private ArrayList<Tile> constructPath(Colonist col, int r, int c, ArrayList<Tile> inital) {
-		ArrayList<Tile> path = inital;
-		ArrayList<Tile> tempP = new ArrayList<Tile>();
-		int colC = col.getC();
-		int colR = col.getR();
-		tempP.add(map[colR][colC]);
-		while (true) {
-			if (colC > c && colR > r) { // SE  quadrant
-				if (map[colR][colC - 1].getType().getWeight() <= map[colR-1][colC].getType().getWeight()) {
-					colC--;
-				} else {
-					colR--;
-				}
-			} else if (colC < c && colR < r) {
-				if (map[colR][colC + 1].getType().getWeight() <= map[colR+1][colC].getType().getWeight()) {
-					colC++;
-				} else {
-					colR++;
-				}
-			} else if (colC > c && colR < r) { //NE
-				if (map[colR][colC - 1].getType().getWeight() <= map[colR+ 1][colC ].getType().getWeight()) {
-					colC--;
-				} else {
-					colR++;
-				}
-			} else if (colC < c && colR > r) { //SW
-				if (map[colR][colC + 1].getType().getWeight() <= map[colR-1][colC].getType().getWeight()) {
-					colC++;
-				} else {
-					colR--;
-				}
-			} else if (colC > c) {
-				colC--;
-			} else if (colC < c) {
-				colC++;
-			} else if (colR > r) {
-				colR--;
-			} else if (colR < r) {
-				colR++;
-			} else {
-				break;
-			}
-			tempP.add(map[colR][colC]);
-		}
-		if (tempP.size() < path.size() || path.size() == 0) {
-			for (int i = 0; i < path.size(); i++) {
-				path.remove(i);
-			}
-			for (int i = 0; i < tempP.size(); i++) {
-				path.add(tempP.get(i));
-			}
-		}
-		return path;
+		col.setPath(Map.findPathToTileType(col.getR(), col.getC(), res, map));
 	}
 
 	private void moveColonist(Colonist col) {
-		Tile newL = col.updatePath();
-		col.setR(newL.getR());
-		col.setC(newL.getC());
+		int[] locs = col.updatePath();
+		col.setR(locs[0]);
+		col.setC(locs[1]);
 	}
 
 	public void addColonist(Colonist c) {
 		colonists.add(c);
 	}
 
-	private void moveTowardsBuilding(Colonist col, BuildingType bt) {
-		// This is going away because a colonist just MOVES.
-		// TODO: add code that moves this colonist towards a building (to drop
-		// off storage or to
-		// fulfill need.
-
-		// find nearest storage
-		// weak pathfinding code:
-		// this just finds the first building of bt x,y.
-		for (Building b : buildings) {
-			if (b.getType() == bt) {
-				// TODO: Paul implement a pathfinder for buildings here
-			}
-		}
-
-	}
+	// private void moveTowardsBuilding(Colonist col, BuildingType bt) {
+	// // This is going away because a colonist just MOVES.
+	// // TODO: add code that moves this colonist towards a building (to drop
+	// // off storage or to
+	// // fulfill need.
+	//
+	// // find nearest storage
+	// // weak pathfinding code:
+	// // this just finds the first building of bt x,y.
+	// for (Building b : buildings) {
+	// if (b.getType() == bt) {
+	// // TODO: Paul implement a pathfinder for buildings here
+	// }
+	// }
+	//
+	// }
 
 	private void collectResource(Colonist col, TileType res) {
 		// TODO: we need to add code to get a colonist to extract resources
@@ -307,79 +255,4 @@ public class MotherBoard extends Observable {
 	public void move(Colonist col, int foundX, int foundY) {
 
 	}
-
-	// private void setupBoard() {
-	// // random random.nextint()
-	// Random random = new Random();
-	//
-	// //assign tiles to each part of the array
-	// for (int i = 0; i < 10; i++){
-	// for(int j = 0; j<10; j++){
-	// int rand = random.nextInt(3);
-	// switch(rand){
-	// case 0:
-	// tiles[i][j] = new GroundTile();
-	// break;
-	//
-	// case 1:
-	// tiles[i][j] = new ObstacleTile();
-	// break;
-	//
-	// case 2:
-	// int chance = random.nextInt(7);
-	// switch (chance) {
-	// case 0:
-	// tiles[i][j] = new ResourceTile(Resource.Aquarius);
-	// break;
-	// case 1:
-	// tiles[i][j] = new ResourceTile(Resource.Agrarian);
-	// break;
-	// case 2:
-	// tiles[i][j] = new ResourceTile(Resource.Iron);
-	// break;
-	// case 3:
-	// tiles[i][j] = new ResourceTile(Resource.Nickel);
-	// break;
-	// case 4:
-	// tiles[i][j] = new ResourceTile(Resource.Oxygen);
-	// break;
-	// case 5:
-	// tiles[i][j] = new ResourceTile(Resource.Unobtanium);
-	// break;
-	// case 6:
-	// tiles[i][j] = new ResourceTile(Resource.Thorium);
-	// break;
-	// default:
-	// break;
-	// }
-	//
-	// break;
-	// }
-	//
-	// }
-	// }
-	// // resource, ground, obstacle
-	// }
-	//
-	// public void update(){
-	// setChanged();
-	// notifyObservers(this);
-	// updateResources();
-	// updateColonists();
-	// updateBoardGame();
-	// }
-	//
-	// public void updateResources(){
-	//
-	// }
-	//
-	// public void updateColonists(){
-	//
-	// }
-
-	//
-	// public void updateBoardGame(){
-	//
-	// }
-
 }
