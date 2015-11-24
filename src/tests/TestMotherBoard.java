@@ -160,7 +160,7 @@ public class TestMotherBoard {
 		assertEquals(6, paul.getC());
 		
 		assertEquals(5, paul.getResourceAmount());
-		assertEquals(Action.UnloadCargo, paul.getAction());
+		assertEquals(Action.Move_To_Storage, paul.getAction());
 		
 		model.update();
 		assertEquals(5, paul.getR());
