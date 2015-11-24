@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
+import enums.BuildingType;
 import enums.TileType;
 
 public class Map {
@@ -18,6 +19,62 @@ public class Map {
 		for (int[] s: path){
 			System.out.println("Row: "+s[0]+ " Col: "+s[1]);
 		}
+	}
+	public static ArrayList<int[]> findPathToBuilding(int start_row, int start_col, BuildingType buildingType ,ArrayList<Building> buildings, Tile[][] t){
+		//reset_visited();
+	    visited = new ArrayList<Node>();
+		ArrayList<Node> queue = new ArrayList<Node>();
+		ArrayList<Node> visited2 = getVisited();
+		tiles = t;
+		Node current = new Node(start_row, start_col, null);
+		visited.add(current);
+		queue.add(current);
+		while (!queue.isEmpty()){
+			current = queue.remove(0);
+			ArrayList<Node> children = getChildren(current);
+			for (Node child: children){
+				for (Building b : buildings){
+					if ((b.getType()== buildingType) && (b.getR()==child.getRow()) && (b.getC() == child.getCol())){
+						// Path found to building type found
+						ArrayList<int[]> path = get_reverse_path(child);
+						return path;
+					}
+				}
+				//looped through and building not found.
+				visited.add(child);
+				queue.add(child);
+			}
+		}
+		System.out.println("no destination found");
+		return null;
+			
+	}
+	public static ArrayList<int[]> findPathToTileType(int start_row, int start_col, TileType type, Tile[][] t){
+		//reset_visited();
+	    visited = new ArrayList<Node>();
+		ArrayList<Node> queue = new ArrayList<Node>();
+		ArrayList<Node> visited2 = getVisited();
+		tiles = t;
+		Node current = new Node(start_row, start_col, null);
+		visited.add(current);
+		queue.add(current);
+		while (!queue.isEmpty()){
+			current = queue.remove(0);
+			ArrayList<Node> children = getChildren(current);
+			for (Node child: children){
+				if (t[child.getRow()][child.getCol()].getType() == type){
+					// Path found to tileType type
+					ArrayList<int[]> path = get_reverse_path(child);
+					return path;
+				} else {
+					visited.add(child);
+					queue.add(child);
+				}
+			}
+		}
+		System.out.println("no destination found");
+		return null;
+			
 	}
 	public static int[] findNextStep(int start_row, int start_col, int end_row, int end_col, Tile[][] t){
 		return null;

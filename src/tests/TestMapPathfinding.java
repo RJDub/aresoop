@@ -6,6 +6,9 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 
+import buildings.StorageBuilding;
+import enums.BuildingType;
+import enums.TileType;
 import model.Colonist;
 import model.Generator;
 import model.Map;
@@ -42,6 +45,56 @@ public class TestMapPathfinding {
 		
 		ArrayList<int[]> path = Map.findFullPath(model.getArrColonists().get(0).getR(), model.getArrColonists().get(0).getC(), 
 				5,9, tiles);
+		System.out.println("");
+		Map.printPath(path);
+		assertEquals(2,path.get(0)[0]);
+		assertEquals(8,path.get(0)[1]);
+		
+		assertEquals(2,path.get(1)[0]);
+		assertEquals(7,path.get(1)[1]);
+		
+		
+		
+		
+	}
+	@Test
+	public void testPathToResource(){
+		Tile[][] tiles  = Generator.generateMap2();
+		
+		ArrayList<Colonist>colonists = new ArrayList<Colonist>();
+		colonists.add(new Colonist("Mingcheng", 2, 9));
+		MotherBoard model = new MotherBoard(colonists,tiles);
+		// volcano at 3,7
+		// volcano at 3,8
+		// volcano at 3,9
+		// 4,7 mountain
+		
+		ArrayList<int[]> path = Map.findPathToTileType(model.getArrColonists().get(0).getR(), model.getArrColonists().get(0).getC(), 
+				TileType.Ice, tiles);
+		System.out.println("");
+		Map.printPath(path);
+		assertEquals(2,path.get(0)[0]);
+		assertEquals(8,path.get(0)[1]);
+		
+		assertEquals(2,path.get(1)[0]);
+		assertEquals(7,path.get(1)[1]);
+	}
+	
+	@Test
+	public void testPathToBuilding(){
+		Tile[][] tiles  = Generator.generateMap2();
+		
+		ArrayList<Colonist>colonists = new ArrayList<Colonist>();
+		colonists.add(new Colonist("Mingcheng", 2, 9));
+		MotherBoard model = new MotherBoard(colonists,tiles);
+		model.getArrBuildings().add(new StorageBuilding(5,8));
+		// volcano at 3,7
+		// volcano at 3,8
+		// volcano at 3,9
+		// 4,7 mountain
+		
+		ArrayList<int[]> path = Map.findPathToBuilding(model.getArrColonists().get(0).getR(), model.getArrColonists().get(0).getC(), 
+				BuildingType.Storage,model.getArrBuildings(), tiles);
 		System.out.println("");
 		Map.printPath(path);
 		assertEquals(2,path.get(0)[0]);
