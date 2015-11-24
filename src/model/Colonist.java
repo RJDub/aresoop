@@ -175,6 +175,16 @@ public class Colonist {
 		
 	}
 
+	public boolean isAtBuilding(ArrayList<Building> buildings) {
+		for(Building b: buildings){
+			if (b.getC()==this.getC() && b.getR() == this.getR()){
+				return true;
+			}
+		}
+		return false;
+		
+	}
+
 
 //	public boolean isAlive() {
 //		if (HungerLevel == Hunger.Dead || ThirstLevel == Thirst.Dead || FatigueLevel == Fatigue.Dead) {
