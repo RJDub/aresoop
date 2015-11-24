@@ -117,10 +117,12 @@ public class TestMotherBoard {
 		paul.setTask(Task.MiningIce);
 		model.update();
 		//paul Should be at 0,1 or 1, 0
+		assertEquals(1, paul.getC());
+		assertEquals(0, paul.getR());
 		
 		assertEquals(997, paul.getThirstLevel());
 		model.update();
-		assertEquals(Action.Move, paul.getAction());
+		assertEquals(Action.Move_To_Ice, paul.getAction());
 		assertTrue(!(paul.getPath()==null));
 		assertEquals(996, paul.getThirstLevel());
 		assertEquals(0,paul.getR());

@@ -186,7 +186,9 @@ public class AresFrame extends JFrame {
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Auto-generated method stub
 			if (timer.isRunning()) {
+				System.out.println("about to call update");
 				model.update();
+				System.out.println("called model.update");
 				
 				//TODO Under construction(update panels)
 				updateView();
