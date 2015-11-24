@@ -138,17 +138,35 @@ public class MotherBoard extends Observable {
 	}
 
 	private Action makeDecisionOnMining(Colonist col, TileType resource) {
-		if (col.getPath() == null && col.hasCapacityToMineResources()) {
-			constructResourcePath(col, resource);
-			return Action.Move_To_Ice;
-		} else if (col.getAction() == Action.Mine && !col.hasCapacityToMineResources()) {
-			constructBuildingPath(col, BuildingType.Storage);
-			return Action.Move_To_Storage;
-		} else if (col.getPath() == null && !col.hasCapacityToMineResources()) {
-			return Action.UnloadCargo;
+		if (!col.hasCapacityToMineResources()) {
+//			if (col.getPath() == null) constructResourcePath(col, resource);
+			// if at building
+			if(col.isAtBuilding(buildings)){
+				return Action.UnloadCargo;
+			}
+			else
+				return Action.Move_To_Storage;			
 		} else {
-			return Action.Mine;
+			if (getTileAtLocation(col.getR(), col.getC()).getType() == resource){
+				return Action.Mine;
+				
+			} else {
+				if (resource == TileType.Ice)
+					return Action.Move_To_Ice;
+				else
+					return Action.Move_To_Iron;
+			}
 		}
+//		}
+//			
+//			if (col.getAction() == Action.Mine && !col.hasCapacityToMineResources()) {
+//			constructBuildingPath(col, BuildingType.Storage);
+//			return Action.Move_To_Storage;
+//		} else if (col.getPath() == null && !col.hasCapacityToMineResources()) {
+//			return Action.UnloadCargo;
+//		} else {
+//			return Action.Mine;
+//		}
 		// if (!col.hasCapacityToMineResources()) {
 		// if (col.getPath()==null)
 		// constructBuildingPath(col, BuildingType.Storage);
@@ -180,19 +198,29 @@ public class MotherBoard extends Observable {
 		switch (col.getAction()) {
 		case Mine:
 			System.out.println("Colonist " + col.getName() + " is mining.");
+			//if (col.getPath() == null) constructResourcePath(col, TileType.IronOre );
 			col.execute();
 			break;
 		case Move_To_Ice:
 			// move(col);
+			if (col.getPath() == null) constructResourcePath(col, TileType.Ice);
 			moveColonist(col);
 			System.out.println("Colonist " + col.getName() + " is moving to ice");
 			break;
+		case Move_To_Iron:
+			if (col.getPath() == null) constructResourcePath(col, TileType.IronOre);
+			moveColonist(col);
+			System.out.println("Colonist " + col.getName() + " is moving to ironore");
+			break;
 		case Move_To_Storage:
+			if (col.getPath() == null) constructBuildingPath(col, BuildingType.Storage);
 			moveColonist(col);
 			System.out.println("Colonist " + col.getName() + " is moving to storage");
 			break;
 		case UnloadCargo:
+			// this is handled by the building.
 			System.out.println("Colonist " + col.getName() + " needs to unload cargo");
+			
 			// depreciated moveTowardsBuilding(col, BuildingType.Storage);
 			break;
 		default:
