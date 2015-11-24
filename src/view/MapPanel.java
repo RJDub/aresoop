@@ -48,9 +48,10 @@ public class MapPanel extends JPanel implements Observer{
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
-		for (int y = 0; y < mobo.getBoardHeight(); y++){
-			for (int x = 0; x < mobo.getBoardWidth(); x++){
-				g2.drawImage(drawTile(x,y), x*INCREMENT, y*INCREMENT, null);
+		for (int x = 0; x < mobo.getBoardWidth(); x++){
+			for (int y = 0; y < mobo.getBoardHeight(); y++){
+			
+				g2.drawImage(drawTile(y,x), x*INCREMENT, y*INCREMENT, null);
 			}
 		}
 		drawArrBuildings(g2);
