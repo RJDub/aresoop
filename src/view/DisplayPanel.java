@@ -40,16 +40,20 @@ public class DisplayPanel extends JPanel{
 
 	// When colonist is selected
 	public void colonistSelected(Colonist c) {
-		temp.setText("\n\n\tName:   " + c.getName()
+		String t = 
+		"\n\n\tName:   " + c.getName()
 		+ "\n\tHunger:   " + c.getHungerLevel()
 		+ "\n\tThirst:   " + c.getThirstLevel()
 		+ "\n\tFatigue:   " + c.getFatigueLevel()
 		+ "\n\tTask:   " + c.getTask()
 		+ "\n\tAction:   " + c.getAction()
-		+ "\n\tResource Amount:   " + c.getResourceAmount()
-		+ "\n\tItem:   " + c.getItems().toString()
-		+ "\n\tColumn:   " + c.getC()
-		+ "\n\tRow:   " + c.getR());
+		+ "\n\tResource Amount:   " + c.getResourceAmount();
+		if (c.getItems()!=null){
+			t = t+ "\n\tItem:   " + c.getItems().toString();
+		}
+		t = t+ "\n\tColumn:   " + c.getC()
+		+ "\n\tRow:   " + c.getR();
+		temp.setText(t);
 	}
 
 	private String getItems(ArrayList<Item> i) {
