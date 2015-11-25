@@ -1,10 +1,11 @@
 package items;
 import java.awt.Point;
+import java.io.Serializable;
 
 import enums.Task;
 import model.*;
 
-public class JackHammer extends Item{
+public class JackHammer extends Item implements Serializable {
 
 	public JackHammer() {
 		super();

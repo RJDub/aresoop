@@ -1,9 +1,11 @@
 package buildings;
+import java.io.Serializable;
+
 import enums.BuildingType;
 import enums.Task;
 import model.Building;
 
-public class StorageBuilding extends Building {
+public class StorageBuilding extends Building  implements Serializable {
 	
 	private int waterAmount;
 	private int ironOreAmount;

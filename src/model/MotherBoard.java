@@ -1,15 +1,15 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Random;
 
-import tiles.*;
 import colonists.*;
 import enums.*;
 import buildings.*;
 
-public class MotherBoard extends Observable {
+public class MotherBoard extends Observable implements Serializable {
 	// private Tile[][] tiles;
 	private ArrayList<Colonist> colonists;
 	private Tile[][] map;

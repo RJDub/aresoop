@@ -1,9 +1,11 @@
 
 package model;
 
+import java.io.Serializable;
+
 import enums.*;
 
-public class Tile {
+public class Tile implements Serializable {
 	
 	private TileType type;
 	private int c;

@@ -1,6 +1,8 @@
 package enums;
 
-public enum TileType {
+import java.io.Serializable;
+
+public enum TileType implements Serializable {
 	Flat(1),
 	Ice(1),
 	IronOre(1),

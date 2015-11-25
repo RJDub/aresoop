@@ -1,9 +1,11 @@
 package buildings;
 
+import java.io.Serializable;
+
 import enums.BuildingType;
 import model.Building;
 
-public class Mess extends Building{
+public class Mess extends Building implements Serializable {
 	public Mess(int r, int c){
 		super(r,c);
 		super.setType(BuildingType.Mess);

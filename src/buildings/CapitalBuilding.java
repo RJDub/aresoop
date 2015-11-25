@@ -1,10 +1,10 @@
 package buildings;
 
-import java.awt.Point;
+import java.io.Serializable;
 
 import model.Building;
 
-public class CapitalBuilding extends Building{
+public class CapitalBuilding extends Building implements Serializable {
 
 	public CapitalBuilding(int x, int y) {
 		super(x, y);

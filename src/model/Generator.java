@@ -1,10 +1,11 @@
 package model;
 
+import java.io.Serializable;
 import java.util.Random;
 
 import enums.*;
 
-public class Generator {
+public class Generator implements Serializable {
 
 	
 	public static Tile[][] generateMap(Tile[][] map){

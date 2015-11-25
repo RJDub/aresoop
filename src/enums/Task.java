@@ -1,5 +1,7 @@
 package enums;
 
-public enum Task {
+import java.io.Serializable;
+
+public enum Task implements Serializable {
 	MiningIce, MiningIronOre, None;
 }

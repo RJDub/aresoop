@@ -1,8 +1,10 @@
 package model;
 
+import java.io.Serializable;
+
 import enums.BuildingType;
 
-public abstract class Building {
+public abstract class Building implements Serializable {
 
 	private int thirstBonus;
 	private int fatigueBonus;

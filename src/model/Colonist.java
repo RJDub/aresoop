@@ -1,10 +1,11 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import enums.*;
 
-public class Colonist {
+public class Colonist implements Serializable {
 	
 	private int hunger;
 	private int thirst;

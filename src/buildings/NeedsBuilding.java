@@ -1,5 +1,7 @@
 package buildings;
 
-public class NeedsBuilding {
+import java.io.Serializable;
+
+public class NeedsBuilding  implements Serializable {
 
 }
