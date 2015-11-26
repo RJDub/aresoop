@@ -1,5 +1,7 @@
 package model;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Observable;
@@ -140,7 +142,7 @@ public class MotherBoard extends Observable implements Serializable {
 	private Action makeDecisionOnMining(Colonist col, TileType resource) {
 		if (!col.hasCapacityToMineResources()) {
 //			if (col.getPath() == null) constructResourcePath(col, resource);
-			// if at building
+//			if at building
 			if(col.isAtBuilding(buildings)){
 				return Action.UnloadCargo;
 			}
@@ -283,4 +285,6 @@ public class MotherBoard extends Observable implements Serializable {
 	public void move(Colonist col, int foundX, int foundY) {
 
 	}
+	
+
 }

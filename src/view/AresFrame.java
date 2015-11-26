@@ -129,8 +129,10 @@ public class AresFrame extends JFrame {
 		// TODO Under construction
 		// add colonistPanelSelectedListener
 		colonistPanel.getTable().addMouseListener(new ColonistRowSelectListener());
+		hud.getPlay().addActionListener(new PlayPauseActionListener());
 		buildings.getBuildingList().addMouseListener(new BuildingRowSelectListener());
 		this.addWindowListener(new MyWindowListener());
+
 	}
 
 	private void setupAresFrame() {
@@ -386,5 +388,16 @@ public class AresFrame extends JFrame {
 		@Override
 		public void windowDeactivated(WindowEvent e) {
 		}
+	}
+	private class PlayPauseActionListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			if (timer.isRunning()){
+				timer.stop();
+			} else 
+				timer.start();
+		}
+		
 	}
 }
