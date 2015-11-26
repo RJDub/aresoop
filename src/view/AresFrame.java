@@ -33,7 +33,6 @@ import enums.TileType;
 import model.*;
 
 public class AresFrame extends JFrame {
-	private static final int MINUTE = 1000000;
 	private static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
 	private JScrollPane mapPane;
@@ -130,6 +129,7 @@ public class AresFrame extends JFrame {
 		// add colonistPanelSelectedListener
 		colonistPanel.getTable().addMouseListener(new ColonistRowSelectListener());
 		hud.getPlay().addActionListener(new PlayPauseActionListener());
+		map.addMouseListener(new MapPanelClickedActionListener());
 		buildings.getBuildingList().addMouseListener(new BuildingRowSelectListener());
 		this.addWindowListener(new MyWindowListener());
 
@@ -343,7 +343,11 @@ public class AresFrame extends JFrame {
 			}
 			timer.start();
 		}
-
+		public int[] getTileCoordinates(int pixel_x,int pixel_y){
+			int display_height = map.getHeight();
+			int display_width =  map.getWidth();
+			return null;
+		}
 		@Override
 		public void windowClosing(WindowEvent e) {
 			timer.stop();
@@ -399,5 +403,37 @@ public class AresFrame extends JFrame {
 				timer.start();
 		}
 		
+	}
+	private class MapPanelClickedActionListener implements MouseListener{
+
+		@Override
+		public void mouseClicked(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mousePressed(MouseEvent arg0) {
+
+			hud.displayTileInformation(arg0.getX(), arg0.getY());
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
 	}
 }

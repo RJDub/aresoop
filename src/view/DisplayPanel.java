@@ -94,4 +94,8 @@ public class DisplayPanel extends JPanel{
 		+ "\n\tFAtigueBonus:   " + b.getFatigueBonus()
 		+ "\n\tThis building has (those facilities)");
 	}
+	
+	public void displayTileInformation(int row, int col){
+		temp.setText("You clicked the map");
+	}
 }
