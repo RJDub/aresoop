@@ -56,4 +56,9 @@ public abstract class Building implements Serializable {
 		thirstBonus = i;
 		
 	}
+	
+	@Override
+	public String toString(){
+		return type.toString(); 
+	}
 }
