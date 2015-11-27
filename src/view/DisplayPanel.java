@@ -21,7 +21,8 @@ public class DisplayPanel extends JPanel{
 	
 	private JTextArea temp;
 	private JButton play;
-	
+	private JButton optionsPopup;
+	private JPanel buttonPanel;
 	public DisplayPanel() {
 		layoutGUI();
 	}
@@ -34,8 +35,26 @@ public class DisplayPanel extends JPanel{
 		// Start Info
 		temp = new JTextArea("\n\n\n\tSelect A Tile or A Colonist for More Information");
 		temp.setEditable(false);
-		temp.setPreferredSize(new Dimension((int) (Toolkit.getDefaultToolkit().getScreenSize().width * .333),(int) (Toolkit.getDefaultToolkit().getScreenSize().height * .27)));
-		this.add(temp);
+		//temp.setPreferredSize(new Dimension((int) (Toolkit.getDefaultToolkit().getScreenSize().width * .333),(int) (Toolkit.getDefaultToolkit().getScreenSize().height * .27)));
+		setupButtonPanel();
+		
+		this.setLayout(new BorderLayout());
+		this.add(temp, BorderLayout.CENTER);
+		this.add(buttonPanel, BorderLayout.NORTH);
+	}
+
+	private void setupButtonPanel() {
+		setupPlayButton();
+		optionsPopup = new JButton("Temp Label:Options Popup?");
+		buttonPanel = new JPanel();
+		buttonPanel.setLayout(new GridLayout(1,4));
+		buttonPanel.add(play);
+		buttonPanel.add(optionsPopup);
+		
+	}
+
+	private void setupPlayButton() {
+		play = new JButton("Play/Pause");
 	}
 
 	// When colonist is selected
