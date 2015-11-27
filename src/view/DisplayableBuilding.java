@@ -1,5 +1,7 @@
 package view;
 
+import buildings.StorageBuilding;
+import enums.BuildingType;
 import model.Building;
 
 public class DisplayableBuilding implements DisplayableObject {
@@ -9,7 +11,15 @@ public class DisplayableBuilding implements DisplayableObject {
 	}
 	@Override
 	public String display() {
-		return building.toString();
+		String result = building.toString()+'\n';
+		if (building.getType().equals(BuildingType.Storage)){
+			result+="resources: \n";
+			result+="\t water: "+((StorageBuilding)building).getWaterAmount()+'\n';
+			result+="\t irone ore: "+((StorageBuilding)building).getIronOreAmount()+'\n';
+			
+		}
+		
+		return result + "\n\tadd better descprition in DisplayableBuilding class";
 		
 	}
 
