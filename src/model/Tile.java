@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 import enums.*;
 
-public class Tile implements Serializable {
+public class Tile implements Serializable{
 	
 	private TileType type;
 	private int c;
@@ -27,5 +27,9 @@ public class Tile implements Serializable {
 	
 	public int getR(){
 		return r;
+	}
+	
+	public void setType(TileType in){
+		type = in;
 	}
 }

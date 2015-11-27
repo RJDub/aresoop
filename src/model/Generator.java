@@ -72,4 +72,40 @@ public class Generator implements Serializable {
 		}
 		return map;
 	}
+	
+	public static Tile[][] realisticMap(Tile[][] map){
+		Random rand = new Random();
+		for (int r = 0; r < map.length; r++){
+			for (int c = 0; c < map[0].length; c++){
+				if (r < 2 || r > map.length-3){
+					map[r][c] = new Tile(TileType.Flat, r, c);
+				}
+				map[r][c] = new Tile(TileType.Flat, r, c);
+			}
+		}
+		
+		int row = rand.nextInt(map.length/4)  + 3;
+		int col = rand.nextInt(map[0].length/4) + 3;
+		map[row-1][col-1].setType(TileType.Crater);
+		map[row][col-1].setType(TileType.Crater);
+		map[row-1][col].setType(TileType.Crater);
+		map[row][col].setType(TileType.Crater);
+		
+		int obstacles = 0;
+		int resources = 0;
+		while(true){
+			int choice = rand.nextInt(5);
+			switch(choice){
+			case 1:
+				
+			}
+			if (obstacles == 5 && resources == 10){
+				break;
+			}
+		}
+		
+		
+		
+		return map;
+	}
 }

@@ -9,7 +9,7 @@ import colonists.*;
 import enums.*;
 import buildings.*;
 
-public class MotherBoard extends Observable implements Serializable {
+public class MotherBoard extends Observable implements Serializable{
 	// private Tile[][] tiles;
 	private ArrayList<Colonist> colonists;
 	private Tile[][] map;
