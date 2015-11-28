@@ -13,6 +13,11 @@ import items.JackHammer;
 import model.*;
 
 public class TestMotherBoard {
+	
+	@Test
+	public void testNeedsFulfillment(){
+		
+	}
 
 	@Test
 	public void testStartInMotherboard() {

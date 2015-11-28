@@ -42,6 +42,7 @@ public class MotherBoard extends Observable implements Serializable {
 	}
 	
 	public void addBuilding(Building b) {
+//		if (map[b.getR][b.getC].getType())
 		buildings.add(b);
 	}
 
@@ -201,7 +202,7 @@ public class MotherBoard extends Observable implements Serializable {
 	public void executeAction(Colonist col) {
 		switch (col.getAction()) {
 		case Mine:
-			System.out.println("Colonist " + col.getName() + " is mining.");
+//			System.out.println("Colonist " + col.getName() + " is mining.");
 			//if (col.getPath() == null) constructResourcePath(col, TileType.IronOre );
 			col.execute();
 			break;
@@ -227,7 +228,20 @@ public class MotherBoard extends Observable implements Serializable {
 			// depreciated moveTowardsBuilding(col, BuildingType.Storage);
 			break;
 		case None:
-			System.out.println("Colonist " + col.getName() + " is ACTION_NONE.");
+//			System.out.println("Colonist " + col.getName() + " is ACTION_NONE.");
+			break;
+		case FindFood:
+			if (col.getPath() == null) constructBuildingPath(col, BuildingType.Mess);
+			moveColonist(col);
+			break;
+		case FindWater:
+			if (col.getPath() == null) constructBuildingPath(col, BuildingType.Mess);
+			moveColonist(col);
+			break;
+		case FindSleep:
+			if (col.getPath() == null) constructBuildingPath(col, BuildingType.Dormitory);
+			moveColonist(col);
+			break;
 		default:
 			System.out.println("Colonist " + col.getName() + " has an unhandled action!ERROR!");
 			break;

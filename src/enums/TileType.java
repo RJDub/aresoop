@@ -10,6 +10,17 @@ public enum TileType implements Serializable {
 	Crater(999),
 	Mountain(999);
 	
+	private boolean buildable;
+	
+	static {
+		Flat.buildable = true;
+		Ice.buildable = false;
+		IronOre.buildable = false;
+		Volcano.buildable = false;
+		Crater.buildable = false;
+		Mountain.buildable = false;
+	}
+	
 	private int weight;
 	private TileType(int input){
 		weight = input;
@@ -18,4 +29,11 @@ public enum TileType implements Serializable {
 	public int getWeight(){
 		return weight;
 	}
+	
+	public boolean isBuildable(){
+		return buildable;
+	}
+	
+	
+	
 }
