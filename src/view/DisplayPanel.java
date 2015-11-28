@@ -55,6 +55,7 @@ public class DisplayPanel extends JPanel implements Observer{
 		buttonPanel.add(play);
 		buttonPanel.add(optionsPopup);
 		
+		
 	}
 
 	private void setupPlayButton() {
