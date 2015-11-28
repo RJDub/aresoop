@@ -18,6 +18,8 @@ public class DisplayableBuilding implements DisplayableObject {
 			result+="\t irone ore: "+((StorageBuilding)building).getIronOreAmount()+'\n';
 			
 		}
+		result+= "\nrow: "+building.getR();
+		result+= "\ncol: "+building.getC();
 		
 		return result + "\n\tadd better descprition in DisplayableBuilding class";
 		
