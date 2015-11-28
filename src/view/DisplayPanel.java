@@ -6,6 +6,8 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -17,12 +19,13 @@ import model.Building;
 import model.Colonist;
 import model.Item;
 
-public class DisplayPanel extends JPanel{
+public class DisplayPanel extends JPanel implements Observer{
 	
 	private JTextArea temp;
 	private JButton play;
 	private JButton optionsPopup;
 	private JPanel buttonPanel;
+	private DisplayableObject disp_object;
 	public DisplayPanel() {
 		layoutGUI();
 	}
@@ -45,11 +48,13 @@ public class DisplayPanel extends JPanel{
 
 	private void setupButtonPanel() {
 		setupPlayButton();
+		disp_object = null;
 		optionsPopup = new JButton("Temp Label:Options Popup?");
 		buttonPanel = new JPanel();
 		buttonPanel.setLayout(new GridLayout(1,4));
 		buttonPanel.add(play);
 		buttonPanel.add(optionsPopup);
+		
 		
 	}
 
@@ -84,6 +89,14 @@ public class DisplayPanel extends JPanel{
 		}
 		return ref;
 	}
+	
+	public void setDisplayableObject(DisplayableObject d){
+		if (d != null){
+			disp_object = d;
+			display();
+		}
+		
+	}
 
 	public void buildingSelected(Building b) {
 		temp.setText("\n\n\tBuilding Type:   " + b.getType().toString()
@@ -94,4 +107,20 @@ public class DisplayPanel extends JPanel{
 		+ "\n\tFAtigueBonus:   " + b.getFatigueBonus()
 		+ "\n\tThis building has (those facilities)");
 	}
+	
+	public void displayTileInformation(int row, int col){
+		temp.setText("You clicked the map");
+	}
+
+	@Override
+	public void update(Observable arg0, Object arg1) {
+		if (disp_object!=null)
+			display();
+		
+	}
+	
+	private void display(){
+		temp.setText(disp_object.display());
+	}
+	
 }

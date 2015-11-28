@@ -30,8 +30,10 @@ import enums.*;
 import model.*;
 
 public class AresFrame extends JFrame {
-	private static final int MINUTE = 1000000;
 	private static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+
+	private static final int screen_height = (int) Math.round(screenSize.height);
+	private static final int screen_width = (int) Math.round(screenSize.width);
 
 	private JScrollPane mapPane;
 	private MapPanel map;
@@ -47,18 +49,23 @@ public class AresFrame extends JFrame {
 
 	public static void main(String[] args) {
 
-		ArrayList<Colonist> colonists = new ArrayList<Colonist>();
 		// Tile[][] tiles = new Tile[100][100];
-		Tile[][] tiles = new Tile[30][50];
-
 		// model = new MotherBoard(colonists, Generator.generateMap(tiles));
-		model = new MotherBoard(colonists, Generator.generateEasyMap(tiles));
-		model.getArrColonists().add(new Colonist("Paul", 0, 0));
-		model.getArrColonists().add(new Colonist("Mingcheng", 0, 0));
 
-		model.addBuilding(new Dormitory(4, 4));
-		model.addBuilding(new Mess(4, 5));
-		model.addBuilding(new StorageBuilding(8, 1));
+		Tile[][] tiles = new Tile[30][50];
+		ArrayList<Colonist> colonists = new ArrayList<Colonist>();
+		boolean TESTINGMODE = true;
+		if (TESTINGMODE) {
+			model = Generator.generateTestMotherBoard(10, 10);
+		} else {
+			model = new MotherBoard(colonists, Generator.generateEasyMap(tiles));
+			model.getArrColonists().add(new Colonist("Paul", 0, 0));
+			model.getArrColonists().add(new Colonist("Mingcheng", 0, 0));
+			model.addBuilding(new Dormitory(4, 4));
+			model.addBuilding(new Mess(4, 5));
+			model.addBuilding(new StorageBuilding(8, 1));
+		}
+
 		AresFrame window = new AresFrame();
 		window.setVisible(true);
 	}
@@ -81,7 +88,8 @@ public class AresFrame extends JFrame {
 
 		mapPane.setVisible(true);
 		mapPane.setLocation(0, 0);
-		mapPane.setSize(screenSize.width, (int) (screenSize.height * .666));
+
+		mapPane.setSize(screen_width, (int) (screen_height * .666));
 		mapPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		mapPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 
@@ -113,11 +121,12 @@ public class AresFrame extends JFrame {
 
 	private void setupModelAndTimer() {
 		model.addObserver(map);
+		model.addObserver(hud);
 		model.assignTask(model.getArrColonists().get(0), Task.MiningIce);
 		model.assignTask(model.getArrColonists().get(1), Task.MiningIronOre);
 
 		timer = new Timer(500, new OurTimerListener());
-		//timer.start();
+		// timer.start();
 		// model.start();
 		// model.printModel();
 	}
@@ -125,9 +134,12 @@ public class AresFrame extends JFrame {
 	private void registerListeners() {
 		// TODO Under construction
 		// add colonistPanelSelectedListener
-		colonistPanel.getTable().addMouseListener(new ColonistRowSelectListener());
+		// colonistPanel.getTable().addMouseListener(new
+		// ColonistRowSelectListener());
 		hud.getPlay().addActionListener(new PlayPauseActionListener());
-		buildings.getBuildingList().addMouseListener(new BuildingRowSelectListener());
+		map.addMouseListener(new MapPanelClickedActionListener());
+		// buildings.getBuildingList().addMouseListener(new
+		// BuildingRowSelectListener());
 		this.addWindowListener(new MyWindowListener());
 
 	}
@@ -136,12 +148,14 @@ public class AresFrame extends JFrame {
 		this.setLayout(null);
 		this.setFocusable(true);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		this.setSize(screenSize);
+		this.setPreferredSize(screenSize);
+		this.setSize(screen_width, screen_height);
+
 	}
 
 	private void setupView() {
 		view.setLayout(null);
-		view.setSize(screenSize);
+		view.setSize(screen_width, screen_height);
 		view.setVisible(true);
 		view.setLocation(0, 0);
 		view.setBackground(Color.BLACK);
@@ -150,49 +164,73 @@ public class AresFrame extends JFrame {
 	private void setupMapPanel() {
 		map.setVisible(true);
 		map.setLocation(0, 0);
-		map.setPreferredSize(new Dimension(4000, 4000));
+		map.setPreferredSize(new Dimension(screen_width, screen_height));
 		map.setBackground(Color.BLUE);
 	}
 
 	private void setupColonistPanel() {
 		colonistPanel.setVisible(true);
-		colonistPanel.setLocation(0, (int) (screenSize.height * .666));
-		colonistPanel.setSize((int) (screenSize.width * .333), (int) (screenSize.height * .333));
+		colonistPanel.setLocation(0, (int) (screen_height * .666));
+		colonistPanel.setSize((int) (screen_width * .333), (int) (screen_height * .333));
 		colonistPanel.setBackground(Color.RED);
+		colonistPanel.getTable().addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 1) {
+					int index = colonistPanel.getTable().getSelectedRow();
+					if (index >= 0 && index < model.getArrColonists().size())
+						hud.setDisplayableObject(new DisplayableColonist(model.getArrColonists().get(index)));
+					System.out.println("Double clicked on Item " + index);
+				}
+			}
+
+		});
 	}
 
 	private void setupHud() {
 		hud.setVisible(true);
-		hud.setLocation((int) (screenSize.width * .333), (int) (screenSize.height * .666));
-		hud.setSize((int) (screenSize.width * .333), (int) (screenSize.height * .333));
+		hud.setLocation((int) (screen_width * .333), (int) (screen_height * .666));
+		hud.setSize((int) (screen_width * .333), (int) (screen_height * .333));
 		hud.setBackground(Color.DARK_GRAY);
+
 	}
 
 	private void setupSelectorPanel() {
 		selector.setVisible(true);
-		selector.setLocation((int) (screenSize.width * .666), (int) (screenSize.height * .666));
-		selector.setSize((int) (screenSize.width * .333), (int) (screenSize.height * .333));
+		selector.setLocation((int) (screen_width * .666), (int) (screen_height * .666));
+		selector.setSize((int) (screen_width * .333), (int) (screen_height * .333));
 		selector.setBackground(Color.CYAN);
 	}
 
 	private void setupBuildingPanel() {
 		buildings.setVisible(true);
 		buildings.setLocation(0, 0);
-		buildings.setSize((int) (screenSize.width * .333), (int) (screenSize.height * .13));
+		buildings.setSize((int) (screen_width * .333), (int) (screen_height * .13));
+		buildings.getBuildingList().addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 2) {
+					int index = buildings.getBuildingList().locationToIndex(e.getPoint());
+					Building b = buildings.getArrBuildings().get(index);
+					if (b != null)
+						hud.setDisplayableObject(new DisplayableBuilding(b));
+
+					System.out.println("Double clicked on Building Panel index " + index);
+				}
+			}
+		});
 	}
 
 	private void setupItemPanel() {
 		items.setVisible(true);
 		items.setLocation(0, (int) (screenSize.height * .17));
-		items.setSize((int) (screenSize.width * .333), (int) (screenSize.height * .13));
+		items.setSize((int) (screen_width * .333), (int) (screen_height * .13));
 	}
-	
-	private void sendModelToPanels(){
+
+	private void sendModelToPanels() {
 		map.updateBoard(model);
 		colonistPanel.updateColonistList(model.getArrColonists());
 		buildings.updateBuildingList(model.getArrBuildings());
 		items.updateItemList(model.getArrItems());
-		
+
 	}
 
 	private class OurTimerListener implements ActionListener {
@@ -200,7 +238,6 @@ public class AresFrame extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			if (timer.isRunning()) {
-				System.out.println("about to call update");
 				model.update();
 				System.out.println("called model.update");
 				updateView();
@@ -209,7 +246,7 @@ public class AresFrame extends JFrame {
 
 		private void updateView() {
 			colonistPanel.update(model.getArrColonists());
-			updateHud();
+			// updateHud();
 		}
 
 		private void updateHud() {
@@ -234,16 +271,15 @@ public class AresFrame extends JFrame {
 		public void mouseClicked(MouseEvent e) {
 			int rowSelected = colonistPanel.getTable().getSelectedRow();
 			if (rowSelected < 0) {
-				// Do nothing
 			} else {
 				Colonist refColonist = null;
 				for (Colonist thisColonist : model.getArrColonists()) {
 					if (thisColonist.getName().equals(colonistPanel.getData()[rowSelected][0]))
 						refColonist = thisColonist;
 				}
+				hud.setDisplayableObject(new DisplayableColonist(refColonist));
 				hud.colonistSelected(refColonist);
 			}
-
 		}
 	}
 
@@ -297,6 +333,12 @@ public class AresFrame extends JFrame {
 			timer.start();
 		}
 
+		public int[] getTileCoordinates(int pixel_x, int pixel_y) {
+			int display_height = map.getHeight();
+			int display_width = map.getWidth();
+			return null;
+		}
+
 		@Override
 		public void windowClosing(WindowEvent e) {
 			timer.stop();
@@ -322,15 +364,25 @@ public class AresFrame extends JFrame {
 			}
 		}
 	}
-	private class PlayPauseActionListener implements ActionListener{
+
+	private class PlayPauseActionListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			if (timer.isRunning()){
+			if (timer.isRunning()) {
 				timer.stop();
-			} else 
+			} else
 				timer.start();
 		}
-		
+
+	}
+
+	private class MapPanelClickedActionListener extends MouseAdapter {
+
+		@Override
+		public void mousePressed(MouseEvent arg0) {
+
+			hud.displayTileInformation(arg0.getX(), arg0.getY());
+		}
 	}
 }

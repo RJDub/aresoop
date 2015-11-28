@@ -7,6 +7,7 @@ import org.junit.Test;
 import buildings.StorageBuilding;
 import enums.Task;
 import model.Building;
+import model.Generator;
 import model.MotherBoard;
 
 public class TestBuildings {
@@ -27,6 +28,12 @@ public class TestBuildings {
 		assertEquals(1000, building2.getWaterAmount());
 		assertEquals(8, building2.getIronOreAmount());
 		
+		
+	}
+	
+	@Test
+	public void testSpawnBuildings(){
+		MotherBoard model = Generator.generateTestMotherBoard(10,10);
 		
 	}
 

@@ -22,10 +22,35 @@ public class MotherBoard extends Observable implements Serializable{
 		buildings = new ArrayList<Building>();
 		items = new ArrayList<Item>();
 	}
+	
+	public void update() {
+		updateColonists();
+		updateBuildings(); // TODO: finish this method.
+		setChanged();
+		notifyObservers(this);
+	}
 
+	public void updateColonists() {
+		for (Colonist colonist : colonists) {
+			updateNeeds(colonist);
+			assignAction(colonist);
+			executeAction(colonist);
+		}
+	}
+	
 	public void addBuilding(Building b) {
 		buildings.add(b);
+		
 	}
+	public boolean spawnBuilding(Building b){
+		if (map[b.getR()][b.getC()].getType().isBuildable()){
+			addBuilding(b);
+			return true;
+		}else { 
+			return false;
+		}
+	}
+	
 
 	public void addItem(Item i) {
 		items.add(i);
@@ -70,21 +95,6 @@ public class MotherBoard extends Observable implements Serializable{
 
 	public void start() {
 
-	}
-
-	public void update() {
-		updateColonists();
-		updateBuildings(); // TODO: finish this method.
-		setChanged();
-		notifyObservers(this);
-	}
-
-	public void updateColonists() {
-		for (Colonist colonist : colonists) {
-			updateNeeds(colonist);
-			assignAction(colonist);
-			executeAction(colonist);
-		}
 	}
 
 	// this is where the building checks if a colonist is on it.
@@ -132,8 +142,11 @@ public class MotherBoard extends Observable implements Serializable{
 
 		}
 
-		else
-			col.setAction(Action.None);
+		else { // colonists needs are NOT met...
+			// decide which need should be fulfilled by colonist, and set action accordingly.
+			col.setNeedsAction();
+		}
+			
 	}
 
 	private Action makeDecisionOnMining(Colonist col, TileType resource) {
@@ -193,10 +206,9 @@ public class MotherBoard extends Observable implements Serializable{
 	}
 
 	public void executeAction(Colonist col) {
-		// TODO: effectively null, doesnt produce any output other than sysout
 		switch (col.getAction()) {
 		case Mine:
-			System.out.println("Colonist " + col.getName() + " is mining.");
+//			System.out.println("Colonist " + col.getName() + " is mining.");
 			//if (col.getPath() == null) constructResourcePath(col, TileType.IronOre );
 			col.execute();
 			break;
@@ -204,26 +216,40 @@ public class MotherBoard extends Observable implements Serializable{
 			// move(col);
 			if (col.getPath() == null) constructResourcePath(col, TileType.Ice);
 			moveColonist(col);
-			System.out.println("Colonist " + col.getName() + " is moving to ice");
+//			System.out.println("Colonist " + col.getName() + " is moving to ice");
 			break;
 		case Move_To_Iron:
 			if (col.getPath() == null) constructResourcePath(col, TileType.IronOre);
 			moveColonist(col);
-			System.out.println("Colonist " + col.getName() + " is moving to ironore");
+//			System.out.println("Colonist " + col.getName() + " is moving to ironore");
 			break;
 		case Move_To_Storage:
 			if (col.getPath() == null) constructBuildingPath(col, BuildingType.Storage);
 			moveColonist(col);
-			System.out.println("Colonist " + col.getName() + " is moving to storage");
+//			System.out.println("Colonist " + col.getName() + " is moving to storage");
 			break;
 		case UnloadCargo:
 			// this is handled by the building.
-			System.out.println("Colonist " + col.getName() + " needs to unload cargo");
-			
+//			System.out.println("Colonist " + col.getName() + " needs to unload cargo");
 			// depreciated moveTowardsBuilding(col, BuildingType.Storage);
 			break;
+		case None:
+//			System.out.println("Colonist " + col.getName() + " is ACTION_NONE.");
+			break;
+		case FindFood:
+			if (col.getPath() == null) constructBuildingPath(col, BuildingType.Mess);
+			moveColonist(col);
+			break;
+		case FindWater:
+			if (col.getPath() == null) constructBuildingPath(col, BuildingType.Mess);
+			moveColonist(col);
+			break;
+		case FindSleep:
+			if (col.getPath() == null) constructBuildingPath(col, BuildingType.Dormitory);
+			moveColonist(col);
+			break;
 		default:
-			System.out.println("Colonist " + col.getName() + " is ACTION_NONE.");
+			System.out.println("Colonist " + col.getName() + " has an unhandled action!ERROR!");
 			break;
 		}
 	}
