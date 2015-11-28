@@ -25,7 +25,7 @@ public class BuildingPanel extends JPanel{
 	}
 
 	private void layoutGUI() {
-		buildingArray.add(new StorageBuilding(4,4));
+//		buildingArray.add(new StorageBuilding(4,4));
 		buildingList = new JList(toArrayInString(buildingArray));
 		buildingList.setPreferredSize(new Dimension(400,1000));
 		JScrollPane scrollPane = new JScrollPane(buildingList);
