@@ -8,9 +8,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -26,11 +25,8 @@ import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.Timer;
 
-import buildings.Dormitory;
-import buildings.Mess;
-import buildings.StorageBuilding;
-import enums.Task;
-import enums.TileType;
+import buildings.*;
+import enums.*;
 import model.*;
 
 public class AresFrame extends JFrame {
@@ -52,8 +48,6 @@ public class AresFrame extends JFrame {
 	private Timer timer;
 
 	public static void main(String[] args) {
-
-
 		AresFrame window = new AresFrame();
 		window.setVisible(true);
 	}
@@ -65,11 +59,17 @@ public class AresFrame extends JFrame {
 //		Tile[][] tiles = new Tile[100][100];
 //		model = new MotherBoard(colonists, Generator.generateMap(tiles));
 		
+
+		// Tile[][] tiles = new Tile[100][100];
+		// model = new MotherBoard(colonists, Generator.generateMap(tiles));
+
+
 		Tile[][] tiles = new Tile[30][50];
 		ArrayList<Colonist> colonists = new ArrayList<Colonist>();
 		boolean TESTINGMODE = false;
-		if (TESTINGMODE){
+		if (TESTINGMODE) {
 			model = Generator.generateTestMotherBoard(10, 10);
+
 		}else{
 			
 			if (model == null){
@@ -105,8 +105,8 @@ public class AresFrame extends JFrame {
 				}
 			}
 		} 
-			
 		
+
 		layoutGUI();
 		setupModelAndTimer();
 		registerListeners();
@@ -176,8 +176,10 @@ public class AresFrame extends JFrame {
 		// ColonistRowSelectListener());
 		hud.getPlay().addActionListener(new PlayPauseActionListener());
 		map.addMouseListener(new MapPanelClickedActionListener());
+
 //		buildings.getBuildingList().addMouseListener(new BuildingRowSelectListener());
 		
+
 
 	}
 
@@ -262,12 +264,21 @@ public class AresFrame extends JFrame {
 		items.setSize((int) (screen_width * .333), (int) (screen_height * .13));
 	}
 
+	private void sendModelToPanels() {
+		map.updateBoard(model);
+		colonistPanel.updateColonistList(model.getArrColonists());
+		buildings.updateBuildingList(model.getArrBuildings());
+		items.updateItemList(model.getArrItems());
+
+	}
+
 	private class OurTimerListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			if (timer.isRunning()) {
 				model.update();
+				System.out.println("called model.update");
 				updateView();
 			}
 		}
@@ -293,44 +304,25 @@ public class AresFrame extends JFrame {
 
 	}
 
-	/*
-	 * private class ColonistRowSelectListener implements MouseListener {
-	 * 
-	 * @Override public void mouseClicked(MouseEvent e) { int rowSelected =
-	 * colonistPanel.getTable().getSelectedRow(); if (rowSelected < 0) { // Do
-	 * nothing } else { Colonist refColonist = null; for (Colonist thisColonist
-	 * : model.getArrColonists()) { if
-	 * (thisColonist.getName().equals(colonistPanel.getData()[rowSelected][0]))
-	 * refColonist = thisColonist; } hud.setDisplayableObject(new
-	 * DisplayableColonist(refColonist)); // hud.colonistSelected(refColonist);
-	 * }
-	 * 
-	 * }
-	 * 
-	 * @Override public void mousePressed(MouseEvent e) { // TODO Auto-generated
-	 * method stub
-	 * 
-	 * }
-	 * 
-	 * @Override public void mouseReleased(MouseEvent e) { // TODO
-	 * Auto-generated method stub
-	 * 
-	 * }
-	 * 
-	 * @Override public void mouseEntered(MouseEvent e) { // TODO Auto-generated
-	 * method stub
-	 * 
-	 * }
-	 * 
-	 * @Override public void mouseExited(MouseEvent e) { // TODO Auto-generated
-	 * method stub
-	 * 
-	 * }
-	 * 
-	 * }
-	 */
-/*
-	private class BuildingRowSelectListener implements MouseListener {
+	private class ColonistRowSelectListener extends MouseAdapter {
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			int rowSelected = colonistPanel.getTable().getSelectedRow();
+			if (rowSelected < 0) {
+			} else {
+				Colonist refColonist = null;
+				for (Colonist thisColonist : model.getArrColonists()) {
+					if (thisColonist.getName().equals(colonistPanel.getData()[rowSelected][0]))
+						refColonist = thisColonist;
+				}
+				hud.setDisplayableObject(new DisplayableColonist(refColonist));
+				hud.colonistSelected(refColonist);
+			}
+		}
+	}
+
+	private class BuildingRowSelectListener extends MouseAdapter {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
@@ -347,37 +339,13 @@ public class AresFrame extends JFrame {
 			System.out.println(refBuilding.toString());
 			hud.buildingSelected(refBuilding);
 		}
-
-		@Override
-		public void mousePressed(MouseEvent e) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void mouseReleased(MouseEvent e) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void mouseEntered(MouseEvent e) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void mouseExited(MouseEvent e) {
-			// TODO Auto-generated method stub
-
-		}
-
 	}
-*/
-	private class MyWindowListener implements WindowListener {
+
+	private class MyWindowListener extends WindowAdapter {
 
 		@Override
 		public void windowOpened(WindowEvent e) {
+
 //			int decision = JOptionPane.showConfirmDialog(AresFrame.this, "Do you want to load your saved game?");
 //			if (decision == JOptionPane.YES_OPTION) {
 //				ObjectInputStream objStr = null;
@@ -402,6 +370,7 @@ public class AresFrame extends JFrame {
 //				}
 //			}
 //			timer.start();
+
 		}
 
 		public int[] getTileCoordinates(int pixel_x, int pixel_y) {
@@ -434,26 +403,6 @@ public class AresFrame extends JFrame {
 				}
 			}
 		}
-
-		@Override
-		public void windowClosed(WindowEvent e) {
-		}
-
-		@Override
-		public void windowIconified(WindowEvent e) {
-		}
-
-		@Override
-		public void windowDeiconified(WindowEvent e) {
-		}
-
-		@Override
-		public void windowActivated(WindowEvent e) {
-		}
-
-		@Override
-		public void windowDeactivated(WindowEvent e) {
-		}
 	}
 
 	private class PlayPauseActionListener implements ActionListener {
@@ -468,36 +417,12 @@ public class AresFrame extends JFrame {
 
 	}
 
-	private class MapPanelClickedActionListener implements MouseListener {
-
-		@Override
-		public void mouseClicked(MouseEvent arg0) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void mouseEntered(MouseEvent arg0) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void mouseExited(MouseEvent arg0) {
-			// TODO Auto-generated method stub
-
-		}
+	private class MapPanelClickedActionListener extends MouseAdapter {
 
 		@Override
 		public void mousePressed(MouseEvent arg0) {
 
 			hud.displayTileInformation(arg0.getX(), arg0.getY());
-		}
-
-		@Override
-		public void mouseReleased(MouseEvent arg0) {
-			// TODO Auto-generated method stub
-
 		}
 	}
 }

@@ -30,6 +30,10 @@ public class ColonistPanel extends JPanel{
 		colonists = c;
 		layoutGUI();
 	}
+	
+	public void updateColonistList(ArrayList<Colonist> in){
+		colonists = in;
+	}
 
 	private void layoutGUI() {
 		columnNames = new String[]{"Name", "Hunger", "Thirst", "Fatigue"};

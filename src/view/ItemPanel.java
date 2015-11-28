@@ -23,6 +23,10 @@ public class ItemPanel extends JPanel{
 		layoutGUI();
 	}
 	
+	public void updateItemList(ArrayList<Item> in){
+		itemArray = in;
+	}
+	
 	private void layoutGUI() {
 		itemList = new JList(toArrayInString(itemArray));
 		itemList.setPreferredSize(new Dimension(400,1000));

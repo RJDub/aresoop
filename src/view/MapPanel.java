@@ -90,6 +90,11 @@ public class MapPanel extends JPanel implements Observer{
 		repaint();
 	}
 	
+	public void updateBoard(MotherBoard in){
+		mobo = in;
+		repaint();
+	}
+	
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		
