@@ -27,8 +27,8 @@ import enums.TileType;
 import model.*;
 
 public class MapPanel extends JPanel implements Observer{
-	private final int BOARD_ROW_SIZE = 10;
-	private final int BOARD_COL_SIZE = 20;
+	private final int WINDOW_ROW_COUNT = 10;
+	private final int WINDOW_COL_COUNT = 20;
 	private final int INCREMENT = 50;
 	private int MAX_ROW_COUNT;
 	private int MAX_COL_COUNT;
@@ -57,7 +57,7 @@ public class MapPanel extends JPanel implements Observer{
 		}
 		drawBoard();
 		buttons_panel= new JPanel();
-		buttons_panel.setLocation(BOARD_COL_SIZE*INCREMENT,0);
+		buttons_panel.setLocation(WINDOW_COL_COUNT*INCREMENT,0);
 		buttons_panel.setSize(200, 200);
 		buttons_panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		button_north = new JButton("UP");
@@ -82,6 +82,8 @@ public class MapPanel extends JPanel implements Observer{
 		selected_col =0;
 		
 	}
+	
+
 
 	// draws the board
 	public void drawBoard() {
@@ -97,7 +99,7 @@ public class MapPanel extends JPanel implements Observer{
 		Graphics2D g2 = (Graphics2D) g;
 		for (int row = 0; row < mobo.getBoardHeight(); row++){
 			for (int col = 0; col < mobo.getBoardWidth(); col++){
-				if ((row < BOARD_ROW_SIZE+offset_row) && (row > offset_row - BOARD_ROW_SIZE) && (col < BOARD_COL_SIZE + offset_col) && (col > offset_col - BOARD_COL_SIZE)){
+				if ((row < WINDOW_ROW_COUNT+offset_row) && (row > offset_row - WINDOW_ROW_COUNT) && (col < WINDOW_COL_COUNT + offset_col) && (col > offset_col - WINDOW_COL_COUNT)){
 					g2.drawImage(drawTile(row,col), (col-offset_col)*INCREMENT, (row-offset_row)*INCREMENT, null);
 				}
 			}
@@ -108,13 +110,13 @@ public class MapPanel extends JPanel implements Observer{
 			BuildingType bt = b.getType();
 			int row = b.getR();
 			int col = b.getC();
-			if ((row < BOARD_ROW_SIZE+offset_row) && (row > offset_row - BOARD_ROW_SIZE) && (col < BOARD_COL_SIZE + offset_col) && (col > offset_col - BOARD_COL_SIZE))
+			if ((row < WINDOW_ROW_COUNT+offset_row) && (row > offset_row - WINDOW_ROW_COUNT) && (col < WINDOW_COL_COUNT + offset_col) && (col > offset_col - WINDOW_COL_COUNT))
 					g2.drawImage(drawBuilding(bt), (col-offset_col)*INCREMENT, (row-offset_row)*INCREMENT, null);
 		}
 		for (Colonist c: mobo.getArrColonists()){
 			int row = c.getR();
 			int col = c.getC();
-			if ((row < BOARD_ROW_SIZE+offset_row) && (row > offset_row - BOARD_ROW_SIZE) && (col < BOARD_COL_SIZE + offset_col) && (col > offset_col - BOARD_COL_SIZE))
+			if ((row < WINDOW_ROW_COUNT+offset_row) && (row > offset_row - WINDOW_ROW_COUNT) && (col < WINDOW_COL_COUNT + offset_col) && (col > offset_col - WINDOW_COL_COUNT))
 				g2.drawImage(drawColonist(), (col-offset_col)*INCREMENT, (row-offset_row)*INCREMENT, null);
 			 
 		}
@@ -123,7 +125,22 @@ public class MapPanel extends JPanel implements Observer{
 		
 	}
 	
-	public void setSelectedRowCol(int x, int y){
+	public void setSelectedRowCol(int r, int c){
+		if ((r > WINDOW_ROW_COUNT/2)){
+			if (r < (MAX_ROW_COUNT-(WINDOW_ROW_COUNT/2)))
+				selected_row = r;
+			else
+				selected_row = MAX_ROW_COUNT-(WINDOW_ROW_COUNT/2);
+		} else 
+			selected_row = WINDOW_ROW_COUNT/2;
+		
+		if (c > WINDOW_COL_COUNT/2){
+				if( c < (MAX_COL_COUNT-(WINDOW_COL_COUNT/2)))
+					selected_col = c;
+				else
+					selected_col = MAX_COL_COUNT-(WINDOW_COL_COUNT/2);
+		} else
+			selected_col = WINDOW_COL_COUNT/2;
 		
 	}
 	private void drawArrBuildings(Graphics2D g2){
