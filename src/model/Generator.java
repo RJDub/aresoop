@@ -1,11 +1,10 @@
 package model;
 
-import java.io.Serializable;
 import java.util.Random;
 
 import enums.*;
 
-public class Generator implements Serializable {
+public class Generator {
 
 	
 	public static Tile[][] generateMap(Tile[][] map){
@@ -93,19 +92,17 @@ public class Generator implements Serializable {
 		
 		int obstacles = 0;
 		int resources = 0;
-		while(true){
-			int choice = rand.nextInt(5);
-			switch(choice){
-			case 1:
-				
-			}
-			if (obstacles == 5 && resources == 10){
-				break;
-			}
-		}
-		
-		
-		
+		//TODO: implement this later on, perhaps two iterations from now
+//		while(true){
+//			int choice = rand.nextInt(5);
+//			switch(choice){
+//			case 1:
+//				
+//			}
+//			if (obstacles == 5 && resources == 10){
+//				break;
+//			}
+//		}
 		return map;
 	}
 }

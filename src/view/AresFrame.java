@@ -6,10 +6,10 @@ import java.awt.ScrollPane;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -25,11 +25,8 @@ import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.Timer;
 
-import buildings.Dormitory;
-import buildings.Mess;
-import buildings.StorageBuilding;
-import enums.Task;
-import enums.TileType;
+import buildings.*;
+import enums.*;
 import model.*;
 
 public class AresFrame extends JFrame {
@@ -189,18 +186,23 @@ public class AresFrame extends JFrame {
 		items.setLocation(0, (int) (screenSize.height * .17));
 		items.setSize((int) (screenSize.width * .333), (int) (screenSize.height * .13));
 	}
+	
+	private void sendModelToPanels(){
+		map.updateBoard(model);
+		colonistPanel.updateColonistList(model.getArrColonists());
+		buildings.updateBuildingList(model.getArrBuildings());
+		items.updateItemList(model.getArrItems());
+		
+	}
 
 	private class OurTimerListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			// TODO Auto-generated method stub
 			if (timer.isRunning()) {
 				System.out.println("about to call update");
 				model.update();
 				System.out.println("called model.update");
-
-				// TODO Under construction(update panels)
 				updateView();
 			}
 		}
@@ -226,7 +228,7 @@ public class AresFrame extends JFrame {
 
 	}
 
-	private class ColonistRowSelectListener implements MouseListener {
+	private class ColonistRowSelectListener extends MouseAdapter {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
@@ -243,34 +245,9 @@ public class AresFrame extends JFrame {
 			}
 
 		}
-
-		@Override
-		public void mousePressed(MouseEvent e) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void mouseReleased(MouseEvent e) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void mouseEntered(MouseEvent e) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void mouseExited(MouseEvent e) {
-			// TODO Auto-generated method stub
-
-		}
-
 	}
 
-	private class BuildingRowSelectListener implements MouseListener {
+	private class BuildingRowSelectListener extends MouseAdapter {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
@@ -287,34 +264,9 @@ public class AresFrame extends JFrame {
 			System.out.println(refBuilding.toString());
 			hud.buildingSelected(refBuilding);
 		}
-
-		@Override
-		public void mousePressed(MouseEvent e) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void mouseReleased(MouseEvent e) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void mouseEntered(MouseEvent e) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void mouseExited(MouseEvent e) {
-			// TODO Auto-generated method stub
-
-		}
-
 	}
 
-	private class MyWindowListener implements WindowListener {
+	private class MyWindowListener extends WindowAdapter {
 
 		@Override
 		public void windowOpened(WindowEvent e) {
@@ -325,6 +277,7 @@ public class AresFrame extends JFrame {
 					FileInputStream stream = new FileInputStream("SavedModelState");
 					objStr = new ObjectInputStream(stream);
 					model = (MotherBoard) objStr.readObject();
+					sendModelToPanels();
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				} catch (ClassNotFoundException e1) {
@@ -367,26 +320,6 @@ public class AresFrame extends JFrame {
 					}
 				}
 			}
-		}
-
-		@Override
-		public void windowClosed(WindowEvent e) {
-		}
-
-		@Override
-		public void windowIconified(WindowEvent e) {
-		}
-
-		@Override
-		public void windowDeiconified(WindowEvent e) {
-		}
-
-		@Override
-		public void windowActivated(WindowEvent e) {
-		}
-
-		@Override
-		public void windowDeactivated(WindowEvent e) {
 		}
 	}
 	private class PlayPauseActionListener implements ActionListener{

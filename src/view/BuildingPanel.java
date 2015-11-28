@@ -50,6 +50,8 @@ public class BuildingPanel extends JPanel{
 		return buildingArray;
 	}
 
-	
+	public void updateBuildingList(ArrayList<Building> in){
+		buildingArray = in;
+	}
 	
 }
