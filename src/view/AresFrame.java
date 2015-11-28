@@ -262,42 +262,42 @@ public class AresFrame extends JFrame {
 		}
 	}
 
-	private class ColonistRowSelectListener extends MouseAdapter {
+//	private class ColonistRowSelectListener extends MouseAdapter {
+//
+//		@Override
+//		public void mouseClicked(MouseEvent e) {
+//			int rowSelected = colonistPanel.getTable().getSelectedRow();
+//			if (rowSelected < 0) {
+//			} else {
+//				Colonist refColonist = null;
+//				for (Colonist thisColonist : model.getArrColonists()) {
+//					if (thisColonist.getName().equals(colonistPanel.getData()[rowSelected][0]))
+//						refColonist = thisColonist;
+//				}
+//				hud.setDisplayableObject(new DisplayableColonist(refColonist));
+//				hud.colonistSelected(refColonist);
+//			}
+//		}
+//	}
 
-		@Override
-		public void mouseClicked(MouseEvent e) {
-			int rowSelected = colonistPanel.getTable().getSelectedRow();
-			if (rowSelected < 0) {
-			} else {
-				Colonist refColonist = null;
-				for (Colonist thisColonist : model.getArrColonists()) {
-					if (thisColonist.getName().equals(colonistPanel.getData()[rowSelected][0]))
-						refColonist = thisColonist;
-				}
-				hud.setDisplayableObject(new DisplayableColonist(refColonist));
-				hud.colonistSelected(refColonist);
-			}
-		}
-	}
-
-	private class BuildingRowSelectListener extends MouseAdapter {
-
-		@Override
-		public void mouseClicked(MouseEvent e) {
-			int rowSelected = BuildingPanel.getBuildingList().getSelectedIndex();
-			Building refBuilding = null;
-			if (rowSelected < 0) {
-				// Do nothing
-			} else {
-				for (Building thisBuilding : model.getArrBuildings()) {
-					if (thisBuilding.getType().equals(buildings.getArrBuildings().get(rowSelected).getType()))
-						refBuilding = thisBuilding;
-				}
-			}
-			System.out.println(refBuilding.toString());
-			hud.buildingSelected(refBuilding);
-		}
-	}
+//	private class BuildingRowSelectListener extends MouseAdapter {
+//
+//		@Override
+//		public void mouseClicked(MouseEvent e) {
+//			int rowSelected = BuildingPanel.getBuildingList().getSelectedIndex();
+//			Building refBuilding = null;
+//			if (rowSelected < 0) {
+//				// Do nothing
+//			} else {
+//				for (Building thisBuilding : model.getArrBuildings()) {
+//					if (thisBuilding.getType().equals(buildings.getArrBuildings().get(rowSelected).getType()))
+//						refBuilding = thisBuilding;
+//				}
+//			}
+//			System.out.println(refBuilding.toString());
+//			hud.buildingSelected(refBuilding);
+//		}
+//	}
 
 	private class MyWindowListener extends WindowAdapter {
 
