@@ -132,7 +132,7 @@ public class MotherBoard extends Observable implements Serializable {
 						break;
 					case FindWater:
 						if (colonist.getR() == building.getR() && colonist.getC() == building.getC())
-							colonist.incrementHungerLevel(((Mess)building).getThirstBonus()); 
+							colonist.incrementThirstLevel(((Mess)building).getThirstBonus()); 
 						break;
 					default:
 						break;
