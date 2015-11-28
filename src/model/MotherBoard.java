@@ -42,9 +42,18 @@ public class MotherBoard extends Observable implements Serializable {
 	}
 	
 	public void addBuilding(Building b) {
-//		if (map[b.getR][b.getC].getType())
 		buildings.add(b);
+		
 	}
+	public boolean spawnBuilding(Building b){
+		if (map[b.getR()][b.getC()].getType().isBuildable()){
+			addBuilding(b);
+			return true;
+		}else { 
+			return false;
+		}
+	}
+	
 
 	public void addItem(Item i) {
 		items.add(i);
