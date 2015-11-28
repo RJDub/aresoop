@@ -49,15 +49,13 @@ public class AresFrame extends JFrame {
 
 	public static void main(String[] args) {
 
-		// Tile[][] tiles = new Tile[100][100];
-		// model = new MotherBoard(colonists, Generator.generateMap(tiles));
-
-		Tile[][] tiles = new Tile[30][50];
 		ArrayList<Colonist> colonists = new ArrayList<Colonist>();
-		boolean TESTINGMODE = true;
+		boolean TESTINGMODE = false;
 		if (TESTINGMODE) {
+			Tile[][] tiles = new Tile[30][50];
 			model = Generator.generateTestMotherBoard(10, 10);
 		} else {
+			Tile[][] tiles = new Tile[100][100];
 			model = new MotherBoard(colonists, Generator.generateEasyMap(tiles));
 			model.getArrColonists().add(new Colonist("Paul", 0, 0));
 			model.getArrColonists().add(new Colonist("Mingcheng", 0, 0));
@@ -232,6 +230,25 @@ public class AresFrame extends JFrame {
 		items.updateItemList(model.getArrItems());
 
 	}
+	
+	private void updateView() {
+		colonistPanel.update(model.getArrColonists());
+		// updateHud();
+	}
+
+	private void updateHud() {
+		int rowSelected = colonistPanel.getTable().getSelectedRow();
+		if (rowSelected < 0) {
+			// Do nothing
+		} else {
+			Colonist refColonist = null;
+			for (Colonist thisColonist : model.getArrColonists()) {
+				if (thisColonist.getName().equals(colonistPanel.getData()[rowSelected][0]))
+					refColonist = thisColonist;
+			}
+			hud.colonistSelected(refColonist);
+		}
+	}
 
 	private class OurTimerListener implements ActionListener {
 
@@ -243,26 +260,6 @@ public class AresFrame extends JFrame {
 				updateView();
 			}
 		}
-
-		private void updateView() {
-			colonistPanel.update(model.getArrColonists());
-			// updateHud();
-		}
-
-		private void updateHud() {
-			int rowSelected = colonistPanel.getTable().getSelectedRow();
-			if (rowSelected < 0) {
-				// Do nothing
-			} else {
-				Colonist refColonist = null;
-				for (Colonist thisColonist : model.getArrColonists()) {
-					if (thisColonist.getName().equals(colonistPanel.getData()[rowSelected][0]))
-						refColonist = thisColonist;
-				}
-				hud.colonistSelected(refColonist);
-			}
-		}
-
 	}
 
 	private class ColonistRowSelectListener extends MouseAdapter {
@@ -333,11 +330,11 @@ public class AresFrame extends JFrame {
 			timer.start();
 		}
 
-		public int[] getTileCoordinates(int pixel_x, int pixel_y) {
-			int display_height = map.getHeight();
-			int display_width = map.getWidth();
-			return null;
-		}
+		// public int[] getTileCoordinates(int pixel_x, int pixel_y) {
+		// int display_height = map.getHeight();
+		// int display_width = map.getWidth();
+		// return null;
+		// }
 
 		@Override
 		public void windowClosing(WindowEvent e) {
