@@ -53,18 +53,24 @@ public class AresFrame extends JFrame {
 
 	public static void main(String[] args) {
 
-		ArrayList<Colonist> colonists = new ArrayList<Colonist>();
-		// Tile[][] tiles = new Tile[100][100];
-		Tile[][] tiles = new Tile[30][50];
-
+//		Tile[][] tiles = new Tile[100][100];
 //		model = new MotherBoard(colonists, Generator.generateMap(tiles));
-		model = new MotherBoard(colonists, Generator.generateEasyMap(tiles));
-		model.getArrColonists().add(new Colonist("Paul", 0, 0));
-		model.getArrColonists().add(new Colonist("Mingcheng", 0, 0));
-
-		model.addBuilding(new Dormitory(4, 4));
-		model.addBuilding(new Mess(4, 5));
-		model.addBuilding(new StorageBuilding(8, 1));
+		
+		Tile[][] tiles = new Tile[30][50];
+		ArrayList<Colonist> colonists = new ArrayList<Colonist>();
+		boolean TESTINGMODE = true;
+		if (TESTINGMODE){
+			model = Generator.generateTestMotherBoard(10, 10);
+		}else{
+			model = new MotherBoard(colonists, Generator.generateEasyMap(tiles));		
+			model.getArrColonists().add(new Colonist("Paul", 0, 0));
+			model.getArrColonists().add(new Colonist("Mingcheng", 0, 0));
+			model.addBuilding(new Dormitory(4, 4));
+			model.addBuilding(new Mess(4, 5));
+			model.addBuilding(new StorageBuilding(8, 1));
+		} 
+			
+		
 		AresFrame window = new AresFrame();
 		window.setVisible(true);
 	}
