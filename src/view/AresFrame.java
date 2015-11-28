@@ -58,7 +58,7 @@ public class AresFrame extends JFrame {
 		
 		Tile[][] tiles = new Tile[30][50];
 		ArrayList<Colonist> colonists = new ArrayList<Colonist>();
-		boolean TESTINGMODE = true;
+		boolean TESTINGMODE = false;
 		if (TESTINGMODE){
 			model = Generator.generateTestMotherBoard(10, 10);
 		}else{
