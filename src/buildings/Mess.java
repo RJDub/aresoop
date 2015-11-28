@@ -9,7 +9,7 @@ public class Mess extends Building implements Serializable {
 	public Mess(int r, int c){
 		super(r,c);
 		super.setType(BuildingType.Mess);
-		super.setThirstBonus(0);
+		super.setThirstBonus(1000);
 		super.setFatigueBonus(0);
 		super.setHungerBonus(1000);
 	}

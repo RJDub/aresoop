@@ -103,7 +103,8 @@ public class MotherBoard extends Observable implements Serializable{
 	// the building if it is a storage building.
 	private void updateBuildings() {
 		for (Building building : buildings) {
-			if (building.getType() == BuildingType.Storage) {
+			switch(building.getType()){
+			case Storage:
 				for (Colonist colonist : colonists) {
 					if (colonist.getR() == building.getR() && colonist.getC() == building.getC()) {
 						int amount = colonist.withdrawResources();
@@ -111,6 +112,31 @@ public class MotherBoard extends Observable implements Serializable{
 						((StorageBuilding) building).depositResource(amount, task);
 					}
 				}
+				break;
+			case Dormitory:
+				for (Colonist colonist : colonists) {
+					if (colonist.getR() == building.getR() && colonist.getC() == building.getC() && colonist.getAction()==Action.FindSleep) {
+						colonist.incrementFatigueLevel(((Dormitory)building).getFatigueBonus()); 
+					}
+				}
+				break;
+			case Mess:
+				for (Colonist colonist : colonists) {
+					switch (colonist.getAction()){
+					case FindFood:
+						if (colonist.getR() == building.getR() && colonist.getC() == building.getC())
+							colonist.incrementHungerLevel(((Mess)building).getHungerBonus()); 
+						break;
+					case FindWater:
+						if (colonist.getR() == building.getR() && colonist.getC() == building.getC())
+							colonist.incrementThirstLevel(((Mess)building).getThirstBonus()); 
+						break;
+					default:
+						break;
+					}
+				}		
+			default:
+			
 			}
 		}
 

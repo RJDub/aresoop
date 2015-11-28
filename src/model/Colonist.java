@@ -31,9 +31,12 @@ public class Colonist implements Serializable {
 		r = row;
 		c = column;
 		thirst = 1000;
+		thirst_threshold = 200;
 		hunger = 1000;
+		hunger_threshold = 200;
 		fatigue = 1000;
 		fatigue_threshold = 200;
+		
 		resourceAmount = 0;
 		capacity = 5;
 		items = null;

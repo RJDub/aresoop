@@ -84,6 +84,14 @@ public class Generator implements Serializable {
 		model.addBuilding(new Dormitory(4, 4));
 		model.addBuilding(new Mess(4, 5));
 		model.addBuilding(new StorageBuilding(5	, 9));
+		model.getArrColonists().get(0).incrementFatigueLevel(-801);
+		model.getArrColonists().get(1).incrementHungerLevel(-801);
+		model.getArrColonists().get(2).incrementHungerLevel(-801);
+		model.getArrColonists().get(2).incrementFatigueLevel(-801);
+		model.getArrColonists().get(3).incrementHungerLevel(-799);
+		model.getArrColonists().get(3).incrementThirstLevel(-799);
+		model.getArrColonists().get(3).incrementFatigueLevel(-799);
+		
 		return model;
 		
 	}
