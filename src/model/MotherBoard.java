@@ -25,6 +25,13 @@ public class MotherBoard extends Observable implements Serializable {
 		buildings = new ArrayList<Building>();
 		items = new ArrayList<Item>();
 	}
+	
+	public void update() {
+		updateColonists();
+		updateBuildings(); // TODO: finish this method.
+		setChanged();
+		notifyObservers(this);
+	}
 
 	public void addBuilding(Building b) {
 		buildings.add(b);
@@ -75,12 +82,7 @@ public class MotherBoard extends Observable implements Serializable {
 
 	}
 
-	public void update() {
-		updateColonists();
-		updateBuildings(); // TODO: finish this method.
-		setChanged();
-		notifyObservers(this);
-	}
+	
 
 	public void updateColonists() {
 		for (Colonist colonist : colonists) {
