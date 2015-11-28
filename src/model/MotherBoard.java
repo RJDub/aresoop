@@ -33,6 +33,14 @@ public class MotherBoard extends Observable implements Serializable {
 		notifyObservers(this);
 	}
 
+	public void updateColonists() {
+		for (Colonist colonist : colonists) {
+			updateNeeds(colonist);
+			assignAction(colonist);
+			executeAction(colonist);
+		}
+	}
+	
 	public void addBuilding(Building b) {
 		buildings.add(b);
 	}
@@ -82,16 +90,6 @@ public class MotherBoard extends Observable implements Serializable {
 
 	}
 
-	
-
-	public void updateColonists() {
-		for (Colonist colonist : colonists) {
-			updateNeeds(colonist);
-			assignAction(colonist);
-			executeAction(colonist);
-		}
-	}
-
 	// this is where the building checks if a colonist is on it.
 	// if there is a colonist on this building, increase the
 	// appropriate need or unload all of the colonists cargo into
@@ -137,8 +135,11 @@ public class MotherBoard extends Observable implements Serializable {
 
 		}
 
-		else
-			col.setAction(Action.None);
+		else { // colonists needs are NOT met...
+			// decide which need should be fulfilled by colonist, and set action accordingly.
+			col.setNeedsAction();
+		}
+			
 	}
 
 	private Action makeDecisionOnMining(Colonist col, TileType resource) {
