@@ -1,12 +1,21 @@
 package model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Random;
 
 import enums.*;
 
 public class Generator implements Serializable {
 
+	public static ArrayList<Colonist> generateDefaultColonists(){
+		ArrayList<Colonist> result = new ArrayList<Colonist>();
+		result.add(new Colonist("Ryan", 0, 0));
+		result.add(new Colonist("Mark", 0,0));
+		result.add(new Colonist("Mingcheng", 0, 0));
+		result.add(new Colonist("Paul", 0, 0));
+		return result;
+	}
 	
 	public static Tile[][] generateMap(Tile[][] map){
 		for (int r = 0; r < map.length; r++){
