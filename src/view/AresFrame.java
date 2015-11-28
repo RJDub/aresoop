@@ -57,7 +57,7 @@ public class AresFrame extends JFrame {
 		// Tile[][] tiles = new Tile[100][100];
 		Tile[][] tiles = new Tile[30][50];
 
-		// model = new MotherBoard(colonists, Generator.generateMap(tiles));
+//		model = new MotherBoard(colonists, Generator.generateMap(tiles));
 		model = new MotherBoard(colonists, Generator.generateEasyMap(tiles));
 		model.getArrColonists().add(new Colonist("Paul", 0, 0));
 		model.getArrColonists().add(new Colonist("Mingcheng", 0, 0));
