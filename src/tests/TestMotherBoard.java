@@ -16,7 +16,29 @@ public class TestMotherBoard {
 	
 	@Test
 	public void testNeedsFulfillment(){
+		MotherBoard model = Generator.generateTestMotherBoard(10, 10);
+		Colonist thirsty= model.getArrColonists().get(2);
+		thirsty.incrementThirstLevel(-990);
+		assertEquals(199, thirsty.getFatigueLevel());
+		assertEquals(199, thirsty.getHungerLevel());
+		assertEquals(10,thirsty.getThirstLevel());
+		assertEquals(Action.None, thirsty.getAction());
+		model.update();
+		assertEquals(Action.FindSleep, thirsty.getAction());
+		thirsty.incrementFatigueLevel(800);
+		assertEquals(9,thirsty.getThirstLevel());
+		model.update();
+		assertEquals(Action.FindFood, thirsty.getAction());
+		thirsty.incrementHungerLevel(800);
+		assertEquals(997,thirsty.getHungerLevel());
 		
+		model.update();
+		assertEquals(Action.FindWater, thirsty.getAction());
+		thirsty.incrementThirstLevel(800);
+		assertEquals(807, thirsty.getThirstLevel());
+		
+		model.update();
+		assertEquals(Action.None, thirsty.getAction());
 	}
 
 	@Test
