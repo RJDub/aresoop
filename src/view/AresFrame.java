@@ -173,7 +173,7 @@ public class AresFrame extends JFrame {
 		colonistPanel.setBackground(Color.RED);
 		colonistPanel.getTable().addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				if (e.getClickCount() == 2) {
+				if (e.getClickCount() == 1) {
 					int index = colonistPanel.getTable().getSelectedRow();
 					if (index >= 0 && index < model.getArrColonists().size())
 						hud.setDisplayableObject(new DisplayableColonist(model.getArrColonists().get(index)));
