@@ -27,7 +27,7 @@ public class Map {
 		ArrayList<Node> visited2 = getVisited();
 		tiles = t;
 		Node current = new Node(start_row, start_col, null);
-		visited.add(current);
+		//visited.add(current);
 		queue.add(current);
 		while (!queue.isEmpty()){
 			current = queue.remove(0);
@@ -56,7 +56,7 @@ public class Map {
 		ArrayList<Node> visited2 = getVisited();
 		tiles = t;
 		Node current = new Node(start_row, start_col, null);
-		visited.add(current);
+//		visited.add(current);
 		queue.add(current);
 		while (!queue.isEmpty()){
 			current = queue.remove(0);

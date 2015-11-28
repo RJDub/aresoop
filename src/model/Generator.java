@@ -88,6 +88,10 @@ public class Generator implements Serializable {
 		model.getArrColonists().get(1).incrementHungerLevel(-801);
 		model.getArrColonists().get(2).incrementHungerLevel(-801);
 		model.getArrColonists().get(2).incrementFatigueLevel(-801);
+		model.getArrColonists().get(3).incrementHungerLevel(-799);
+		model.getArrColonists().get(3).incrementThirstLevel(-799);
+		model.getArrColonists().get(3).incrementFatigueLevel(-799);
+		
 		return model;
 		
 	}
