@@ -48,30 +48,68 @@ public class AresFrame extends JFrame {
 	private Timer timer;
 
 	public static void main(String[] args) {
-
-		ArrayList<Colonist> colonists = new ArrayList<Colonist>();
-		boolean TESTINGMODE = false;
-		if (TESTINGMODE) {
-			Tile[][] tiles = new Tile[30][50];
-			model = Generator.generateTestMotherBoard(10, 10);
-		} else {
-			Tile[][] tiles = new Tile[100][100];
-			model = new MotherBoard(colonists, Generator.generateEasyMap(tiles));
-			model.getArrColonists().add(new Colonist("Paul", 0, 0));
-			model.getArrColonists().add(new Colonist("Mingcheng", 0, 0));
-			model.addBuilding(new Dormitory(4, 4));
-			model.addBuilding(new Mess(4, 5));
-			model.addBuilding(new StorageBuilding(8, 1));
-		}
-
 		AresFrame window = new AresFrame();
 		window.setVisible(true);
 	}
 
 	public AresFrame() {
+
+		this.addWindowListener(new MyWindowListener());
+		
+//		Tile[][] tiles = new Tile[100][100];
+//		model = new MotherBoard(colonists, Generator.generateMap(tiles));
+		// Tile[][] tiles = new Tile[100][100];
+		// model = new MotherBoard(colonists, Generator.generateMap(tiles));
+
+
+		Tile[][] tiles = new Tile[30][50];
+		ArrayList<Colonist> colonists = new ArrayList<Colonist>();
+		boolean TESTINGMODE = false;
+		if (TESTINGMODE) {
+			//Tile[][] tiles = new Tile[30][50];
+			model = Generator.generateTestMotherBoard(10, 10);
+		} else {
+			
+			if (model == null){
+				int decision = JOptionPane.showConfirmDialog(AresFrame.this, "Do you want to load your saved game?");
+				if (decision == JOptionPane.YES_OPTION) {
+					ObjectInputStream objStr = null;
+					try {
+						FileInputStream stream = new FileInputStream("SavedModelState");
+						objStr = new ObjectInputStream(stream);
+						model = (MotherBoard) objStr.readObject();
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					} catch (ClassNotFoundException e1) {
+						System.err.println("Found something other than motherboard");
+						e1.printStackTrace();
+					} finally {
+						try {
+							if (objStr != null) {
+								objStr.close();
+							}
+						} catch (IOException e1) {
+							System.err.println("File did not close.");
+							e1.printStackTrace();
+						}
+					}
+				} else {
+					model = new MotherBoard(colonists, Generator.generateEasyMap(tiles));		
+					model.getArrColonists().add(new Colonist("Paul", 0, 0));
+					model.getArrColonists().add(new Colonist("Mingcheng", 0, 0));
+					model.addBuilding(new Dormitory(4, 4));
+					model.addBuilding(new Mess(4, 5));
+					model.addBuilding(new StorageBuilding(8, 1));
+				}
+			}
+		} 
+		
+
 		layoutGUI();
 		setupModelAndTimer();
 		registerListeners();
+		
+		timer.start();
 	}
 
 	private void layoutGUI() {
@@ -136,9 +174,10 @@ public class AresFrame extends JFrame {
 		// ColonistRowSelectListener());
 		hud.getPlay().addActionListener(new PlayPauseActionListener());
 		map.addMouseListener(new MapPanelClickedActionListener());
-		// buildings.getBuildingList().addMouseListener(new
-		// BuildingRowSelectListener());
-		this.addWindowListener(new MyWindowListener());
+
+//		buildings.getBuildingList().addMouseListener(new BuildingRowSelectListener());
+		
+
 
 	}
 
@@ -303,31 +342,32 @@ public class AresFrame extends JFrame {
 
 		@Override
 		public void windowOpened(WindowEvent e) {
-			int decision = JOptionPane.showConfirmDialog(AresFrame.this, "Do you want to load your saved game?");
-			if (decision == JOptionPane.YES_OPTION) {
-				ObjectInputStream objStr = null;
-				try {
-					FileInputStream stream = new FileInputStream("SavedModelState");
-					objStr = new ObjectInputStream(stream);
-					model = (MotherBoard) objStr.readObject();
-					sendModelToPanels();
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				} catch (ClassNotFoundException e1) {
-					System.err.println("Found something other than motherboard");
-					e1.printStackTrace();
-				} finally {
-					try {
-						if (objStr != null) {
-							objStr.close();
-						}
-					} catch (IOException e1) {
-						System.err.println("File did not close.");
-						e1.printStackTrace();
-					}
-				}
-			}
-			timer.start();
+
+//			int decision = JOptionPane.showConfirmDialog(AresFrame.this, "Do you want to load your saved game?");
+//			if (decision == JOptionPane.YES_OPTION) {
+//				ObjectInputStream objStr = null;
+//				try {
+//					FileInputStream stream = new FileInputStream("SavedModelState");
+//					objStr = new ObjectInputStream(stream);
+//					model = (MotherBoard) objStr.readObject();
+//				} catch (IOException e1) {
+//					e1.printStackTrace();
+//				} catch (ClassNotFoundException e1) {
+//					System.err.println("Found something other than motherboard");
+//					e1.printStackTrace();
+//				} finally {
+//					try {
+//						if (objStr != null) {
+//							objStr.close();
+//						}
+//					} catch (IOException e1) {
+//						System.err.println("File did not close.");
+//						e1.printStackTrace();
+//					}
+//				}
+//			}
+//			timer.start();
+
 		}
 
 		// public int[] getTileCoordinates(int pixel_x, int pixel_y) {
