@@ -58,8 +58,6 @@ public class AresFrame extends JFrame {
 		
 //		Tile[][] tiles = new Tile[100][100];
 //		model = new MotherBoard(colonists, Generator.generateMap(tiles));
-		
-
 		// Tile[][] tiles = new Tile[100][100];
 		// model = new MotherBoard(colonists, Generator.generateMap(tiles));
 
@@ -68,9 +66,9 @@ public class AresFrame extends JFrame {
 		ArrayList<Colonist> colonists = new ArrayList<Colonist>();
 		boolean TESTINGMODE = false;
 		if (TESTINGMODE) {
+			//Tile[][] tiles = new Tile[30][50];
 			model = Generator.generateTestMotherBoard(10, 10);
-
-		}else{
+		} else {
 			
 			if (model == null){
 				int decision = JOptionPane.showConfirmDialog(AresFrame.this, "Do you want to load your saved game?");
@@ -271,6 +269,25 @@ public class AresFrame extends JFrame {
 		items.updateItemList(model.getArrItems());
 
 	}
+	
+	private void updateView() {
+		colonistPanel.update(model.getArrColonists());
+		// updateHud();
+	}
+
+	private void updateHud() {
+		int rowSelected = colonistPanel.getTable().getSelectedRow();
+		if (rowSelected < 0) {
+			// Do nothing
+		} else {
+			Colonist refColonist = null;
+			for (Colonist thisColonist : model.getArrColonists()) {
+				if (thisColonist.getName().equals(colonistPanel.getData()[rowSelected][0]))
+					refColonist = thisColonist;
+			}
+			hud.colonistSelected(refColonist);
+		}
+	}
 
 	private class OurTimerListener implements ActionListener {
 
@@ -282,64 +299,44 @@ public class AresFrame extends JFrame {
 				updateView();
 			}
 		}
-
-		private void updateView() {
-			colonistPanel.update(model.getArrColonists());
-			// updateHud();
-		}
-
-		private void updateHud() {
-			int rowSelected = colonistPanel.getTable().getSelectedRow();
-			if (rowSelected < 0) {
-				// Do nothing
-			} else {
-				Colonist refColonist = null;
-				for (Colonist thisColonist : model.getArrColonists()) {
-					if (thisColonist.getName().equals(colonistPanel.getData()[rowSelected][0]))
-						refColonist = thisColonist;
-				}
-				hud.colonistSelected(refColonist);
-			}
-		}
-
 	}
 
-	private class ColonistRowSelectListener extends MouseAdapter {
+//	private class ColonistRowSelectListener extends MouseAdapter {
+//
+//		@Override
+//		public void mouseClicked(MouseEvent e) {
+//			int rowSelected = colonistPanel.getTable().getSelectedRow();
+//			if (rowSelected < 0) {
+//			} else {
+//				Colonist refColonist = null;
+//				for (Colonist thisColonist : model.getArrColonists()) {
+//					if (thisColonist.getName().equals(colonistPanel.getData()[rowSelected][0]))
+//						refColonist = thisColonist;
+//				}
+//				hud.setDisplayableObject(new DisplayableColonist(refColonist));
+//				hud.colonistSelected(refColonist);
+//			}
+//		}
+//	}
 
-		@Override
-		public void mouseClicked(MouseEvent e) {
-			int rowSelected = colonistPanel.getTable().getSelectedRow();
-			if (rowSelected < 0) {
-			} else {
-				Colonist refColonist = null;
-				for (Colonist thisColonist : model.getArrColonists()) {
-					if (thisColonist.getName().equals(colonistPanel.getData()[rowSelected][0]))
-						refColonist = thisColonist;
-				}
-				hud.setDisplayableObject(new DisplayableColonist(refColonist));
-				hud.colonistSelected(refColonist);
-			}
-		}
-	}
-
-	private class BuildingRowSelectListener extends MouseAdapter {
-
-		@Override
-		public void mouseClicked(MouseEvent e) {
-			int rowSelected = BuildingPanel.getBuildingList().getSelectedIndex();
-			Building refBuilding = null;
-			if (rowSelected < 0) {
-				// Do nothing
-			} else {
-				for (Building thisBuilding : model.getArrBuildings()) {
-					if (thisBuilding.getType().equals(buildings.getArrBuildings().get(rowSelected).getType()))
-						refBuilding = thisBuilding;
-				}
-			}
-			System.out.println(refBuilding.toString());
-			hud.buildingSelected(refBuilding);
-		}
-	}
+//	private class BuildingRowSelectListener extends MouseAdapter {
+//
+//		@Override
+//		public void mouseClicked(MouseEvent e) {
+//			int rowSelected = BuildingPanel.getBuildingList().getSelectedIndex();
+//			Building refBuilding = null;
+//			if (rowSelected < 0) {
+//				// Do nothing
+//			} else {
+//				for (Building thisBuilding : model.getArrBuildings()) {
+//					if (thisBuilding.getType().equals(buildings.getArrBuildings().get(rowSelected).getType()))
+//						refBuilding = thisBuilding;
+//				}
+//			}
+//			System.out.println(refBuilding.toString());
+//			hud.buildingSelected(refBuilding);
+//		}
+//	}
 
 	private class MyWindowListener extends WindowAdapter {
 
@@ -373,11 +370,11 @@ public class AresFrame extends JFrame {
 
 		}
 
-		public int[] getTileCoordinates(int pixel_x, int pixel_y) {
-			int display_height = map.getHeight();
-			int display_width = map.getWidth();
-			return null;
-		}
+		// public int[] getTileCoordinates(int pixel_x, int pixel_y) {
+		// int display_height = map.getHeight();
+		// int display_width = map.getWidth();
+		// return null;
+		// }
 
 		@Override
 		public void windowClosing(WindowEvent e) {
