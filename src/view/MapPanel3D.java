@@ -31,6 +31,7 @@ public class MapPanel3D extends JPanel implements Observer{
 	private final int WINDOW_COL_COUNT = 20;
 	private final int X_INCREMENT = 50;
 	private final int Y_INCREMENT = 50;
+	
 	private final int Y_OFFSET = 25;
 	private int MAX_ROW_COUNT;
 	private int MAX_COL_COUNT;
@@ -147,25 +148,29 @@ public class MapPanel3D extends JPanel implements Observer{
 		
 		
 	}
-	
 	public void setSelectedRowCol(int r, int c){
-		if ((r > WINDOW_ROW_COUNT/2)){
-			if (r < (MAX_ROW_COUNT-(WINDOW_ROW_COUNT/2)))
-				selected_row = r;
-			else
-				selected_row = MAX_ROW_COUNT-(WINDOW_ROW_COUNT/2);
-		} else 
-			selected_row = WINDOW_ROW_COUNT/2;
-		
-		if (c > WINDOW_COL_COUNT/2){
-				if( c < (MAX_COL_COUNT-(WINDOW_COL_COUNT/2)))
-					selected_col = c;
-				else
-					selected_col = MAX_COL_COUNT-(WINDOW_COL_COUNT/2);
-		} else
-			selected_col = WINDOW_COL_COUNT/2;
-		
+		selected_row = r;
+		selected_col = c;
 	}
+	
+//	public void setSelectedRowCol(int r, int c){
+//		if ((r > WINDOW_ROW_COUNT/2)){
+//			if (r < (MAX_ROW_COUNT-(WINDOW_ROW_COUNT/2)))
+//				selected_row = r;
+//			else
+//				selected_row = MAX_ROW_COUNT-(WINDOW_ROW_COUNT/2);
+//		} else 
+//			selected_row = WINDOW_ROW_COUNT/2;
+//		
+//		if (c > WINDOW_COL_COUNT/2){
+//				if( c < (MAX_COL_COUNT-(WINDOW_COL_COUNT/2)))
+//					selected_col = c;
+//				else
+//					selected_col = MAX_COL_COUNT-(WINDOW_COL_COUNT/2);
+//		} else
+//			selected_col = WINDOW_COL_COUNT/2;
+//		
+//	}
 	private void drawArrBuildings(Graphics2D g2){
 		for(Building b: mobo.getArrBuildings()){
 			BuildingType bt = b.getType();
@@ -257,6 +262,18 @@ public class MapPanel3D extends JPanel implements Observer{
 			}
 			
 		}
+		
+	}
+
+	public void setSelectedRowColFromPixel(int x, int y) {
+		int window_x_offset = 0;
+		int window_y_offset = 25;
+		System.out.println("Clicked: "+x+", " + y);
+		int col = (x-window_x_offset)/X_INCREMENT + selected_col;
+		int row = (int) (y/Y_OFFSET) + selected_row;
+		System.out.println("Clicked row"+row+", col:" + col);
+		
+		setSelectedRowCol(row,col);
 		
 	}
 	
