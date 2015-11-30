@@ -36,7 +36,7 @@ public class AresFrame extends JFrame {
 	private static final int screen_width = (int) Math.round(screenSize.width);
 
 	private JScrollPane mapPane;
-	private MapPanel map;
+	private MapPanel3D map;
 	private ColonistPanel colonistPanel;
 	private DisplayPanel hud;
 	private JPanel selector;
@@ -118,7 +118,7 @@ public class AresFrame extends JFrame {
 		view = new JPanel();
 		setupView();
 
-		map = new MapPanel(model);
+		map = new MapPanel3D(model);
 		setupMapPanel();
 		mapPane = new JScrollPane(map);
 
