@@ -181,7 +181,8 @@ public class MotherBoard extends Observable implements Serializable{
 		if (!col.hasCapacityToMineResources()) {
 //			if (col.getPath() == null) constructResourcePath(col, resource);
 //			if at building
-			if(col.isAtBuilding(buildings)){
+			if(col.isAtStorageBuilding(buildings)){
+			//if(col.isAtBuilding(buildings)){
 				return Action.UnloadCargo;
 			}
 			else

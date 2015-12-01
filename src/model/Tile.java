@@ -32,4 +32,9 @@ public class Tile implements Serializable{
 	public void setType(TileType in){
 		type = in;
 	}
+	
+	@Override 
+	public String toString(){
+		return this.type.toString();
+	}
 }

@@ -225,12 +225,15 @@ public class TestMotherBoard {
 		
 		model.update();
 		
-	
-		assertEquals(2, paul.getResourceAmount());
+		
+		assertEquals(0, paul.getResourceAmount());
 		model.update();
-		assertEquals(3,paul.getResourceAmount());
+		System.out.println(paul.toString());
 		model.update();
 		model.update();
+		printBuildings(model.getArrBuildings());
+		System.out.print("Tile at Row: "+ 3+ " Col: "+ 3 + " type: "+ model.getTileAtLocation(3, 3).toString());
+		assertEquals(0,paul.getResourceAmount());
 		// moving to storage? hopefully? storage at 5, 8
 		//Currently at 3,5
 	
@@ -295,5 +298,10 @@ public class TestMotherBoard {
 		assertEquals(0, model.getArrItems().size());
 		
 	}
-
+	
+	public static void printBuildings(ArrayList<Building> buildings){
+		for (Building b: buildings){
+			System.out.println(b.toString());
+		}
+	}
 }

@@ -105,22 +105,22 @@ public class MapPanel3D extends JPanel implements Observer{
 		super.paintComponent(g);
 		
 		
-		int offset_col = selected_col-WINDOW_COL_COUNT/2;
-		int offset_row = selected_row-WINDOW_ROW_COUNT/2;
+		int offset_col = selected_col;//-WINDOW_COL_COUNT/2;
+		int offset_row = selected_row;//-WINDOW_ROW_COUNT/2;
 		Graphics2D g2 = (Graphics2D) g;
 		for (int row = 0; row < mobo.getBoardHeight(); row++){
 			for (int col = 0; col < mobo.getBoardWidth(); col++){
 				if (isInTheWindow(row,col)){
-					g2.drawImage(drawTile(row,col), (col-offset_col)*X_INCREMENT, (row-offset_row)*Y_OFFSET, null);
+					g2.drawImage(drawTile(row,col), (col-offset_col+WINDOW_COL_COUNT/2)*X_INCREMENT, (row-offset_row+WINDOW_ROW_COUNT/2)*Y_OFFSET, null);
 					for(Building b: mobo.getArrBuildings()){
 						BuildingType bt = b.getType();
 						if((b.getR()==row) && (b.getC()==col)){
-								g2.drawImage(drawBuilding(bt), (col-offset_col)*X_INCREMENT, (row-offset_row)*Y_OFFSET, null);
+								g2.drawImage(drawBuilding(bt), (col-offset_col+WINDOW_COL_COUNT/2)*X_INCREMENT, (row-offset_row+WINDOW_ROW_COUNT/2)*Y_OFFSET, null);
 						}
 					}
 					for (Colonist c: mobo.getArrColonists()){
 						if((c.getR()==row) && (c.getC()==col)){
-								g2.drawImage(drawColonist(), (col-offset_col)*X_INCREMENT, (row-offset_row)*Y_OFFSET, null);
+								g2.drawImage(drawColonist(), (col-offset_col+WINDOW_COL_COUNT/2)*X_INCREMENT, (row-offset_row+WINDOW_ROW_COUNT/2)*Y_OFFSET, null);
 						}
 						 
 					}
@@ -148,29 +148,30 @@ public class MapPanel3D extends JPanel implements Observer{
 		
 		
 	}
-	public void setSelectedRowCol(int r, int c){
-		selected_row = r ;
-		selected_col = c ;
-	}
-	
 //	public void setSelectedRowCol(int r, int c){
-//		if ((r > WINDOW_ROW_COUNT/2)){
-//			if (r < (MAX_ROW_COUNT-(WINDOW_ROW_COUNT/2)))
-//				selected_row = r;
-//			else
-//				selected_row = MAX_ROW_COUNT-(WINDOW_ROW_COUNT/2);
-//		} else 
-//			selected_row = WINDOW_ROW_COUNT/2;
-//		
-//		if (c > WINDOW_COL_COUNT/2){
-//				if( c < (MAX_COL_COUNT-(WINDOW_COL_COUNT/2)))
-//					selected_col = c;
-//				else
-//					selected_col = MAX_COL_COUNT-(WINDOW_COL_COUNT/2);
-//		} else
-//			selected_col = WINDOW_COL_COUNT/2;
-//		
+//		selected_row = r ;
+//		selected_col = c ;
 //	}
+	
+	public void setSelectedRowCol(int r, int c){
+		if ((r > WINDOW_ROW_COUNT/2)){
+			if (r < (MAX_ROW_COUNT-(WINDOW_ROW_COUNT/2)))
+				selected_row = r;
+			else
+				selected_row = MAX_ROW_COUNT-(WINDOW_ROW_COUNT/2);
+		} else 
+			selected_row = WINDOW_ROW_COUNT/2;
+		
+		if (c > WINDOW_COL_COUNT/2){
+				if( c < (MAX_COL_COUNT-(WINDOW_COL_COUNT/2)))
+					selected_col = c;
+				else
+					selected_col = MAX_COL_COUNT-(WINDOW_COL_COUNT/2);
+		} else
+			selected_col = WINDOW_COL_COUNT/2;
+			System.out.println("Selected Row: "+ selected_row);
+			System.out.println("Selected Col: "+ selected_col);
+	}
 	private void drawArrBuildings(Graphics2D g2){
 		for(Building b: mobo.getArrBuildings()){
 			BuildingType bt = b.getType();
@@ -267,22 +268,27 @@ public class MapPanel3D extends JPanel implements Observer{
 
 	public void setSelectedRowColFromPixel(int x, int y) {
 		int window_x_offset = 0;
-		int window_y_offset = 25;
+		int window_y_offset = 0;
+		y-=25;
 		System.out.println("Clicked: "+x+", " + y);
-		int col = (x-window_x_offset)/X_INCREMENT + selected_col;
-		int row = (int) (y/Y_OFFSET) + selected_row;
+		int col = (int)(x)/X_INCREMENT-1;
+		int row = (int) (y/Y_OFFSET)-1;
 		System.out.println("Clicked row"+row+", col:" + col);
+		System.out.println("selected_row: "+selected_row+", selected_col: "+selected_col);
+		int delta_row = row-selected_row;
+		int delta_col = col-selected_col;
+		setSelectedRowCol(row+delta_row,col+delta_col);
 		
-		setSelectedRowCol(row,col);
+				//setSelectedRowCol(row,col);
 		
 	}
 	
 	private boolean isInTheWindow(int row, int col){
-		int row_offset = selected_row - WINDOW_ROW_COUNT/2;
-		int col_offset = selected_col - WINDOW_COL_COUNT/2;
+		int row_offset = selected_row/2;// - WINDOW_ROW_COUNT/2;
+		int col_offset = selected_col/2;// - WINDOW_COL_COUNT/2;
 		
-		boolean inRow = (row < row_offset + WINDOW_ROW_COUNT) && (row > row_offset);
-		boolean inCol = (col < col_offset + WINDOW_COL_COUNT) && (col > col_offset);
+		boolean inRow = (row < selected_row + WINDOW_ROW_COUNT/2) && (row > selected_row - WINDOW_ROW_COUNT/2);
+		boolean inCol = (col < selected_col + WINDOW_COL_COUNT/2) && (col > selected_col - WINDOW_COL_COUNT/2);
 		return inRow && inCol;
 	}
 	
