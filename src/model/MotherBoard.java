@@ -347,10 +347,21 @@ public class MotherBoard extends Observable implements Serializable{
 		return total;
 	}
 	
-	public boolean updateIronTotal(int amt){
-		if (amt >= getIronTotal()){
+	public boolean withdrawIronTotal(int amt){
+		if (amt <= getIronTotal()){
+			for (Building b: buildings){
+				if (b.getType()==BuildingType.Storage){
+					if (amt <= ((StorageBuilding) b).getIronOreAmount()){
+						((StorageBuilding) b).withdrawIronOre(amt);
+						amt = 0;
+					} else {
+						int temp_amount = ((StorageBuilding) b).getIronOreAmount();
+						((StorageBuilding) b).withdrawIronOre(temp_amount);
+						amt -= temp_amount;
+					}
+				}
+			}
 			return true;
-			// waiting for StorageBuilding.withdraw(amt) method.
 		}
 		return false;
 	}
