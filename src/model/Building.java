@@ -59,6 +59,6 @@ public abstract class Building implements Serializable {
 	
 	@Override
 	public String toString(){
-		return type.toString(); 
+		return type.toString()+ " Row: "+this.getR()+ " Col: "+this.getC(); 
 	}
 }
