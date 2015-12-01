@@ -84,12 +84,9 @@ public class MapPanel3D extends JPanel implements Observer{
 		this.setLayout(null);
 		this.add(buttons_panel);
 		
-		setSelectedRowCol(0,0);
-		
+		setSelectedRowCol(0,0);	
 		
 	}
-	
-
 
 	// draws the board
 	public void drawBoard() {
@@ -127,32 +124,9 @@ public class MapPanel3D extends JPanel implements Observer{
 					
 				}
 			}
-		}
-//		drawArrBuildings(g2);
-
-//		for(Building b: mobo.getArrBuildings()){
-//			BuildingType bt = b.getType();
-//			int row = b.getR();
-//			int col = b.getC();
-//			if ((row < WINDOW_ROW_COUNT+offset_row) && (row > offset_row - WINDOW_ROW_COUNT) && (col < WINDOW_COL_COUNT + offset_col) && (col > offset_col - WINDOW_COL_COUNT))
-//					g2.drawImage(drawBuilding(bt), (col-offset_col)*X_INCREMENT, (row-offset_row)*Y_OFFSET, null);
-//		}
-//		for (Colonist c: mobo.getArrColonists()){
-//			int row = c.getR();
-//			int col = c.getC();
-//			if ((row < WINDOW_ROW_COUNT+offset_row) && (row > offset_row - WINDOW_ROW_COUNT) && (col < WINDOW_COL_COUNT + offset_col) && (col > offset_col - WINDOW_COL_COUNT))
-//				g2.drawImage(drawColonist(), (col-offset_col)*X_INCREMENT, (row-offset_row)*Y_OFFSET, null);
-//			 
-//		}
-//		drawArrColonists(g2);
-		
-		
+		}	
 	}
-//	public void setSelectedRowCol(int r, int c){
-//		selected_row = r ;
-//		selected_col = c ;
-//	}
-	
+
 	public void setSelectedRowCol(int r, int c){
 		if ((r > WINDOW_ROW_COUNT/2)){
 			if (r < (MAX_ROW_COUNT-(WINDOW_ROW_COUNT/2)))
@@ -227,8 +201,6 @@ public class MapPanel3D extends JPanel implements Observer{
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		mobo = (MotherBoard) arg0;
-		// do calculations
-		// colonists = newMB.colonists;
 		repaint();
 		
 	}
@@ -270,17 +242,14 @@ public class MapPanel3D extends JPanel implements Observer{
 		int window_x_offset = 0;
 		int window_y_offset = 0;
 		y-=25;
-		System.out.println("Clicked: "+x+", " + y);
+//		System.out.println("Clicked: "+x+", " + y);
 		int col = (int)(x)/X_INCREMENT-1;
 		int row = (int) (y/Y_OFFSET)-1;
-		System.out.println("Clicked row"+row+", col:" + col);
-		System.out.println("selected_row: "+selected_row+", selected_col: "+selected_col);
+//		System.out.println("Clicked row"+row+", col:" + col);
+//		System.out.println("selected_row: "+selected_row+", selected_col: "+selected_col);
 		int delta_row = row-selected_row;
 		int delta_col = col-selected_col;
-		setSelectedRowCol(row+delta_row,col+delta_col);
-		
-				//setSelectedRowCol(row,col);
-		
+		setSelectedRowCol(row+delta_row,col+delta_col);	
 	}
 	
 	private boolean isInTheWindow(int row, int col){
