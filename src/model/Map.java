@@ -72,8 +72,11 @@ public class Map {
 				}
 			}
 		}
-		System.out.println("no destination found");
-		return null;
+		//System.out.println("no destination found");
+		int [] start = {start_row,start_col};
+		ArrayList<int[]>ret_array_list = new ArrayList<int[]>();
+		ret_array_list.add(start);
+		return ret_array_list;
 			
 	}
 	public static int[] findNextStep(int start_row, int start_col, int end_row, int end_col, Tile[][] t){
