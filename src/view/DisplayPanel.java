@@ -45,7 +45,7 @@ public class DisplayPanel extends JPanel implements Observer{
 
 	private void layoutGUI() {
 		// Start Info
-		temp = new JTextArea("\n\n\n\tSelect A Tile or A Colonist for More Information");
+		temp = new JTextArea("\n\n\n\tSelect Something for More Information");
 		temp.setEditable(false);
 		//temp.setPreferredSize(new Dimension((int) (Toolkit.getDefaultToolkit().getScreenSize().width * .333),(int) (Toolkit.getDefaultToolkit().getScreenSize().height * .27)));
 		setupButtonPanel();

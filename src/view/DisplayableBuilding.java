@@ -9,6 +9,7 @@ public class DisplayableBuilding implements DisplayableObject {
 	public DisplayableBuilding (Building b){
 		building = b;
 	}
+	
 	@Override
 	public String display() {
 		String result = building.toString()+'\n';

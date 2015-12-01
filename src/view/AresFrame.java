@@ -151,7 +151,8 @@ public class AresFrame extends JFrame {
 
 		// need Motherboard to return an ItemList
 		items = new ItemPanel(model.getArrItems());
-
+		setupItemPanel();
+		
 		selector.add(buildings);
 		selector.add(items);
 
@@ -221,11 +222,11 @@ public class AresFrame extends JFrame {
 		colonistPanel.setBackground(Color.RED);
 		colonistPanel.getTable().addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
+				buildings.getBuildingList().clearSelection();
 				if (e.getClickCount() == 1) {
 					int index = colonistPanel.getTable().getSelectedRow();
 					if (index >= 0 && index < model.getArrColonists().size())
 						hud.setDisplayableObject(new DisplayableColonist(model.getArrColonists().get(index)));
-					System.out.println("Double clicked on Item " + index);
 				}
 			}
 
@@ -253,13 +254,12 @@ public class AresFrame extends JFrame {
 		buildings.setSize((int) (screen_width * .333), (int) (screen_height * .13));
 		buildings.getBuildingList().addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				if (e.getClickCount() == 2) {
+				colonistPanel.getTable().clearSelection();
+				if (e.getClickCount() == 1) {
 					int index = buildings.getBuildingList().locationToIndex(e.getPoint());
 					Building b = buildings.getArrBuildings().get(index);
 					if (b != null)
 						hud.setDisplayableObject(new DisplayableBuilding(b));
-
-					System.out.println("Double clicked on Building Panel index " + index);
 				}
 			}
 		});
@@ -269,6 +269,16 @@ public class AresFrame extends JFrame {
 		items.setVisible(true);
 		items.setLocation(0, (int) (screenSize.height * .17));
 		items.setSize((int) (screen_width * .333), (int) (screen_height * .13));
+		items.getItemList().addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 1) {
+					int index = items.getItemList().locationToIndex(e.getPoint());
+					Item i = model.getArrItems().get(index);
+					if (i != null)
+						hud.setDisplayableObject(new DisplayableItem(i));
+				}
+			}
+		});
 	}
 
 	private void sendModelToPanels() {
@@ -433,6 +443,9 @@ public class AresFrame extends JFrame {
 				TaskPanel tasks = new TaskPanel();
 				JOptionPane.showMessageDialog(null,tasks,"Choose a Task",JOptionPane.INFORMATION_MESSAGE);
 			}
+			colonistPanel.getTable().clearSelection();
+			buildings.getBuildingList().clearSelection();
+			items.getItemList().clearSelection();
 		}
 	}
 	
@@ -447,12 +460,18 @@ public class AresFrame extends JFrame {
 				builder.addBuilding("Dormitory");
 			} else {
 				JOptionPane.showMessageDialog(null, "Gather more iron first!");
+				colonistPanel.getTable().clearSelection();
+				buildings.getBuildingList().clearSelection();
+				items.getItemList().clearSelection();
 				return;
 			}
 			if (amount > 10){
 				builder.addBuilding("Storage");
 			}
 			JOptionPane.showMessageDialog(null, builder, "Choose a building to be built", JOptionPane.INFORMATION_MESSAGE);
+			colonistPanel.getTable().clearSelection();
+			buildings.getBuildingList().clearSelection();
+			items.getItemList().clearSelection();
 		}
 	}
 
@@ -464,6 +483,9 @@ public class AresFrame extends JFrame {
 				map.setSelectedRowColFromPixel(arg0.getX(), arg0.getY());
 			}
 			hud.displayTileInformation(arg0.getX(), arg0.getY());
+			colonistPanel.getTable().clearSelection();
+			buildings.getBuildingList().clearSelection();
+			items.getItemList().clearSelection();
 		}
 	}
 	
