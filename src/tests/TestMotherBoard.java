@@ -15,6 +15,19 @@ import model.*;
 public class TestMotherBoard {
 	
 	@Test
+	public void testWithdrawIronTotal(){
+		MotherBoard model = Generator.generateTestMotherBoard(10, 10);
+		StorageBuilding storage = new StorageBuilding(4, 4);
+		
+		model.addBuilding(storage);
+		storage.depositResource(100, Task.MiningIronOre);
+		assertEquals(100, model.getIronTotal());
+		assertTrue(!model.withdrawIronTotal(101));
+		assertTrue(model.withdrawIronTotal(50));
+		assertEquals(50, model.getIronTotal());
+	}
+	
+	@Test
 	public void testNeedsFulfillment(){
 		MotherBoard model = Generator.generateTestMotherBoard(10, 10);
 		Colonist thirsty= model.getArrColonists().get(2);

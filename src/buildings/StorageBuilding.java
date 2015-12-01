@@ -36,4 +36,22 @@ public class StorageBuilding extends Building  implements Serializable {
 			ironOreAmount += amount;
 		}
 	}
+	
+	public boolean withdrawWater(int amount) {
+		if (amount<=waterAmount) {
+			waterAmount-=amount;
+			return true;
+		}
+		else
+			return false;
+	}
+	
+	public boolean withdrawIronOre(int amount) {
+		if (amount<=ironOreAmount) {
+			ironOreAmount-=amount;
+			return true;
+		}
+		else
+			return false;
+	}
 }

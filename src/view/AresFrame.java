@@ -32,6 +32,7 @@ import javax.swing.Timer;
 import EmailSearcher.EmailSearcher.JListListener;
 import buildings.*;
 import enums.*;
+import items.JackHammer;
 import model.*;
 
 public class AresFrame extends JFrame {
@@ -105,6 +106,8 @@ public class AresFrame extends JFrame {
 					model.addBuilding(new Dormitory(4, 4));
 					model.addBuilding(new Mess(4, 5));
 					model.addBuilding(new StorageBuilding(8, 1));
+					model.addItem(new JackHammer());
+					
 				}
 			}
 		} 
