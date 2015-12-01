@@ -17,9 +17,12 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Random;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -178,6 +181,7 @@ public class AresFrame extends JFrame {
 		// ColonistRowSelectListener());
 		hud.getPlay().addActionListener(new PlayPauseActionListener());
 		hud.getAssignTask().addActionListener(new AssignTaskListener());
+		hud.getConstruction().addActionListener(new BuildConstructListener());
 		map.addMouseListener(new MapPanelClickedActionListener());
 
 //		buildings.getBuildingList().addMouseListener(new BuildingRowSelectListener());
@@ -416,7 +420,6 @@ public class AresFrame extends JFrame {
 			} else
 				timer.start();
 		}
-
 	}
 	
 	private class AssignTaskListener implements ActionListener{
@@ -430,9 +433,27 @@ public class AresFrame extends JFrame {
 				TaskPanel tasks = new TaskPanel();
 				JOptionPane.showMessageDialog(null,tasks,"Choose a Task",JOptionPane.INFORMATION_MESSAGE);
 			}
-			
 		}
-		
+	}
+	
+	private class BuildConstructListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			int amount = model.getIronTotal();
+			BuilderPanel builder = new BuilderPanel();
+			if (amount > 5){
+				builder.addBuilding("Mess Hall");
+				builder.addBuilding("Dormitory");
+			} else {
+				JOptionPane.showMessageDialog(null, "Gather more iron first!");
+				return;
+			}
+			if (amount > 10){
+				builder.addBuilding("Storage");
+			}
+			JOptionPane.showMessageDialog(null, builder, "Choose a building to be built", JOptionPane.INFORMATION_MESSAGE);
+		}
 	}
 
 	private class MapPanelClickedActionListener extends MouseAdapter {
@@ -470,6 +491,52 @@ public class AresFrame extends JFrame {
 			iceOption.addActionListener(new IceListener());
 			ironOption.addActionListener(new IronListener());
 			unobOption.addActionListener(new UnobListener());
+		}
+	}
+	
+	private class BuilderPanel extends JPanel{
+		private JList<String> list;
+		private JButton select;
+		private DefaultListModel<String> buildable;
+		
+		public BuilderPanel(){
+			list = new JList<String>();
+			select = new JButton("Select");
+			add(list);
+			add(select);
+			buildable = new DefaultListModel<String>();
+			list.setModel(buildable);
+			
+			JListListener listener = new JListListener();
+			select.addActionListener(listener);
+		}
+		
+		public void addBuilding(String in){
+			buildable.addElement(in);
+			list.setModel(buildable);
+		}
+		
+		private class JListListener implements ActionListener{
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String type = list.getSelectedValue();
+				Random rand = new Random();
+				switch(type){
+				case "Mess Hall":
+					//TODO: figure out how to get location working better
+					model.getArrBuildings().add(new Mess(rand.nextInt(30), rand.nextInt(30)));
+					break;
+				case "Dormitory":
+					model.getArrBuildings().add(new Dormitory(rand.nextInt(30), rand.nextInt(30)));
+					break;
+				case "Storage":
+					model.getArrBuildings().add(new StorageBuilding(rand.nextInt(30), rand.nextInt(30)));
+					break;
+				default:
+					break;
+				}
+			}
 		}
 	}
 	
