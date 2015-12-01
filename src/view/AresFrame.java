@@ -420,8 +420,14 @@ public class AresFrame extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			TaskPanel tasks = new TaskPanel();
-			JOptionPane.showMessageDialog(null,tasks,"Choose a Task",JOptionPane.INFORMATION_MESSAGE);
+			int rowSelected = colonistPanel.getTable().getSelectedRow();
+			if (rowSelected < 0) {
+				JOptionPane.showMessageDialog(null, "Please select a colonist first");
+			} else {
+				TaskPanel tasks = new TaskPanel();
+				JOptionPane.showMessageDialog(null,tasks,"Choose a Task",JOptionPane.INFORMATION_MESSAGE);
+			}
+			
 		}
 		
 	}
