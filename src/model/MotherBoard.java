@@ -16,13 +16,19 @@ public class MotherBoard extends Observable implements Serializable{
 	private ArrayList<Item> items;
 
 	public MotherBoard(ArrayList<Colonist> cols, Tile[][] tiles) {
-		// tiles = new Tile[10][10];
 		colonists = cols;
 		map = tiles;
 		buildings = new ArrayList<Building>();
 		items = new ArrayList<Item>();
 	}
 	
+	public MotherBoard(Tile[][] tiles) {
+		colonists = new ArrayList<Colonist>();
+		map = tiles;
+		buildings = new ArrayList<Building>();
+		items = new ArrayList<Item>();
+	}
+
 	public void update() {
 		updateColonists();
 		updateBuildings(); // TODO: finish this method.
