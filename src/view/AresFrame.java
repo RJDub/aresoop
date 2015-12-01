@@ -29,7 +29,6 @@ import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.Timer;
 
-import EmailSearcher.EmailSearcher.JListListener;
 import buildings.*;
 import enums.*;
 import items.JackHammer;
@@ -441,7 +440,7 @@ public class AresFrame extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			int amount = getIronTotal();
+			int amount = model.getIronTotal();
 			BuilderPanel builder = new BuilderPanel();
 			if (amount > 5){
 				builder.addBuilding("Mess Hall");
