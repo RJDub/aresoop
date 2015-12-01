@@ -285,10 +285,13 @@ public class AresFrame extends JFrame {
 					if (i != null)
 						hud.setDisplayableObject(new DisplayableItem(i));
 				}
+				else if (e.getClickCount() == 2) {
+					AssignItemToColonistDialog a = new AssignItemToColonistDialog(e);
+				}
 			}
 		});
 	}
-
+	
 	private void sendModelToPanels() {
 		map.updateBoard(model);
 		colonistPanel.updateColonistList(model.getArrColonists());
@@ -579,6 +582,32 @@ public class AresFrame extends JFrame {
 					JOptionPane.showMessageDialog(null, "ERROR! No name inputed by user. Enter a name!");
 				}
 			}
+		}
+	}
+	
+	private class AssignItemToColonistDialog extends JDialog {
+		public AssignItemToColonistDialog(MouseEvent e){
+			Colonist refColonist = null;
+			Item refItem = null;
+			int indexOfC = colonistPanel.getTable().getSelectedRow();
+			if (indexOfC >= 0 && indexOfC < model.getArrColonists().size()) {
+				refColonist = model.getArrColonists().get(indexOfC);
+			}
+			int indexOfI = items.getItemList().locationToIndex(e.getPoint());
+			refItem = model.getArrItems().get(indexOfI);
+			
+			if (refColonist != null && refItem != null) {
+				refColonist.addItem(refItem);
+				JOptionPane.showMessageDialog(null, "Assign Item to Colonist successfully!");
+				//TODO do somethings to the model
+				model.getArrItems().remove(indexOfI);
+			}
+			else {
+				JOptionPane.showMessageDialog(null, "Please Select a Colonist first!");
+			}
+			colonistPanel.getTable().clearSelection();
+			buildings.getBuildingList().clearSelection();
+			items.getItemList().clearSelection();
 		}
 	}
 }
