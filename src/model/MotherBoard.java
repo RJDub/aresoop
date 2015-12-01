@@ -51,7 +51,7 @@ public class MotherBoard extends Observable implements Serializable{
 		}
 	}
 	
-
+	
 	public void addItem(Item i) {
 		items.add(i);
 	}

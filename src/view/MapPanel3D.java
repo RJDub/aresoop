@@ -27,12 +27,14 @@ import enums.TileType;
 import model.*;
 
 public class MapPanel3D extends JPanel implements Observer{
-	private final int WINDOW_ROW_COUNT = 15;
+	private final int WINDOW_ROW_COUNT = 20;
 	private final int WINDOW_COL_COUNT = 20;
+	
 	private final int X_INCREMENT = 50;
 	private final int Y_INCREMENT = 50;
 	
 	private final int Y_OFFSET = 25;
+	
 	private int MAX_ROW_COUNT;
 	private int MAX_COL_COUNT;
 	
@@ -82,8 +84,8 @@ public class MapPanel3D extends JPanel implements Observer{
 		this.setLayout(null);
 		this.add(buttons_panel);
 		
-		selected_row =0;
-		selected_col =0;
+		setSelectedRowCol(0,0);
+		
 		
 	}
 	
@@ -103,23 +105,21 @@ public class MapPanel3D extends JPanel implements Observer{
 		super.paintComponent(g);
 		
 		
-		int offset_col = selected_col;
-		int offset_row = selected_row;
+		int offset_col = selected_col-WINDOW_COL_COUNT/2;
+		int offset_row = selected_row-WINDOW_ROW_COUNT/2;
 		Graphics2D g2 = (Graphics2D) g;
 		for (int row = 0; row < mobo.getBoardHeight(); row++){
 			for (int col = 0; col < mobo.getBoardWidth(); col++){
-				if ((row < WINDOW_ROW_COUNT+offset_row) && (row > offset_row - WINDOW_ROW_COUNT) && (col < WINDOW_COL_COUNT + offset_col) && (col > offset_col - WINDOW_COL_COUNT)){
+				if (isInTheWindow(row,col)){
 					g2.drawImage(drawTile(row,col), (col-offset_col)*X_INCREMENT, (row-offset_row)*Y_OFFSET, null);
 					for(Building b: mobo.getArrBuildings()){
 						BuildingType bt = b.getType();
 						if((b.getR()==row) && (b.getC()==col)){
-							if ((row < WINDOW_ROW_COUNT+offset_row) && (row > offset_row - WINDOW_ROW_COUNT) && (col < WINDOW_COL_COUNT + offset_col) && (col > offset_col - WINDOW_COL_COUNT))
 								g2.drawImage(drawBuilding(bt), (col-offset_col)*X_INCREMENT, (row-offset_row)*Y_OFFSET, null);
 						}
 					}
 					for (Colonist c: mobo.getArrColonists()){
 						if((c.getR()==row) && (c.getC()==col)){
-							if ((row < WINDOW_ROW_COUNT+offset_row) && (row > offset_row - WINDOW_ROW_COUNT) && (col < WINDOW_COL_COUNT + offset_col) && (col > offset_col - WINDOW_COL_COUNT))
 								g2.drawImage(drawColonist(), (col-offset_col)*X_INCREMENT, (row-offset_row)*Y_OFFSET, null);
 						}
 						 
@@ -149,8 +149,8 @@ public class MapPanel3D extends JPanel implements Observer{
 		
 	}
 	public void setSelectedRowCol(int r, int c){
-		selected_row = r;
-		selected_col = c;
+		selected_row = r ;
+		selected_col = c ;
 	}
 	
 //	public void setSelectedRowCol(int r, int c){
@@ -275,6 +275,15 @@ public class MapPanel3D extends JPanel implements Observer{
 		
 		setSelectedRowCol(row,col);
 		
+	}
+	
+	private boolean isInTheWindow(int row, int col){
+		int row_offset = selected_row - WINDOW_ROW_COUNT/2;
+		int col_offset = selected_col - WINDOW_COL_COUNT/2;
+		
+		boolean inRow = (row < row_offset + WINDOW_ROW_COUNT) && (row > row_offset);
+		boolean inCol = (col < col_offset + WINDOW_COL_COUNT) && (col > col_offset);
+		return inRow && inCol;
 	}
 	
 		
