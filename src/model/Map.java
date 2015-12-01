@@ -51,12 +51,20 @@ public class Map {
 	}
 	public static ArrayList<int[]> findPathToTileType(int start_row, int start_col, TileType type, Tile[][] t){
 		//reset_visited();
+		int [] start = {start_row,start_col};
+		ArrayList<int[]>ret_array_list = new ArrayList<int[]>();
+		ret_array_list.add(start);
+		ArrayList<int[]> path = new ArrayList<int[]>();
 	    visited = new ArrayList<Node>();
 		ArrayList<Node> queue = new ArrayList<Node>();
 		ArrayList<Node> visited2 = getVisited();
 		tiles = t;
+		
 		Node current = new Node(start_row, start_col, null);
 //		visited.add(current);
+		if(t[start_row][start_col].getType() == type){
+			return ret_array_list;
+		}
 		queue.add(current);
 		while (!queue.isEmpty()){
 			current = queue.remove(0);
@@ -64,7 +72,7 @@ public class Map {
 			for (Node child: children){
 				if (t[child.getRow()][child.getCol()].getType() == type){
 					// Path found to tileType type
-					ArrayList<int[]> path = get_reverse_path(child);
+					path = get_reverse_path(child);
 					return path;
 				} else {
 					visited.add(child);
@@ -72,8 +80,9 @@ public class Map {
 				}
 			}
 		}
-		System.out.println("no destination found");
-		return null;
+		//System.out.println("no destination found");
+		
+		return ret_array_list;
 			
 	}
 	public static int[] findNextStep(int start_row, int start_col, int end_row, int end_col, Tile[][] t){

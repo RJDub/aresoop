@@ -16,6 +16,14 @@ public abstract class Building implements Serializable {
 		c = column;
 	}
 	
+	public void setRow(int row){
+		r = row;
+	}
+	
+	public void setCol(int col){
+		c = col;
+	}
+	
 	public BuildingType getType(){
 		return type;
 	}

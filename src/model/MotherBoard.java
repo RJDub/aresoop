@@ -16,13 +16,19 @@ public class MotherBoard extends Observable implements Serializable{
 	private ArrayList<Item> items;
 
 	public MotherBoard(ArrayList<Colonist> cols, Tile[][] tiles) {
-		// tiles = new Tile[10][10];
 		colonists = cols;
 		map = tiles;
 		buildings = new ArrayList<Building>();
 		items = new ArrayList<Item>();
 	}
 	
+	public MotherBoard(Tile[][] tiles) {
+		colonists = new ArrayList<Colonist>();
+		map = tiles;
+		buildings = new ArrayList<Building>();
+		items = new ArrayList<Item>();
+	}
+
 	public void update() {
 		updateColonists();
 		updateBuildings(); // TODO: finish this method.
@@ -53,7 +59,9 @@ public class MotherBoard extends Observable implements Serializable{
 		}
 	}
 	
-	
+	public Tile[][] getTiles(){
+		return map;
+	}
 	public void addItem(Item i) {
 		items.add(i);
 	}
@@ -95,6 +103,9 @@ public class MotherBoard extends Observable implements Serializable{
 		return map[r][c];
 	}
 
+	public void setTileAtLocation(TileType t, int r, int c){
+		map[r][c] = new Tile(t,r,c);
+	}
 	public void start() {
 
 	}
@@ -328,12 +339,6 @@ public class MotherBoard extends Observable implements Serializable{
 		}
 	}
 
-	// This is a very important method that Paul is working on.
-	//
-	// this method receives a colonist (which has their own x and y)
-	// and a destination x and destination y. This code will find
-	// the best path for the colonist to take towards this destination
-	// and the actually move the colonist towards that location.
 	public void move(Colonist col, int foundX, int foundY) {
 
 	}

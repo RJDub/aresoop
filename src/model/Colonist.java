@@ -132,6 +132,7 @@ public class Colonist implements Serializable {
 		if (path.size() == 0) {
 			path = null;
 		}
+		
 		return result;
 	}
 
