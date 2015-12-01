@@ -297,7 +297,7 @@ public class AresFrame extends JFrame {
 		public void actionPerformed(ActionEvent arg0) {
 			if (timer.isRunning()) {
 				model.update();
-				System.out.println("called model.update");
+//				System.out.println("called model.update");
 				updateView();
 			}
 		}
@@ -430,7 +430,9 @@ public class AresFrame extends JFrame {
 
 		@Override
 		public void mousePressed(MouseEvent arg0) {
-
+			if (arg0.getClickCount()==2){
+				map.setSelectedRowColFromPixel(arg0.getX(), arg0.getY());
+			}
 			hud.displayTileInformation(arg0.getX(), arg0.getY());
 		}
 	}

@@ -12,7 +12,7 @@ public class Dormitory extends Building implements Serializable {
 		super(r, c);
 		super.setType(BuildingType.Dormitory);
 		super.setThirstBonus(0);
-		super.setFatigueBonus(1000);
+		super.setFatigueBonus(100);
 		super.setHungerBonus(0);
 	}
 	

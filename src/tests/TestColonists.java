@@ -13,17 +13,28 @@ public class TestColonists {
 	@Test
 	public void test() {
 		Colonist c = new Colonist("George",1,1);
-		assertEquals(1000,c.getFatigueLevel());
-		assertEquals(1000,c.getHungerLevel());
-		assertEquals(1000,c.getThirstLevel());
+		int starting_fatigue = c.getFatigueLevel();
+		int starting_hunger = c.getHungerLevel();
+		int starting_thrist = c.getThirstLevel();
+		
+		assertEquals(starting_fatigue,c.getFatigueLevel());
+		assertEquals(starting_hunger,c.getHungerLevel());
+		assertEquals(starting_thrist,c.getThirstLevel());
 		c.update(TileType.Ice);
-		assertEquals(999,c.getFatigueLevel());
-		assertEquals(999,c.getHungerLevel());
-		assertEquals(1000,c.getThirstLevel());
+		starting_fatigue--;
+		starting_hunger--;
+	
+		assertEquals(starting_fatigue,c.getFatigueLevel());
+		assertEquals(starting_hunger,c.getHungerLevel());
+		assertEquals(starting_thrist,c.getThirstLevel());
 		c.update(TileType.Crater);
-		assertEquals(998,c.getFatigueLevel());
-		assertEquals(998,c.getHungerLevel());
-		assertEquals(999,c.getThirstLevel());
+		starting_fatigue--;
+		starting_hunger--;
+		starting_thrist--;
+		
+		assertEquals(starting_fatigue,c.getFatigueLevel());
+		assertEquals(starting_hunger,c.getHungerLevel());
+		assertEquals(starting_thrist,c.getThirstLevel());
 		assertEquals(1,c.getC());
 		assertEquals(1,c.getR());
 	}

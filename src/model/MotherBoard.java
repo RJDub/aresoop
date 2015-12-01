@@ -32,9 +32,11 @@ public class MotherBoard extends Observable implements Serializable{
 
 	public void updateColonists() {
 		for (Colonist colonist : colonists) {
-			updateNeeds(colonist);
-			assignAction(colonist);
-			executeAction(colonist);
+			if(colonist.isAlive()){
+				updateNeeds(colonist);
+				assignAction(colonist);
+				executeAction(colonist);
+			}
 		}
 	}
 	
@@ -51,7 +53,7 @@ public class MotherBoard extends Observable implements Serializable{
 		}
 	}
 	
-
+	
 	public void addItem(Item i) {
 		items.add(i);
 	}
