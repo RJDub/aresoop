@@ -43,6 +43,8 @@ public class MapPanel3D extends JPanel implements Observer {
 	private int selected_row;
 	private int selected_col;
 	public static Random r = new Random();
+	
+	private JPanel[][] tiles;
 	private JPanel buttons_panel;
 	JButton button_north;
 	JButton button_south;
