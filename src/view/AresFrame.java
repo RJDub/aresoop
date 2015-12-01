@@ -24,10 +24,12 @@ import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.Timer;
 
@@ -182,6 +184,7 @@ public class AresFrame extends JFrame {
 		hud.getPlay().addActionListener(new PlayPauseActionListener());
 		hud.getAssignTask().addActionListener(new AssignTaskListener());
 		hud.getConstruction().addActionListener(new BuildConstructListener());
+		hud.getRecruitment().addActionListener(new RecruitmentListener());
 		map.addMouseListener(new MapPanelClickedActionListener());
 
 		// buildings.getBuildingList().addMouseListener(new
@@ -381,6 +384,19 @@ public class AresFrame extends JFrame {
 		}
 	}
 
+	private class RecruitmentListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (model.getIronTotal() > 20) {
+				RecruitDialog rec = new RecruitDialog();
+			} else {
+				JOptionPane.showMessageDialog(null, "Gather more iron first!");
+				return;
+			}
+		}
+	}
+
 	private class MapPanelClickedActionListener extends MouseAdapter {
 
 		@Override
@@ -459,7 +475,7 @@ public class AresFrame extends JFrame {
 			add(list, BorderLayout.CENTER);
 			add(select, BorderLayout.SOUTH);
 			buildable = new DefaultListModel<String>();
-			for (String item : strings){
+			for (String item : strings) {
 				buildable.addElement(item);
 			}
 			list.setModel(buildable);
@@ -487,6 +503,40 @@ public class AresFrame extends JFrame {
 					break;
 				}
 				dispose();
+			}
+		}
+	}
+
+	private class RecruitDialog extends JDialog {
+
+		private JTextField name;
+
+		public RecruitDialog() {
+			this.setVisible(true);
+			this.setSize(300, 100);
+			this.setLocation(400, 400);
+			
+			JLabel nameLabel = new JLabel("Input a name for your colonist:");
+			name = new JTextField();
+			JButton submit = new JButton("Submit");
+			submit.addActionListener(new subButtonListener());
+			
+			this.add(nameLabel, BorderLayout.NORTH);
+			this.add(name, BorderLayout.CENTER);
+			this.add(submit, BorderLayout.SOUTH);
+		}
+
+		private class subButtonListener implements ActionListener {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String input = name.getText();
+				if (input.compareTo("") != 0){
+					model.getArrColonists().add(new Colonist(input, 5, 5));
+					dispose();
+				} else {
+					JOptionPane.showMessageDialog(null, "ERROR! No name inputed by user. Enter a name!");
+				}
 			}
 		}
 	}
