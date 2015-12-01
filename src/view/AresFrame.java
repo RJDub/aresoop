@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.ScrollPane;
@@ -21,11 +22,14 @@ import java.util.Random;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.Timer;
 
@@ -60,23 +64,24 @@ public class AresFrame extends JFrame {
 	public AresFrame() {
 
 		this.addWindowListener(new MyWindowListener());
-		
-//		Tile[][] tiles = new Tile[100][100];
-//		model = new MotherBoard(colonists, Generator.generateMap(tiles));
+
 		// Tile[][] tiles = new Tile[100][100];
 		// model = new MotherBoard(colonists, Generator.generateMap(tiles));
-
+		// Tile[][] tiles = new Tile[100][100];
+		// model = new MotherBoard(colonists, Generator.generateMap(tiles));
 
 		Tile[][] tiles = new Tile[30][50];
 		ArrayList<Colonist> colonists = new ArrayList<Colonist>();
 		boolean TESTINGMODE = false;
 		if (TESTINGMODE) {
+
 			//Tile[][] tiles = new Tile[30][50];
 			model = Generator.generateStandardModel(100, 100);
 			//model = Generator.generateTestMotherBoard(10, 10);
+
 		} else {
-			
-			if (model == null){
+
+			if (model == null) {
 				int decision = JOptionPane.showConfirmDialog(AresFrame.this, "Do you want to load your saved game?");
 				if (decision == JOptionPane.YES_OPTION) {
 					ObjectInputStream objStr = null;
@@ -100,6 +105,7 @@ public class AresFrame extends JFrame {
 						}
 					}
 				} else {
+
 					model = Generator.generateStandardModel(50, 50);
 //					model = new MotherBoard(colonists, Generator.generateEasyMap(tiles));		
 //					model.getArrColonists().add(new Colonist("Paul", 0, 0));
@@ -107,17 +113,17 @@ public class AresFrame extends JFrame {
 //					model.addBuilding(new Dormitory(4, 4));
 //					model.addBuilding(new Mess(4, 5));
 //					model.addBuilding(new StorageBuilding(8, 1));
+
 					model.addItem(new JackHammer());
-					
+
 				}
 			}
-		} 
-		
+		}
 
 		layoutGUI();
 		setupModelAndTimer();
 		registerListeners();
-		
+
 		timer.start();
 	}
 
@@ -153,7 +159,8 @@ public class AresFrame extends JFrame {
 
 		// need Motherboard to return an ItemList
 		items = new ItemPanel(model.getArrItems());
-
+		setupItemPanel();
+		
 		selector.add(buildings);
 		selector.add(items);
 
@@ -184,11 +191,11 @@ public class AresFrame extends JFrame {
 		hud.getPlay().addActionListener(new PlayPauseActionListener());
 		hud.getAssignTask().addActionListener(new AssignTaskListener());
 		hud.getConstruction().addActionListener(new BuildConstructListener());
+		hud.getRecruitment().addActionListener(new RecruitmentListener());
 		map.addMouseListener(new MapPanelClickedActionListener());
 
-//		buildings.getBuildingList().addMouseListener(new BuildingRowSelectListener());
-		
-
+		// buildings.getBuildingList().addMouseListener(new
+		// BuildingRowSelectListener());
 
 	}
 
@@ -223,11 +230,11 @@ public class AresFrame extends JFrame {
 		colonistPanel.setBackground(Color.RED);
 		colonistPanel.getTable().addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
+				buildings.getBuildingList().clearSelection();
 				if (e.getClickCount() == 1) {
 					int index = colonistPanel.getTable().getSelectedRow();
 					if (index >= 0 && index < model.getArrColonists().size())
 						hud.setDisplayableObject(new DisplayableColonist(model.getArrColonists().get(index)));
-					System.out.println("Double clicked on Item " + index);
 				}
 			}
 
@@ -255,13 +262,12 @@ public class AresFrame extends JFrame {
 		buildings.setSize((int) (screen_width * .333), (int) (screen_height * .13));
 		buildings.getBuildingList().addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				if (e.getClickCount() == 2) {
+				colonistPanel.getTable().clearSelection();
+				if (e.getClickCount() == 1) {
 					int index = buildings.getBuildingList().locationToIndex(e.getPoint());
 					Building b = buildings.getArrBuildings().get(index);
 					if (b != null)
 						hud.setDisplayableObject(new DisplayableBuilding(b));
-
-					System.out.println("Double clicked on Building Panel index " + index);
 				}
 			}
 		});
@@ -271,6 +277,16 @@ public class AresFrame extends JFrame {
 		items.setVisible(true);
 		items.setLocation(0, (int) (screenSize.height * .17));
 		items.setSize((int) (screen_width * .333), (int) (screen_height * .13));
+		items.getItemList().addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 1) {
+					int index = items.getItemList().locationToIndex(e.getPoint());
+					Item i = model.getArrItems().get(index);
+					if (i != null)
+						hud.setDisplayableObject(new DisplayableItem(i));
+				}
+			}
+		});
 	}
 
 	private void sendModelToPanels() {
@@ -280,7 +296,7 @@ public class AresFrame extends JFrame {
 		items.updateItemList(model.getArrItems());
 
 	}
-	
+
 	private void updateView() {
 		colonistPanel.update(model.getArrColonists());
 		// updateHud();
@@ -306,86 +322,13 @@ public class AresFrame extends JFrame {
 		public void actionPerformed(ActionEvent arg0) {
 			if (timer.isRunning()) {
 				model.update();
-//				System.out.println("called model.update");
+				// System.out.println("called model.update");
 				updateView();
 			}
 		}
 	}
 
-//	private class ColonistRowSelectListener extends MouseAdapter {
-//
-//		@Override
-//		public void mouseClicked(MouseEvent e) {
-//			int rowSelected = colonistPanel.getTable().getSelectedRow();
-//			if (rowSelected < 0) {
-//			} else {
-//				Colonist refColonist = null;
-//				for (Colonist thisColonist : model.getArrColonists()) {
-//					if (thisColonist.getName().equals(colonistPanel.getData()[rowSelected][0]))
-//						refColonist = thisColonist;
-//				}
-//				hud.setDisplayableObject(new DisplayableColonist(refColonist));
-//				hud.colonistSelected(refColonist);
-//			}
-//		}
-//	}
-
-//	private class BuildingRowSelectListener extends MouseAdapter {
-//
-//		@Override
-//		public void mouseClicked(MouseEvent e) {
-//			int rowSelected = BuildingPanel.getBuildingList().getSelectedIndex();
-//			Building refBuilding = null;
-//			if (rowSelected < 0) {
-//				// Do nothing
-//			} else {
-//				for (Building thisBuilding : model.getArrBuildings()) {
-//					if (thisBuilding.getType().equals(buildings.getArrBuildings().get(rowSelected).getType()))
-//						refBuilding = thisBuilding;
-//				}
-//			}
-//			System.out.println(refBuilding.toString());
-//			hud.buildingSelected(refBuilding);
-//		}
-//	}
-
 	private class MyWindowListener extends WindowAdapter {
-
-		@Override
-		public void windowOpened(WindowEvent e) {
-
-//			int decision = JOptionPane.showConfirmDialog(AresFrame.this, "Do you want to load your saved game?");
-//			if (decision == JOptionPane.YES_OPTION) {
-//				ObjectInputStream objStr = null;
-//				try {
-//					FileInputStream stream = new FileInputStream("SavedModelState");
-//					objStr = new ObjectInputStream(stream);
-//					model = (MotherBoard) objStr.readObject();
-//				} catch (IOException e1) {
-//					e1.printStackTrace();
-//				} catch (ClassNotFoundException e1) {
-//					System.err.println("Found something other than motherboard");
-//					e1.printStackTrace();
-//				} finally {
-//					try {
-//						if (objStr != null) {
-//							objStr.close();
-//						}
-//					} catch (IOException e1) {
-//						System.err.println("File did not close.");
-//						e1.printStackTrace();
-//					}
-//				}
-//			}
-//			timer.start();
-
-		}
-
-		// public int[] getTileCoordinates(int pixel_x, int pixel_y) {
-		// int display_height = map.getHeight();
-		// int display_width = map.getWidth();
-		// return null;
-		// }
 
 		@Override
 		public void windowClosing(WindowEvent e) {
@@ -423,38 +366,60 @@ public class AresFrame extends JFrame {
 				timer.start();
 		}
 	}
-	
-	private class AssignTaskListener implements ActionListener{
+
+	private class AssignTaskListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			int rowSelected = colonistPanel.getTable().getSelectedRow();
 			if (rowSelected < 0) {
-				JOptionPane.showMessageDialog(null, "Please select a colonist first");
+				JOptionPane.showMessageDialog(null, "Select a colonist first!");
 			} else {
-				TaskPanel tasks = new TaskPanel();
-				JOptionPane.showMessageDialog(null,tasks,"Choose a Task",JOptionPane.INFORMATION_MESSAGE);
+				TaskDialog task = new TaskDialog();
 			}
+			colonistPanel.getTable().clearSelection();
+			buildings.getBuildingList().clearSelection();
+			items.getItemList().clearSelection();
 		}
 	}
-	
-	private class BuildConstructListener implements ActionListener{
+
+	private class BuildConstructListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			int amount = model.getIronTotal();
-			BuilderPanel builder = new BuilderPanel();
-			if (amount > 5){
-				builder.addBuilding("Mess Hall");
-				builder.addBuilding("Dormitory");
+			ArrayList<String> types = new ArrayList<String>();
+			if (amount > 10) {
+				types.add("Storage");
+			}
+			if (amount > 5) {
+				types.add("Mess Hall");
+				types.add("Dormitory");
+				BuilderDialog builder = new BuilderDialog(types);
+			} else {
+				JOptionPane.showMessageDialog(null, "Gather more iron first!");
+				colonistPanel.getTable().clearSelection();
+				buildings.getBuildingList().clearSelection();
+				items.getItemList().clearSelection();
+				return;
+			}
+		}
+	}
+
+	private class RecruitmentListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (model.getIronTotal() > 20) {
+				RecruitDialog rec = new RecruitDialog();
 			} else {
 				JOptionPane.showMessageDialog(null, "Gather more iron first!");
 				return;
 			}
-			if (amount > 10){
-				builder.addBuilding("Storage");
-			}
-			JOptionPane.showMessageDialog(null, builder, "Choose a building to be built", JOptionPane.INFORMATION_MESSAGE);
+			//JOptionPane.showMessageDialog(null, builder, "Choose a building to be built", JOptionPane.INFORMATION_MESSAGE);
+			colonistPanel.getTable().clearSelection();
+			buildings.getBuildingList().clearSelection();
+			items.getItemList().clearSelection();
 		}
 	}
 
@@ -462,138 +427,146 @@ public class AresFrame extends JFrame {
 
 		@Override
 		public void mousePressed(MouseEvent arg0) {
-			if (arg0.getClickCount()==2){
+			if (arg0.getClickCount() == 2) {
 				map.setSelectedRowColFromPixel(arg0.getX(), arg0.getY());
 			}
 			hud.displayTileInformation(arg0.getX(), arg0.getY());
+			colonistPanel.getTable().clearSelection();
+			buildings.getBuildingList().clearSelection();
+			items.getItemList().clearSelection();
 		}
 	}
-	
-	private class TaskPanel extends JPanel{
-		
-		private JButton iceOption;
-		private JButton ironOption;
-		private JButton unobOption;
-		
-		public TaskPanel(){
-			layoutPanel();
-			registerListeners();
+
+	private class TaskDialog extends JDialog {
+
+		private JButton select;
+		private JList<String> list;
+		private DefaultListModel<String> tasks;
+
+		public TaskDialog() {
+			this.setVisible(true);
+			this.setLocation(400, 400);
+			this.setSize(300, 100);
+			list = new JList<String>();
+			select = new JButton("Select");
+			tasks = new DefaultListModel<String>();
+			tasks.addElement("Collect Ice");
+			tasks.addElement("Collect Iron Ore");
+			tasks.addElement("Collect Unobtanium");
+			list.setModel(tasks);
+			select.addActionListener(new TaskListListener());
+			add(list, BorderLayout.CENTER);
+			add(select, BorderLayout.SOUTH);
 		}
-		
-		private void layoutPanel(){
-			iceOption = new JButton("Collect Ice");
-			ironOption = new JButton("Collect Iron Ore");
-			unobOption = new JButton("Collect Unobtanium");
-			add(iceOption);
-			add(ironOption);
-			add(unobOption);
-		}
-		
-		private void registerListeners(){
-			iceOption.addActionListener(new IceListener());
-			ironOption.addActionListener(new IronListener());
-			unobOption.addActionListener(new UnobListener());
+
+		private class TaskListListener implements ActionListener {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String type = list.getSelectedValue();
+
+				int rowSelected = colonistPanel.getTable().getSelectedRow();
+				Colonist refColonist = null;
+				for (Colonist thisColonist : model.getArrColonists()) {
+					if (thisColonist.getName().equals(colonistPanel.getData()[rowSelected][0]))
+						refColonist = thisColonist;
+				}
+
+				switch (type) {
+				case "Collect Ice":
+					refColonist.setTask(Task.MiningIce);
+					break;
+				case "Collect Iron Ore":
+					refColonist.setTask(Task.MiningIronOre);
+					break;
+				case "Collect Unobtanium":
+					refColonist.setTask(Task.MiningUnobtanium);
+					break;
+				default:
+					break;
+				}
+				dispose();
+			}
 		}
 	}
-	
-	private class BuilderPanel extends JPanel{
+
+	private class BuilderDialog extends JDialog {
 		private JList<String> list;
 		private JButton select;
 		private DefaultListModel<String> buildable;
-		
-		public BuilderPanel(){
+
+		public BuilderDialog(ArrayList<String> strings) {
+			this.setVisible(true);
+			this.setSize(300, 100);
+			this.setLocation(400, 400);
 			list = new JList<String>();
 			select = new JButton("Select");
-			add(list);
-			add(select);
+			add(list, BorderLayout.CENTER);
+			add(select, BorderLayout.SOUTH);
 			buildable = new DefaultListModel<String>();
+			for (String item : strings) {
+				buildable.addElement(item);
+			}
 			list.setModel(buildable);
-			
-			JListListener listener = new JListListener();
-			select.addActionListener(listener);
+			select.addActionListener(new BuildListListener());
 		}
-		
-		public void addBuilding(String in){
-			buildable.addElement(in);
-			list.setModel(buildable);
-		}
-		
-		private class JListListener implements ActionListener{
+
+		private class BuildListListener implements ActionListener {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String type = list.getSelectedValue();
 				Random rand = new Random();
-				switch(type){
+				switch (type) {
 				case "Mess Hall":
-					//TODO: figure out how to get location working better
-					model.getArrBuildings().add(new Mess(rand.nextInt(30), rand.nextInt(30)));
+					// TODO: figure out how to get location working better
+					model.getArrBuildings().add(new Mess(10 + rand.nextInt(10), 10 + rand.nextInt(10)));
 					break;
 				case "Dormitory":
-					model.getArrBuildings().add(new Dormitory(rand.nextInt(30), rand.nextInt(30)));
+					model.getArrBuildings().add(new Dormitory(10 + rand.nextInt(10), 10 + rand.nextInt(10)));
 					break;
 				case "Storage":
-					model.getArrBuildings().add(new StorageBuilding(rand.nextInt(30), rand.nextInt(30)));
+					model.getArrBuildings().add(new StorageBuilding(10 + rand.nextInt(10), 10 + rand.nextInt(10)));
 					break;
 				default:
 					break;
 				}
+				dispose();
 			}
 		}
 	}
-	
-	private class IceListener implements ActionListener{
 
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			int rowSelected = colonistPanel.getTable().getSelectedRow();
-			if (rowSelected < 0) {
-				// Do nothing
-			} else {
-				Colonist refColonist = null;
-				for (Colonist thisColonist : model.getArrColonists()) {
-					if (thisColonist.getName().equals(colonistPanel.getData()[rowSelected][0]))
-						refColonist = thisColonist;
+	private class RecruitDialog extends JDialog {
+
+		private JTextField name;
+
+		public RecruitDialog() {
+			this.setVisible(true);
+			this.setSize(300, 100);
+			this.setLocation(400, 400);
+			
+			JLabel nameLabel = new JLabel("Input a name for your colonist:");
+			name = new JTextField();
+			JButton submit = new JButton("Submit");
+			submit.addActionListener(new subButtonListener());
+			
+			this.add(nameLabel, BorderLayout.NORTH);
+			this.add(name, BorderLayout.CENTER);
+			this.add(submit, BorderLayout.SOUTH);
+		}
+
+		private class subButtonListener implements ActionListener {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String input = name.getText();
+				if (input.compareTo("") != 0){
+					model.getArrColonists().add(new Colonist(input, 5, 5));
+					dispose();
+				} else {
+					JOptionPane.showMessageDialog(null, "ERROR! No name inputed by user. Enter a name!");
 				}
-				refColonist.setTask(Task.MiningIce);
 			}
 		}
-	}
-	
-	private class IronListener implements ActionListener{
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			int rowSelected = colonistPanel.getTable().getSelectedRow();
-			if (rowSelected < 0) {
-				// Do nothing
-			} else {
-				Colonist refColonist = null;
-				for (Colonist thisColonist : model.getArrColonists()) {
-					if (thisColonist.getName().equals(colonistPanel.getData()[rowSelected][0]))
-						refColonist = thisColonist;
-				}
-				refColonist.setTask(Task.MiningIronOre);
-			}
-		}
-	}
-	
-	private class UnobListener implements ActionListener{
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			int rowSelected = colonistPanel.getTable().getSelectedRow();
-			if (rowSelected < 0) {
-				// Do nothing
-			} else {
-				Colonist refColonist = null;
-				for (Colonist thisColonist : model.getArrColonists()) {
-					if (thisColonist.getName().equals(colonistPanel.getData()[rowSelected][0]))
-						refColonist = thisColonist;
-				}
-				refColonist.setTask(Task.MiningUnobtanium);
-			}
-		}
-		
 	}
 }

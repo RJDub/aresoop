@@ -25,6 +25,7 @@ public class DisplayPanel extends JPanel implements Observer{
 	private JButton play;
 	private JButton assignTask;
 	private JButton construction;
+	private JButton recruitment;
 	private JPanel buttonPanel;
 	private DisplayableObject disp_object;
 	public DisplayPanel() {
@@ -42,10 +43,14 @@ public class DisplayPanel extends JPanel implements Observer{
 	public JButton getConstruction(){
 		return construction;
 	}
+	
+	public JButton getRecruitment(){
+		return recruitment;
+	}
 
 	private void layoutGUI() {
 		// Start Info
-		temp = new JTextArea("\n\n\n\tSelect A Tile or A Colonist for More Information");
+		temp = new JTextArea("\n\n\n\tSelect Something for More Information");
 		temp.setEditable(false);
 		//temp.setPreferredSize(new Dimension((int) (Toolkit.getDefaultToolkit().getScreenSize().width * .333),(int) (Toolkit.getDefaultToolkit().getScreenSize().height * .27)));
 		setupButtonPanel();
@@ -57,14 +62,16 @@ public class DisplayPanel extends JPanel implements Observer{
 
 	private void setupButtonPanel() {
 		disp_object = null;
-		assignTask = new JButton("Assign Task");
+		assignTask = new JButton("Assignment");
 		play = new JButton("Play/Pause");
-		construction = new JButton("Construct Building");
+		construction = new JButton("Construction");
+		recruitment = new JButton("Recruitment");
 		buttonPanel = new JPanel();
 		buttonPanel.setLayout(new GridLayout(1,4));
 		buttonPanel.add(play);
 		buttonPanel.add(assignTask);
 		buttonPanel.add(construction);
+		buttonPanel.add(recruitment);
 	}
 
 	// When colonist is selected

@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.ArrayList;
@@ -11,12 +12,13 @@ import javax.swing.ListModel;
 import javax.swing.ScrollPaneConstants;
 
 import items.*;
+import model.Building;
 import model.Item;
 
 public class ItemPanel extends JPanel{
 
 	private ArrayList<Item> itemArray;
-	private JList itemList;
+	private static JList itemList;
 	
 	
 	public ItemPanel(ArrayList<Item> i) {
@@ -43,5 +45,13 @@ public class ItemPanel extends JPanel{
 			temp[j] = i.get(j).toString();
 		}
 		return temp;
+	}
+
+	public JList getItemList() {
+		return itemList;
+	}
+	
+	public ArrayList<Item> getArrItems() {
+		return itemArray;
 	}
 }
