@@ -119,4 +119,130 @@ public class Generator implements Serializable {
 		}
 		return map;
 	}
+	
+	public static MotherBoard generateStandardModel(int row_count, int col_count){
+		MotherBoard model = new MotherBoard(Generator.generateStandardMap(row_count, col_count));
+		Random r = new Random();
+		for (int i = 0; i < row_count; i++){
+			
+			TileType t = null;
+			
+			int switch_random = r.nextInt(5);
+			switch(switch_random){
+			case 0:
+				t = TileType.Volcano;
+				break;
+			case 1:
+				t = TileType.Crater;
+				break;
+			case 2:
+				t = TileType.Mountain;
+				break;
+			case 3:
+				t = TileType.Ice;
+				break;
+			case 4:
+				t = TileType.IronOre;
+				break;
+			}
+			int rand_r = r.nextInt(row_count);
+			r = new Random();
+			int rand_c = r.nextInt(col_count);
+			r = new Random();
+			int count = r.nextInt(10);
+			createPatch(t, rand_r,rand_c, count,model);
+		}
+//		createPatch(TileType.Ice, 5,10,5,model);
+//		createPatch(TileType.Mountain, 2,1,5, model);
+//		createPatch(TileType.Crater, 2,1,3, model);
+//		createPatch(TileType.Volcano, 2,1,5, model);
+//		createPatch(TileType.IronOre, 8,8, 6,model);
+		spawnBuilding(new Dormitory(8,5), model);		
+		spawnBuilding(new Mess(8,7), model);
+		spawnBuilding(new StorageBuilding(8	, 6), model);
+		spawnColonist("Paul",5,4, model);
+		
+		spawnColonist("Ryan",8,4, model);
+		spawnColonist("Mingchen",8,4, model);
+		spawnColonist("Sean",8,4, model);
+		return model;
+	}
+	
+	private static void createPatch(TileType t, int row, int col, int amt, MotherBoard model){
+		int[] focus = {row,col};
+		spawnTileTypes(amt,t,focus, model);
+	}
+	private static void spawnTileTypes(int i, TileType tile_type,int[] focus, MotherBoard model) {
+		Random r = new Random();
+		for (int num = 0; num < i; num++){
+			int row_delta = 1;
+			int col_delta = 1;
+			if(r.nextInt(2) == 0){
+				row_delta *= -1;
+			}
+			if(r.nextInt(2)==0){
+				col_delta*=-1;
+			}
+			
+			int row = focus[0] + row_delta;
+			int col = focus[1] + col_delta;
+			if ((row < model.getTiles().length) && (row >=0) && (col < model.getTiles()[0].length) && (col >= 0)){
+				spawnTile(tile_type, row,col, model.getTiles());
+			}
+
+			
+		}
+		
+	}
+	public static boolean spawnColonist(String name, int row, int col, MotherBoard model){
+		ArrayList<int[]> path = Map.findPathToTileType(row, col, TileType.Flat, model.getTiles());
+		if (path != null){
+			int r = path.get(path.size()-1)[0];
+			int c = path.get(path.size()-1)[1];
+			model.addColonist(new Colonist(name,r,c));
+			return true;
+		} else 
+			return false;
+	
+	}
+
+	public static boolean spawnTile(TileType tile_type,int row, int col, Tile[][] tiles){
+		ArrayList<int[]> path = Map.findPathToTileType(row, col, TileType.Flat, tiles);
+		if (path != null){
+			int r = path.get(path.size()-1)[0];
+			int c = path.get(path.size()-1)[1];
+			tiles[r][c] = new Tile(tile_type, r, c);
+			return true;
+		} else 
+			return false;
+	}
+	
+	public static Tile[][] generateStandardMap(int row_count, int col_count){
+		Tile[][] map = new Tile[row_count][col_count];
+		for (int r = 0; r < row_count; r++){
+			for(int c = 0; c < col_count; c++){
+				map[r][c] = new Tile(TileType.Flat, r,c);
+			}
+		}
+		spawnTile(TileType.Ice, 5, 3, map);
+		spawnTile(TileType.Ice, 5, 2, map);
+		spawnTile(TileType.Ice, 5, 1, map);
+		spawnTile(TileType.Ice, 5, 4, map);
+		spawnTile(TileType.IronOre, 5, 5, map);
+		
+		return map;
+	}
+	
+	public static boolean spawnBuilding(Building b, MotherBoard m){
+		ArrayList<int[]> path = Map.findPathToTileType(b.getR(), b.getC(), TileType.Flat, m.getTiles());
+		if (path != null){
+			b.setRow(path.get(path.size()-1)[0]);
+			b.setCol(path.get(path.size()-1)[1]);
+			m.addBuilding(b);
+			return true;
+		} else {
+			return false;
+		}
+			
+	}
 }
