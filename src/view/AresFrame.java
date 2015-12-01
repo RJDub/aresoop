@@ -18,6 +18,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -173,6 +174,7 @@ public class AresFrame extends JFrame {
 		// colonistPanel.getTable().addMouseListener(new
 		// ColonistRowSelectListener());
 		hud.getPlay().addActionListener(new PlayPauseActionListener());
+		hud.getAssignTask().addActionListener(new AssignTaskListener());
 		map.addMouseListener(new MapPanelClickedActionListener());
 
 //		buildings.getBuildingList().addMouseListener(new BuildingRowSelectListener());
@@ -413,6 +415,16 @@ public class AresFrame extends JFrame {
 		}
 
 	}
+	
+	private class AssignTaskListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			TaskPanel tasks = new TaskPanel();
+			JOptionPane.showMessageDialog(null,tasks,"Choose a Task",JOptionPane.INFORMATION_MESSAGE);
+		}
+		
+	}
 
 	private class MapPanelClickedActionListener extends MouseAdapter {
 
@@ -421,5 +433,87 @@ public class AresFrame extends JFrame {
 
 			hud.displayTileInformation(arg0.getX(), arg0.getY());
 		}
+	}
+	
+	private class TaskPanel extends JPanel{
+		
+		private JButton iceOption;
+		private JButton ironOption;
+		private JButton unobOption;
+		
+		public TaskPanel(){
+			layoutPanel();
+			registerListeners();
+		}
+		
+		private void layoutPanel(){
+			iceOption = new JButton("Collect Ice");
+			ironOption = new JButton("Collect Iron Ore");
+			unobOption = new JButton("Collect Unobtanium");
+			add(iceOption);
+			add(ironOption);
+			add(unobOption);
+		}
+		
+		private void registerListeners(){
+			iceOption.addActionListener(new IceListener());
+			ironOption.addActionListener(new IronListener());
+			unobOption.addActionListener(new UnobListener());
+		}
+	}
+	
+	private class IceListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			int rowSelected = colonistPanel.getTable().getSelectedRow();
+			if (rowSelected < 0) {
+				// Do nothing
+			} else {
+				Colonist refColonist = null;
+				for (Colonist thisColonist : model.getArrColonists()) {
+					if (thisColonist.getName().equals(colonistPanel.getData()[rowSelected][0]))
+						refColonist = thisColonist;
+				}
+				refColonist.setTask(Task.MiningIce);
+			}
+		}
+	}
+	
+	private class IronListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			int rowSelected = colonistPanel.getTable().getSelectedRow();
+			if (rowSelected < 0) {
+				// Do nothing
+			} else {
+				Colonist refColonist = null;
+				for (Colonist thisColonist : model.getArrColonists()) {
+					if (thisColonist.getName().equals(colonistPanel.getData()[rowSelected][0]))
+						refColonist = thisColonist;
+				}
+				refColonist.setTask(Task.MiningIronOre);
+			}
+		}
+	}
+	
+	private class UnobListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			int rowSelected = colonistPanel.getTable().getSelectedRow();
+			if (rowSelected < 0) {
+				// Do nothing
+			} else {
+				Colonist refColonist = null;
+				for (Colonist thisColonist : model.getArrColonists()) {
+					if (thisColonist.getName().equals(colonistPanel.getData()[rowSelected][0]))
+						refColonist = thisColonist;
+				}
+				refColonist.setTask(Task.MiningUnobtanium);
+			}
+		}
+		
 	}
 }
