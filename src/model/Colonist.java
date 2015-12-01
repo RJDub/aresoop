@@ -30,11 +30,11 @@ public class Colonist implements Serializable {
 		action = Action.None;
 		r = row;
 		c = column;
-		thirst = 1000;
+		thirst = 210;
 		thirst_threshold = 200;
-		hunger = 1000;
+		hunger = 210;
 		hunger_threshold = 200;
-		fatigue = 1000;
+		fatigue = 300;
 		fatigue_threshold = 200;
 		
 		resourceAmount = 0;
@@ -218,15 +218,14 @@ public class Colonist implements Serializable {
 
 	}
 
-	// public boolean isAlive() {
-	// if (HungerLevel == Hunger.Dead || ThirstLevel == Thirst.Dead ||
-	// FatigueLevel == Fatigue.Dead) {
-	// return false;
-	// } else {
-	// return true;
-	// }
-	// }
-	//
+	public boolean isAlive() {
+		if (getHungerLevel() == 0 || getThirstLevel() == 0 || getFatigueLevel() == 0) {
+			return false;
+		} else {
+			return true;
+		}
+		}
+	
 
 	// public Colonist switchOccupation(String decision, String identification)
 	// {
