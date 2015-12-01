@@ -12,8 +12,8 @@ public class DisplayableItem implements DisplayableObject {
 	
 	@Override
 	public String display() {
-		String result = item.toString()+'\n';
-		result += "Purpose of Item:\t";
+		String result = item.toString() + "\n";
+		result += "Purpose of Item:\t" + "\n";
 		result += "How to get a new item:\t";
 		return result;
 	}

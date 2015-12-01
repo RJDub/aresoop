@@ -37,7 +37,7 @@ public class ColonistPanel extends JPanel{
 
 	private void layoutGUI() {
 		columnNames = new String[]{"Name", "Hunger", "Thirst", "Fatigue"};
-		data = new String[colonists.size()][6];
+		data = new String[10][6];
 		for(int i =0; i < colonists.size(); i++){
 			data[i][0] = colonists.get(i).getName();
 			data[i][1] = Integer.toString(colonists.get(i).getHungerLevel());
@@ -46,7 +46,15 @@ public class ColonistPanel extends JPanel{
 			data[i][4] = colonists.get(i).getTask().toString();
 			data[i][5] = colonists.get(i).getAction().toString();
 		}
-		table = new JTable(new ColonistTableModel(data,columnNames,colonists.size()));
+		for (int j = colonists.size(); j < 10; j++) {
+			data[j][0] = "";
+			data[j][1] = "";
+			data[j][2] = "";
+			data[j][3] = "";
+			data[j][4] = "";
+			data[j][5] = "";
+		}
+		table = new JTable(new ColonistTableModel(data,columnNames,10));
 		table.setAutoCreateRowSorter(true);
 		table.setPreferredSize(new Dimension(600,1500));
 		JScrollPane scrollPane = new JScrollPane(table);
@@ -82,6 +90,24 @@ public class ColonistPanel extends JPanel{
 
 	public String[][] getData() {
 		return data;
+	}
+
+	public void addANewRow() {
+//		String[][] newData = new String[data.length + 1][6];
+//		for (int i = 0; i < data.length; i++){
+//			newData[i][0] = colonists.get(i).getName();
+//			newData[i][1] = Integer.toString(colonists.get(i).getHungerLevel());
+//			newData[i][2] = Integer.toString(colonists.get(i).getThirstLevel());
+//			newData[i][3] = Integer.toString(colonists.get(i).getFatigueLevel());
+//			newData[i][4] = colonists.get(i).getTask().toString();
+//			newData[i][5] = colonists.get(i).getAction().toString();
+//		}
+//		for (int j = 0; j < 6; j++)
+//			newData[data.length][j] = "";
+//		data = newData;
+//		System.out.println(data.length);
+//		table = new JTable(new ColonistTableModel(data,columnNames,data.length));
+		
 	}
 }
 

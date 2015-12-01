@@ -288,7 +288,6 @@ public class AresFrame extends JFrame {
 		colonistPanel.updateColonistList(model.getArrColonists());
 		buildings.updateBuildingList(model.getArrBuildings());
 		items.updateItemList(model.getArrItems());
-
 	}
 
 	private void updateView() {
@@ -371,9 +370,6 @@ public class AresFrame extends JFrame {
 			} else {
 				TaskDialog task = new TaskDialog();
 			}
-			colonistPanel.getTable().clearSelection();
-			buildings.getBuildingList().clearSelection();
-			items.getItemList().clearSelection();
 		}
 	}
 
@@ -383,10 +379,10 @@ public class AresFrame extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			int amount = model.getIronTotal();
 			ArrayList<String> types = new ArrayList<String>();
-			if (amount > 10) {
+			if (amount >= 10) {
 				types.add("Storage");
 			}
-			if (amount > 5) {
+			if (amount >= 5) {
 				types.add("Mess Hall");
 				types.add("Dormitory");
 				BuilderDialog builder = new BuilderDialog(types);
@@ -404,8 +400,9 @@ public class AresFrame extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if (model.getIronTotal() > 20) {
+			if (model.getIronTotal() >= 20) {
 				RecruitDialog rec = new RecruitDialog();
+				
 			} else {
 				JOptionPane.showMessageDialog(null, "Gather more iron first!");
 				return;
@@ -421,13 +418,14 @@ public class AresFrame extends JFrame {
 
 		@Override
 		public void mousePressed(MouseEvent arg0) {
+			colonistPanel.getTable().clearSelection();
+			buildings.getBuildingList().clearSelection();
+			items.getItemList().clearSelection();
+			
 			if (arg0.getClickCount() == 2) {
 				map.setSelectedRowColFromPixel(arg0.getX(), arg0.getY());
 			}
 			hud.displayTileInformation(arg0.getX(), arg0.getY());
-			colonistPanel.getTable().clearSelection();
-			buildings.getBuildingList().clearSelection();
-			items.getItemList().clearSelection();
 		}
 	}
 
@@ -460,25 +458,34 @@ public class AresFrame extends JFrame {
 				String type = list.getSelectedValue();
 
 				int rowSelected = colonistPanel.getTable().getSelectedRow();
-				Colonist refColonist = null;
-				for (Colonist thisColonist : model.getArrColonists()) {
-					if (thisColonist.getName().equals(colonistPanel.getData()[rowSelected][0]))
-						refColonist = thisColonist;
+				if (rowSelected < 0) {
+					System.out.println(type + "   " + rowSelected);
 				}
+				else {
+					Colonist refColonist = null;
+					for (Colonist thisColonist : model.getArrColonists()) {
+						System.out.println(type + "   " + rowSelected + "   " + thisColonist.getName());
+						if (thisColonist.getName().equals(colonistPanel.getData()[rowSelected][0]))
+							refColonist = thisColonist;
+					}
 
-				switch (type) {
-				case "Collect Ice":
-					refColonist.setTask(Task.MiningIce);
-					break;
-				case "Collect Iron Ore":
-					refColonist.setTask(Task.MiningIronOre);
-					break;
-				case "Collect Unobtanium":
-					refColonist.setTask(Task.MiningUnobtanium);
-					break;
-				default:
-					break;
+					switch (type) {
+					case "Collect Ice":
+						refColonist.setTask(Task.MiningIce);
+						break;
+					case "Collect Iron Ore":
+						refColonist.setTask(Task.MiningIronOre);
+						break;
+					case "Collect Unobtanium":
+						refColonist.setTask(Task.MiningUnobtanium);
+						break;
+					default:
+						break;
+					}
 				}
+				colonistPanel.getTable().clearSelection();
+				buildings.getBuildingList().clearSelection();
+				items.getItemList().clearSelection();
 				dispose();
 			}
 		}
@@ -525,6 +532,9 @@ public class AresFrame extends JFrame {
 				default:
 					break;
 				}
+				colonistPanel.getTable().clearSelection();
+				buildings.getBuildingList().clearSelection();
+				items.getItemList().clearSelection();
 				dispose();
 			}
 		}
@@ -555,7 +565,9 @@ public class AresFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				String input = name.getText();
 				if (input.compareTo("") != 0){
+					colonistPanel.addANewRow();
 					model.getArrColonists().add(new Colonist(input, 5, 5));
+					colonistPanel.updateColonistList(model.getArrColonists());
 					dispose();
 				} else {
 					JOptionPane.showMessageDialog(null, "ERROR! No name inputed by user. Enter a name!");
