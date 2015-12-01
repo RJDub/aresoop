@@ -18,6 +18,7 @@ public class ItemPanel extends JPanel{
 	private ArrayList<Item> itemArray;
 	private JList itemList;
 	
+	
 	public ItemPanel(ArrayList<Item> i) {
 		itemArray = i;
 		layoutGUI();
