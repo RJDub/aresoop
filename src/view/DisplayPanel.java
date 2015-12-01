@@ -24,6 +24,7 @@ public class DisplayPanel extends JPanel implements Observer{
 	private JTextArea temp;
 	private JButton play;
 	private JButton assignTask;
+	private JButton buildBuilding;
 	private JPanel buttonPanel;
 	private DisplayableObject disp_object;
 	public DisplayPanel() {
@@ -51,19 +52,15 @@ public class DisplayPanel extends JPanel implements Observer{
 	}
 
 	private void setupButtonPanel() {
-		setupPlayButton();
 		disp_object = null;
 		assignTask = new JButton("Assign Task");
+		play = new JButton("Play/Pause");
+		buildBuilding = new JButton("Construct Building");
 		buttonPanel = new JPanel();
 		buttonPanel.setLayout(new GridLayout(1,4));
 		buttonPanel.add(play);
 		buttonPanel.add(assignTask);
-		
-		
-	}
-
-	private void setupPlayButton() {
-		play = new JButton("Play/Pause");
+		buttonPanel.add(buildBuilding);
 	}
 
 	// When colonist is selected
