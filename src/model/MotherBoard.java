@@ -328,12 +328,6 @@ public class MotherBoard extends Observable implements Serializable{
 		}
 	}
 
-	// This is a very important method that Paul is working on.
-	//
-	// this method receives a colonist (which has their own x and y)
-	// and a destination x and destination y. This code will find
-	// the best path for the colonist to take towards this destination
-	// and the actually move the colonist towards that location.
 	public void move(Colonist col, int foundX, int foundY) {
 
 	}
