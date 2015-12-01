@@ -105,8 +105,8 @@ public class MapPanel3D extends JPanel implements Observer{
 		super.paintComponent(g);
 		
 		
-		int offset_col = selected_col-WINDOW_COL_COUNT/2;
-		int offset_row = selected_row-WINDOW_ROW_COUNT/2;
+		int offset_col = selected_col;//-WINDOW_COL_COUNT/2;
+		int offset_row = selected_row;//-WINDOW_ROW_COUNT/2;
 		Graphics2D g2 = (Graphics2D) g;
 		for (int row = 0; row < mobo.getBoardHeight(); row++){
 			for (int col = 0; col < mobo.getBoardWidth(); col++){
@@ -278,8 +278,8 @@ public class MapPanel3D extends JPanel implements Observer{
 	}
 	
 	private boolean isInTheWindow(int row, int col){
-		int row_offset = selected_row - WINDOW_ROW_COUNT/2;
-		int col_offset = selected_col - WINDOW_COL_COUNT/2;
+		int row_offset = selected_row;// - WINDOW_ROW_COUNT/2;
+		int col_offset = selected_col;// - WINDOW_COL_COUNT/2;
 		
 		boolean inRow = (row < row_offset + WINDOW_ROW_COUNT) && (row > row_offset);
 		boolean inCol = (col < col_offset + WINDOW_COL_COUNT) && (col > col_offset);
