@@ -23,7 +23,7 @@ public class DisplayPanel extends JPanel implements Observer{
 	
 	private JTextArea temp;
 	private JButton play;
-	private JButton optionsPopup;
+	private JButton assignTask;
 	private JPanel buttonPanel;
 	private DisplayableObject disp_object;
 	public DisplayPanel() {
@@ -32,6 +32,10 @@ public class DisplayPanel extends JPanel implements Observer{
 	
 	public JButton getPlay(){
 		return play;
+	}
+	
+	public JButton getAssignTask(){
+		return assignTask;
 	}
 
 	private void layoutGUI() {
@@ -49,11 +53,11 @@ public class DisplayPanel extends JPanel implements Observer{
 	private void setupButtonPanel() {
 		setupPlayButton();
 		disp_object = null;
-		optionsPopup = new JButton("Temp Label:Options Popup?");
+		assignTask = new JButton("Assign Task");
 		buttonPanel = new JPanel();
 		buttonPanel.setLayout(new GridLayout(1,4));
 		buttonPanel.add(play);
-		buttonPanel.add(optionsPopup);
+		buttonPanel.add(assignTask);
 		
 		
 	}
