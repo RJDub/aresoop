@@ -28,6 +28,7 @@ import javax.swing.Timer;
 
 import buildings.*;
 import enums.*;
+import items.JackHammer;
 import model.*;
 
 public class AresFrame extends JFrame {
@@ -101,6 +102,8 @@ public class AresFrame extends JFrame {
 					model.addBuilding(new Dormitory(4, 4));
 					model.addBuilding(new Mess(4, 5));
 					model.addBuilding(new StorageBuilding(8, 1));
+					model.addItem(new JackHammer());
+					
 				}
 			}
 		} 
@@ -420,8 +423,14 @@ public class AresFrame extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			TaskPanel tasks = new TaskPanel();
-			JOptionPane.showMessageDialog(null,tasks,"Choose a Task",JOptionPane.INFORMATION_MESSAGE);
+			int rowSelected = colonistPanel.getTable().getSelectedRow();
+			if (rowSelected < 0) {
+				JOptionPane.showMessageDialog(null, "Please select a colonist first");
+			} else {
+				TaskPanel tasks = new TaskPanel();
+				JOptionPane.showMessageDialog(null,tasks,"Choose a Task",JOptionPane.INFORMATION_MESSAGE);
+			}
+			
 		}
 		
 	}
