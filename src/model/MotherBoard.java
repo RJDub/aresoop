@@ -53,7 +53,9 @@ public class MotherBoard extends Observable implements Serializable{
 		}
 	}
 	
-	
+	public Tile[][] getTiles(){
+		return map;
+	}
 	public void addItem(Item i) {
 		items.add(i);
 	}
@@ -95,6 +97,9 @@ public class MotherBoard extends Observable implements Serializable{
 		return map[r][c];
 	}
 
+	public void setTileAtLocation(TileType t, int r, int c){
+		map[r][c] = new Tile(t,r,c);
+	}
 	public void start() {
 
 	}
