@@ -72,7 +72,8 @@ public class AresFrame extends JFrame {
 		boolean TESTINGMODE = false;
 		if (TESTINGMODE) {
 			//Tile[][] tiles = new Tile[30][50];
-			model = Generator.generateTestMotherBoard(10, 10);
+			model = Generator.generateStandardModel(100, 100);
+			//model = Generator.generateTestMotherBoard(10, 10);
 		} else {
 			
 			if (model == null){
@@ -99,12 +100,13 @@ public class AresFrame extends JFrame {
 						}
 					}
 				} else {
-					model = new MotherBoard(colonists, Generator.generateEasyMap(tiles));		
-					model.getArrColonists().add(new Colonist("Paul", 0, 0));
-					model.getArrColonists().add(new Colonist("Mingcheng", 0, 0));
-					model.addBuilding(new Dormitory(4, 4));
-					model.addBuilding(new Mess(4, 5));
-					model.addBuilding(new StorageBuilding(8, 1));
+					model = Generator.generateStandardModel(50, 50);
+//					model = new MotherBoard(colonists, Generator.generateEasyMap(tiles));		
+//					model.getArrColonists().add(new Colonist("Paul", 0, 0));
+//					model.getArrColonists().add(new Colonist("Mingcheng", 0, 0));
+//					model.addBuilding(new Dormitory(4, 4));
+//					model.addBuilding(new Mess(4, 5));
+//					model.addBuilding(new StorageBuilding(8, 1));
 					model.addItem(new JackHammer());
 					
 				}
