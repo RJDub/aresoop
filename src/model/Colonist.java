@@ -225,6 +225,17 @@ public class Colonist implements Serializable {
 			return true;
 		}
 		}
+
+	public boolean isAtStorageBuilding(ArrayList<Building> buildings) {
+		for(Building b: buildings){
+			if (b.getType()==BuildingType.Storage){
+				if ((b.getC() == this.getC()) && (b.getR() == this.getR())){
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 	
 
 	// public Colonist switchOccupation(String decision, String identification)
