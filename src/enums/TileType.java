@@ -6,6 +6,8 @@ public enum TileType implements Serializable {
 	Flat(1),
 	Ice(1),
 	IronOre(1),
+	Unobtainium(1),
+	MossyRock(1),
 	Volcano(999),
 	Crater(999),
 	Mountain(999);
@@ -19,6 +21,8 @@ public enum TileType implements Serializable {
 		Volcano.buildable = false;
 		Crater.buildable = false;
 		Mountain.buildable = false;
+		Unobtainium.buildable=false;
+		MossyRock.buildable=false;
 	}
 	
 	private int weight;
