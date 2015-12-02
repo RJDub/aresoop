@@ -530,13 +530,25 @@ public class AresFrame extends JFrame {
 				switch (type) {
 				case "Mess Hall":
 					// TODO: figure out how to get location working better
-					model.getArrBuildings().add(new Mess(10 + rand.nextInt(10), 10 + rand.nextInt(10)));
+					while(true){
+						if (Generator.spawnBuilding(new Mess(10 + rand.nextInt(10), 10 + rand.nextInt(10)), model)){
+							break;
+						}
+					}
 					break;
 				case "Dormitory":
-					model.getArrBuildings().add(new Dormitory(10 + rand.nextInt(10), 10 + rand.nextInt(10)));
+					while(true){
+						if (Generator.spawnBuilding(new Dormitory(10 + rand.nextInt(10), 10 + rand.nextInt(10)), model)){
+							break;
+						}
+					}
 					break;
 				case "Storage":
-					model.getArrBuildings().add(new StorageBuilding(10 + rand.nextInt(10), 10 + rand.nextInt(10)));
+					while(true){
+						if (Generator.spawnBuilding(new StorageBuilding(10 + rand.nextInt(10), 10 + rand.nextInt(10)), model)){
+							break;
+						}
+					}
 					break;
 				default:
 					break;
