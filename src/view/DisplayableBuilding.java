@@ -16,7 +16,9 @@ public class DisplayableBuilding implements DisplayableObject {
 		if (building.getType().equals(BuildingType.Storage)){
 			result+="resources: \n";
 			result+="\t water: "+((StorageBuilding)building).getWaterAmount()+'\n';
-			result+="\t irone ore: "+((StorageBuilding)building).getIronOreAmount()+'\n';
+			result+="\t iron ore: "+((StorageBuilding)building).getIronOreAmount()+'\n';
+			result+="\t unobtainium: "+((StorageBuilding)building).getUnobtainiumAmount()+'\n';
+			result+="\t food: "+((StorageBuilding)building).getFoodAmount()+'\n';
 			
 		}
 		result+= "\nrow: "+building.getR();

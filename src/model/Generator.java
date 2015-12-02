@@ -127,7 +127,7 @@ public class Generator implements Serializable {
 			
 			TileType t = null;
 			
-			int switch_random = r.nextInt(5);
+			int switch_random = r.nextInt(7);
 			switch(switch_random){
 			case 0:
 				t = TileType.Volcano;
@@ -143,6 +143,12 @@ public class Generator implements Serializable {
 				break;
 			case 4:
 				t = TileType.IronOre;
+				break;
+			case 5:
+				t = TileType.Unobtainium;
+				break;
+			case 6:
+				t = TileType.MossyRock;
 				break;
 			}
 			int rand_r = r.nextInt(row_count);
@@ -224,11 +230,7 @@ public class Generator implements Serializable {
 				map[r][c] = new Tile(TileType.Flat, r,c);
 			}
 		}
-		spawnTile(TileType.Ice, 5, 3, map);
-		spawnTile(TileType.Ice, 5, 2, map);
-		spawnTile(TileType.Ice, 5, 1, map);
-		spawnTile(TileType.Ice, 5, 4, map);
-		spawnTile(TileType.IronOre, 5, 5, map);
+
 		
 		return map;
 	}
