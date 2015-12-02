@@ -486,7 +486,7 @@ public class AresFrame extends JFrame {
 						refColonist.setTask(Task.MiningIronOre);
 						break;
 					case "Collect Unobtanium":
-						refColonist.setTask(Task.MiningUnobtanium);
+						refColonist.setTask(Task.MiningUnobtainium);
 						break;
 					default:
 						break;
