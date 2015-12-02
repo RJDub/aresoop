@@ -193,6 +193,10 @@ public class MapPanel3D extends JPanel implements Observer {
 			return sheet.getSubimage(100, 50, X_INCREMENT, Y_INCREMENT);
 		case Mountain:
 			return sheet.getSubimage(150, 0, X_INCREMENT, Y_INCREMENT);
+		case Unobtainium:
+			return sheet.getSubimage(50, 0, X_INCREMENT, Y_INCREMENT);
+		case MossyRock:
+			return sheet.getSubimage(100, 0, X_INCREMENT, Y_INCREMENT);
 		default:
 			return null;
 		}
