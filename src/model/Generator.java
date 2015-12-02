@@ -230,11 +230,7 @@ public class Generator implements Serializable {
 				map[r][c] = new Tile(TileType.Flat, r,c);
 			}
 		}
-		spawnTile(TileType.Ice, 5, 3, map);
-		spawnTile(TileType.Ice, 5, 2, map);
-		spawnTile(TileType.Ice, 5, 1, map);
-		spawnTile(TileType.Ice, 5, 4, map);
-		spawnTile(TileType.IronOre, 5, 5, map);
+
 		
 		return map;
 	}
