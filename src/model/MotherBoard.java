@@ -174,10 +174,12 @@ public class MotherBoard extends Observable implements Serializable{
 			case MiningIronOre:
 				col.setAction(makeDecisionOnMining(col, TileType.IronOre));
 				break;
-			case MiningUnobtanium:
+			case MiningUnobtainium:
 				col.setAction(makeDecisionOnMining(col, TileType.Unobtainium));
+				break;
 			case MiningMossyRock:
 				col.setAction(makeDecisionOnMining(col, TileType.MossyRock));
+				break;
 			default:
 				col.setAction(Action.None);
 				break;
@@ -271,6 +273,14 @@ public class MotherBoard extends Observable implements Serializable{
 			moveColonist(col);
 //			System.out.println("Colonist " + col.getName() + " is moving to ironore");
 			break;
+		case Move_To_Unobtainium:
+			if (col.getPath() == null) constructResourcePath(col, TileType.Unobtainium);
+			moveColonist(col);
+			break;
+		case Move_To_MossyRock:
+			if (col.getPath() == null) constructResourcePath(col, TileType.MossyRock);
+			moveColonist(col);
+			break;
 		case Move_To_Storage:
 			if (col.getPath() == null) constructBuildingPath(col, BuildingType.Storage);
 			moveColonist(col);
@@ -296,6 +306,7 @@ public class MotherBoard extends Observable implements Serializable{
 			if (col.getPath() == null) constructBuildingPath(col, BuildingType.Dormitory);
 			moveColonist(col);
 			break;
+		
 		default:
 			System.out.println("Colonist " + col.getName() + " has an unhandled action!ERROR!");
 			break;
