@@ -9,12 +9,16 @@ public class StorageBuilding extends Building  implements Serializable {
 	
 	private int waterAmount;
 	private int ironOreAmount;
-
+	private int foodAmount;
+	private int unobtainiumAmount;
+	
 	public StorageBuilding(int x, int y) {
 		super(x, y);
 		super.setType(BuildingType.Storage);
 		waterAmount = 0;
 		ironOreAmount = 0;
+		foodAmount = 0;
+		unobtainiumAmount = 0;
 	
 	}
 	
@@ -26,6 +30,14 @@ public class StorageBuilding extends Building  implements Serializable {
 		return waterAmount;
 	}
 	
+	public int getFoodAmount() {
+		return foodAmount;
+	}
+	
+	public int getUnobtainiumAmount() {
+		return unobtainiumAmount;
+	}
+	
 	
 	public void depositResource(int amount, Task task) {
 		if (task == Task.MiningIce){
@@ -34,6 +46,14 @@ public class StorageBuilding extends Building  implements Serializable {
 		
 		else if (task == Task.MiningIronOre){
 			ironOreAmount += amount;
+		}
+		
+		else if (task == Task.MiningMossyRock){
+			foodAmount += amount;
+		}
+		
+		else if (task == Task.MiningUnobtainium){
+			unobtainiumAmount += amount;
 		}
 	}
 	
@@ -49,6 +69,24 @@ public class StorageBuilding extends Building  implements Serializable {
 	public boolean withdrawIronOre(int amount) {
 		if (amount<=ironOreAmount) {
 			ironOreAmount-=amount;
+			return true;
+		}
+		else
+			return false;
+	}
+	
+	public boolean withdrawFood(int amount) {
+		if (amount<=foodAmount) {
+			foodAmount-=amount;
+			return true;
+		}
+		else
+			return false;
+	}
+	
+	public boolean withdrawUnobtainium(int amount) {
+		if (amount<=unobtainiumAmount) {
+			unobtainiumAmount-=amount;
 			return true;
 		}
 		else
