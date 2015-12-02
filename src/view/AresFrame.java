@@ -454,6 +454,7 @@ public class AresFrame extends JFrame {
 			tasks.addElement("Collect Ice");
 			tasks.addElement("Collect Iron Ore");
 			tasks.addElement("Collect Unobtanium");
+			tasks.addElement("Collect food");
 			list.setModel(tasks);
 			select.addActionListener(new TaskListListener());
 			add(list, BorderLayout.CENTER);
@@ -487,6 +488,9 @@ public class AresFrame extends JFrame {
 						break;
 					case "Collect Unobtanium":
 						refColonist.setTask(Task.MiningUnobtainium);
+						break;
+					case "Collect food":
+						refColonist.setTask(Task.MiningMossyRock);
 						break;
 					default:
 						break;
