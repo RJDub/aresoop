@@ -174,6 +174,10 @@ public class MotherBoard extends Observable implements Serializable{
 			case MiningIronOre:
 				col.setAction(makeDecisionOnMining(col, TileType.IronOre));
 				break;
+			case MiningUnobtanium:
+				col.setAction(makeDecisionOnMining(col, TileType.Unobtainium));
+			case MiningMossyRock:
+				col.setAction(makeDecisionOnMining(col, TileType.MossyRock));
 			default:
 				col.setAction(Action.None);
 				break;
@@ -205,8 +209,12 @@ public class MotherBoard extends Observable implements Serializable{
 			} else {
 				if (resource == TileType.Ice)
 					return Action.Move_To_Ice;
-				else
+				else if(resource == TileType.IronOre)
 					return Action.Move_To_Iron;
+				else if(resource == TileType.Unobtainium)
+					return Action.Move_To_Unobtainium;
+				else
+					return Action.Move_To_MossyRock;
 			}
 		}
 //		}
