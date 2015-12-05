@@ -225,10 +225,7 @@ public class MapPanel3D extends JPanel {
 		return sheet.getSubimage(0, 100, X_INCREMENT, Y_INCREMENT);
 	}
 
-	public void moveUp() {
-		centered_row--;
-		drawBoard();
-	}
+	
 
 	private Image drawColonist(Colonist c) {
 		int width = 50;
@@ -238,19 +235,31 @@ public class MapPanel3D extends JPanel {
 		else
 			return sheet.getSubimage(0, 150, X_INCREMENT, Y_INCREMENT);
 	}
-
+	public void moveUp() {
+		int top_left_row = top_left_window_row;
+		int top_left_col = top_left_window_col;
+		setTopLeftRowCol(--top_left_row,top_left_col);
+		drawBoard();
+	}
 	public void moveDown() {
-		centered_row++;
+		int top_left_row = top_left_window_row;
+		int top_left_col = top_left_window_col;
+		setTopLeftRowCol(++top_left_row,top_left_col);
+
 		drawBoard();
 	}
 
 	public void moveLeft() {
-		centered_col--;
+		int top_left_row = top_left_window_row;
+		int top_left_col = top_left_window_col;
+		setTopLeftRowCol(top_left_row,--top_left_col);
 		drawBoard();
 	}
 
 	public void moveRight() {
-		centered_col++;
+		int top_left_row = top_left_window_row;
+		int top_left_col = top_left_window_col;
+		setTopLeftRowCol(top_left_row,++top_left_col);
 		drawBoard();
 	}
 
