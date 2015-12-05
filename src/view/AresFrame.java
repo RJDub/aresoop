@@ -10,6 +10,8 @@ import java.awt.ScrollPane;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
@@ -62,7 +64,6 @@ public class AresFrame extends JFrame {
 	private static MotherBoard model;
 	private JPanel view;
 	private Timer timer;
-	private ModelStatusMonitor monitor;
 
 	public static void main(String[] args) {
 		AresFrame window = new AresFrame();
@@ -104,15 +105,14 @@ public class AresFrame extends JFrame {
 		view = new JPanel();
 		setupView();
 
-		monitor = new ModelStatusMonitor(model);
-		map = new MapPanel3D(model, monitor);
+		map = new MapPanel3D(model, screen_width, (int) (screen_height * .666));
 		setupMapPanel();
 		mapPane = new JScrollPane(map);
 
 		mapPane.setVisible(true);
 		mapPane.setLocation(0, 0);
+		view.add(map);
 
-		mapPane.setSize(screen_width, (int) (screen_height * .666));
 		mapPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		mapPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 
@@ -146,9 +146,9 @@ public class AresFrame extends JFrame {
 	}
 
 	private void setupModelAndTimer() {
-		model.addObserver(map);
+//		model.addObserver(map);
 		model.addObserver(hud);
-		model.addObserver(monitor);
+//		model.addObserver(monitor);
 		model.assignTask(model.getArrColonists().get(0), Task.MiningIce);
 		model.assignTask(model.getArrColonists().get(1), Task.MiningIronOre);
 
@@ -168,6 +168,7 @@ public class AresFrame extends JFrame {
 		hud.getConstruction().addActionListener(new BuildConstructListener());
 		hud.getRecruitment().addActionListener(new RecruitmentListener());
 		map.addMouseListener(new MapPanelClickedActionListener());
+		this.addKeyListener(new ArrowKeyListener());
 
 		// buildings.getBuildingList().addMouseListener(new
 		// BuildingRowSelectListener());
@@ -188,14 +189,13 @@ public class AresFrame extends JFrame {
 		view.setSize(screen_width, screen_height);
 		view.setVisible(true);
 		view.setLocation(0, 0);
-		view.setBackground(Color.BLACK);
 	}
 
 	private void setupMapPanel() {
 		map.setVisible(true);
 		map.setLocation(0, 0);
 		map.setPreferredSize(new Dimension(screen_width, screen_height));
-		map.setBackground(Color.BLUE);
+		map.setBackground(Color.BLACK);
 	}
 
 	private void setupColonistPanel() {
@@ -265,16 +265,32 @@ public class AresFrame extends JFrame {
 			}
 		});
 	}
+	
+	private class ArrowKeyListener extends KeyAdapter{
 
-	private void sendModelToPanels() {
-		// actually this did nothing to panels, they won't update themselves
-		// with data changed
-		// what do to the panels are updateView() below
-		map.updateBoard(model);
-		colonistPanel.updateColonistList(model.getArrColonists());
-		buildings.updateBuildingList(model.getArrBuildings());
-		items.updateItemList(model.getArrItems());
+		@Override
+		public void keyPressed(KeyEvent e) {
+			if (e.getKeyCode() == KeyEvent.VK_UP){
+				map.moveUp();
+			} else if (e.getKeyCode() == KeyEvent.VK_DOWN){
+				map.moveDown();
+			} else if (e.getKeyCode() == KeyEvent.VK_LEFT){
+				map.moveLeft();
+			} else if (e.getKeyCode() == KeyEvent.VK_RIGHT){
+				map.moveRight();
+			}
+		}
 	}
+
+//	private void sendModelToPanels() {
+//		// actually this did nothing to panels, they won't update themselves
+//		// with data changed
+//		// what do to the panels are updateView() below
+//		map.updateBoard(model);
+//		colonistPanel.updateColonistList(model.getArrColonists());
+//		buildings.updateBuildingList(model.getArrBuildings());
+//		items.updateItemList(model.getArrItems());
+//	}
 
 	private void updateView() {
 		colonistPanel.update(model.getArrColonists());
