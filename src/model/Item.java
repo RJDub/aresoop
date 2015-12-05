@@ -24,6 +24,11 @@ public abstract class Item implements Serializable {
 	public void setOwner(Colonist c) {
 		owner = c;
 	}
+
+	public void reclaim(Item i) {
+		owner.removeItem(i);
+		
+	}
 	
 
 	

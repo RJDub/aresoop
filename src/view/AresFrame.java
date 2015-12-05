@@ -313,7 +313,7 @@ public class AresFrame extends JFrame {
 				if (e.getClickCount() == 1) {
 					int index = items.getItemTable().getSelectedRow();
 					Item i = model.getArrItems().get(index);
-					if (i != null)
+					if (i != null) 
 						hud.setDisplayableObject(new DisplayableItem(i));
 				} else if (e.getClickCount() == 2) {
 					AssignItemToColonistDialog a = new AssignItemToColonistDialog(e);
@@ -655,7 +655,13 @@ public class AresFrame extends JFrame {
 				// TODO do somethings to the model
 				// model.getArrItems().remove(indexOfI);
 				refItem.setOwner(refColonist);
-			} else {
+			}
+			else if (refItem != null && refItem.getOwner() != null) {
+				refItem.reclaim(refItem);
+				refItem.setOwner(null);
+				JOptionPane.showMessageDialog(null, "Reclaim Item successfully");
+			}
+			else {
 				JOptionPane.showMessageDialog(null, "Please Select a Colonist first!");
 			}
 			colonistPanel.getTable().clearSelection();
