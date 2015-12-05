@@ -3,6 +3,7 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.ScrollPane;
@@ -60,7 +61,6 @@ public class AresFrame extends JFrame {
 	private static MotherBoard model;
 	private JPanel view;
 	private Timer timer;
-	private boolean finished;
 	private ModelStatusMonitor monitor;
 
 	public static void main(String[] args) {
@@ -79,53 +79,71 @@ public class AresFrame extends JFrame {
 
 		Tile[][] tiles = new Tile[30][50];
 		ArrayList<Colonist> colonists = new ArrayList<Colonist>();
-		boolean TESTINGMODE = true;
+		boolean TESTINGMODE = false;
 		if (TESTINGMODE) {
 
-			//Tile[][] tiles = new Tile[30][50];
+			// Tile[][] tiles = new Tile[30][50];
 			model = Generator.generateStandardModel(100, 100);
-			//model = Generator.generateTestMotherBoard(10, 10);
+			// model = Generator.generateTestMotherBoard(10, 10);
 
 		} else {
-//			SplashScreen loading = new SplashScreen();
-//			loading.setVisible(true);
-			if (model == null) {
-				int decision = JOptionPane.showConfirmDialog(AresFrame.this, "Do you want to load your saved game?");
-				if (decision == JOptionPane.YES_OPTION) {
-					ObjectInputStream objStr = null;
-					try {
-						FileInputStream stream = new FileInputStream("SavedModelState");
-						objStr = new ObjectInputStream(stream);
-						model = (MotherBoard) objStr.readObject();
-					} catch (IOException e1) {
-						e1.printStackTrace();
-					} catch (ClassNotFoundException e1) {
-						System.err.println("Found something other than motherboard");
-						e1.printStackTrace();
-					} finally {
-						try {
-							if (objStr != null) {
-								objStr.close();
-							}
-						} catch (IOException e1) {
-							System.err.println("File did not close.");
-							e1.printStackTrace();
-						}
-					}
-				} else {
-
-					model = Generator.generateStandardModel(50, 50);
-					model = new MotherBoard(colonists, Generator.generateEasyMap(tiles));		
-					model.getArrColonists().add(new Colonist("Paul", 0, 0));
-					model.getArrColonists().add(new Colonist("Mingcheng", 0, 0));
-					model.addBuilding(new Dormitory(4, 4));
-					model.addBuilding(new Mess(4, 5));
-					model.addBuilding(new StorageBuilding(8, 1));
-
-					model.addItem(new JackHammer());
-
-				}
-			}
+			SplashScreen splash = new SplashScreen();
+			// splash.setModal(true);
+			// splash.setLayout(null);
+			// JLabel title = new JLabel("PROJECT A.R.E.S.");
+			// JButton loadGame = new JButton("Load Game");
+			// JButton newGame = new JButton("New Game");
+			// JPanel screen = new JPanel(){
+			// @Override
+			// protected void paintComponent(Graphics g){
+			// super.paintComponent(g);
+			// try {
+			// g.drawImage(ImageIO.read(new File("./images/splash_screen.jpg")),
+			// 0, 0, 600, 400, this);
+			// } catch (IOException e) {
+			// // TODO Auto-generated catch block
+			// e.printStackTrace();
+			// }
+			// }
+			//
+			// @Override
+			// public Dimension getPreferredSize() {
+			// Dimension size = super.getPreferredSize();
+			// size.width = 300;
+			// size.height = 200;
+			//
+			// return size;
+			// }
+			// };
+			// //title.setFont(Font.);
+			// screen.setVisible(true);
+			// screen.setLayout(null);
+			// screen.setSize(600, 400);
+			// screen.repaint();
+			// screen.add(title);
+			// screen.add(loadGame);
+			// screen.add(newGame);
+			//
+			// title.setLocation(250, 10);
+			// title.setFont(Font.MONOSPACED);
+			// title.setSize(300, 100);
+			// title.setVisible(true);
+			// loadGame.setLocation(100, 300);
+			// loadGame.setSize(100, 50);
+			// loadGame.setBackground(Color.BLACK);
+			// newGame.setLocation(400, 300);
+			// newGame.setSize(100, 50);
+			// newGame.setBackground(Color.BLACK);
+			// title.setForeground(Color.BLACK);
+			//
+			// splash.add(screen);
+			//
+			// loadGame.addActionListener(new LoadListener());
+			// newGame.addActionListener(new NewGListener());
+			//
+			// splash.setLocation(550, 350);
+			// splash.setSize(600, 400);
+			// splash.setVisible(true);
 		}
 
 		layoutGUI();
@@ -140,9 +158,9 @@ public class AresFrame extends JFrame {
 
 		view = new JPanel();
 		setupView();
-		
+
 		monitor = new ModelStatusMonitor(model);
-		map = new MapPanel3D(model,monitor);
+		map = new MapPanel3D(model, monitor);
 		setupMapPanel();
 		mapPane = new JScrollPane(map);
 
@@ -169,7 +187,7 @@ public class AresFrame extends JFrame {
 		// need Motherboard to return an ItemList
 		items = new ItemPanel(model.getArrItems());
 		setupItemPanel();
-		
+
 		selector.add(buildings);
 		selector.add(items);
 
@@ -188,7 +206,6 @@ public class AresFrame extends JFrame {
 		model.addObserver(monitor);
 		model.assignTask(model.getArrColonists().get(0), Task.MiningIce);
 		model.assignTask(model.getArrColonists().get(1), Task.MiningIronOre);
-		
 
 		timer = new Timer(500, new OurTimerListener());
 		// timer.start();
@@ -206,7 +223,6 @@ public class AresFrame extends JFrame {
 		hud.getConstruction().addActionListener(new BuildConstructListener());
 		hud.getRecruitment().addActionListener(new RecruitmentListener());
 		map.addMouseListener(new MapPanelClickedActionListener());
-		
 
 		// buildings.getBuildingList().addMouseListener(new
 		// BuildingRowSelectListener());
@@ -298,16 +314,16 @@ public class AresFrame extends JFrame {
 					Item i = model.getArrItems().get(index);
 					if (i != null)
 						hud.setDisplayableObject(new DisplayableItem(i));
-				}
-				else if (e.getClickCount() == 2) {
+				} else if (e.getClickCount() == 2) {
 					AssignItemToColonistDialog a = new AssignItemToColonistDialog(e);
 				}
 			}
 		});
 	}
-	
+
 	private void sendModelToPanels() {
-		// actually this did nothing to panels, they won't update themselves with data changed
+		// actually this did nothing to panels, they won't update themselves
+		// with data changed
 		// what do to the panels are updateView() below
 		map.updateBoard(model);
 		colonistPanel.updateColonistList(model.getArrColonists());
@@ -353,26 +369,27 @@ public class AresFrame extends JFrame {
 		@Override
 		public void windowClosing(WindowEvent e) {
 			timer.stop();
-			int decision = JOptionPane.showConfirmDialog(AresFrame.this, "Save game?");
-			if (decision == JOptionPane.YES_OPTION) {
-				ObjectOutputStream objStream = null;
-				try {
-					FileOutputStream stream = new FileOutputStream("SavedModelState");
-					objStream = new ObjectOutputStream(stream);
-					objStream.writeObject(model);
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				} finally {
-					try {
-						if (objStream != null) {
-							objStream.close();
-						}
-					} catch (IOException e1) {
-						System.err.println("File did not close.");
-						e1.printStackTrace();
-					}
-				}
-			}
+			CloseScreen close = new CloseScreen(model);
+//			int decision = JOptionPane.showConfirmDialog(AresFrame.this, "Save game?");
+//			if (decision == JOptionPane.YES_OPTION) {
+//				ObjectOutputStream objStream = null;
+//				try {
+//					FileOutputStream stream = new FileOutputStream("SavedModelState");
+//					objStream = new ObjectOutputStream(stream);
+//					objStream.writeObject(model);
+//				} catch (IOException e1) {
+//					e1.printStackTrace();
+//				} finally {
+//					try {
+//						if (objStream != null) {
+//							objStream.close();
+//						}
+//					} catch (IOException e1) {
+//						System.err.println("File did not close.");
+//						e1.printStackTrace();
+//					}
+//				}
+//			}
 		}
 	}
 
@@ -429,12 +446,13 @@ public class AresFrame extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			if (model.getIronTotal() >= 20) {
 				RecruitDialog rec = new RecruitDialog();
-				
+
 			} else {
 				JOptionPane.showMessageDialog(null, "Gather more iron first!");
 				return;
 			}
-			//JOptionPane.showMessageDialog(null, builder, "Choose a building to be built", JOptionPane.INFORMATION_MESSAGE);
+			// JOptionPane.showMessageDialog(null, builder, "Choose a building
+			// to be built", JOptionPane.INFORMATION_MESSAGE);
 			colonistPanel.getTable().clearSelection();
 			buildings.getBuildingTable().clearSelection();
 			items.getItemTable().clearSelection();
@@ -448,7 +466,7 @@ public class AresFrame extends JFrame {
 			colonistPanel.getTable().clearSelection();
 			buildings.getBuildingTable().clearSelection();
 			items.getItemTable().clearSelection();
-			
+
 			if (arg0.getClickCount() == 2) {
 				map.setSelectedRowColFromPixel(arg0.getX(), arg0.getY());
 			}
@@ -488,8 +506,7 @@ public class AresFrame extends JFrame {
 				int rowSelected = colonistPanel.getTable().getSelectedRow();
 				if (rowSelected < 0) {
 					System.out.println(type + "   " + rowSelected);
-				}
-				else {
+				} else {
 					Colonist refColonist = null;
 					for (Colonist thisColonist : model.getArrColonists()) {
 						System.out.println(type + "   " + rowSelected + "   " + thisColonist.getName());
@@ -566,7 +583,7 @@ public class AresFrame extends JFrame {
 				default:
 					break;
 				}
-				
+
 				colonistPanel.getTable().clearSelection();
 				buildings.getBuildingTable().clearSelection();
 				items.getItemTable().clearSelection();
@@ -583,12 +600,12 @@ public class AresFrame extends JFrame {
 			this.setVisible(true);
 			this.setSize(300, 100);
 			this.setLocation(400, 400);
-			
+
 			JLabel nameLabel = new JLabel("Input a name for your colonist:");
 			name = new JTextField();
 			JButton submit = new JButton("Submit");
 			submit.addActionListener(new subButtonListener());
-			
+
 			this.add(nameLabel, BorderLayout.NORTH);
 			this.add(name, BorderLayout.CENTER);
 			this.add(submit, BorderLayout.SOUTH);
@@ -599,7 +616,7 @@ public class AresFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String input = name.getText();
-				if (input.compareTo("") != 0){
+				if (input.compareTo("") != 0) {
 					colonistPanel.addANewRow();
 					model.getArrColonists().add(new Colonist(input, 5, 5));
 					colonistPanel.updateColonistList(model.getArrColonists());
@@ -611,9 +628,9 @@ public class AresFrame extends JFrame {
 			}
 		}
 	}
-	
+
 	private class AssignItemToColonistDialog extends JDialog {
-		public AssignItemToColonistDialog(MouseEvent e){
+		public AssignItemToColonistDialog(MouseEvent e) {
 			Colonist refColonist = null;
 			Item refItem = null;
 			int indexOfC = colonistPanel.getTable().getSelectedRow();
@@ -622,15 +639,14 @@ public class AresFrame extends JFrame {
 			}
 			int indexOfI = items.getItemTable().getSelectedRow();
 			refItem = model.getArrItems().get(indexOfI);
-			
+
 			if (refColonist != null && refItem != null) {
 				refColonist.addItem(refItem);
 				JOptionPane.showMessageDialog(null, "Assign Item to Colonist successfully!");
-				//TODO do somethings to the model
-				//model.getArrItems().remove(indexOfI);
+				// TODO do somethings to the model
+				// model.getArrItems().remove(indexOfI);
 				refItem.setOwner(refColonist);
-			}
-			else {
+			} else {
 				JOptionPane.showMessageDialog(null, "Please Select a Colonist first!");
 			}
 			colonistPanel.getTable().clearSelection();
@@ -638,53 +654,64 @@ public class AresFrame extends JFrame {
 			items.getItemTable().clearSelection();
 		}
 	}
-	
-	private class SplashScreen extends JDialog{
+
+	private class SplashScreen extends JDialog {
 
 		private JLabel title;
 		private JButton loadGame;
 		private JButton newGame;
-		
-		public SplashScreen(){
+		private JPanel screen;
+
+		public SplashScreen() {
 			super((java.awt.Frame) null, true);
-			setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
-			this.setLocation(300, 200);
-			this.setSize(300, 200);
+			this.setModal(true);
 			this.setLayout(null);
 			title = new JLabel("PROJECT A.R.E.S.");
 			loadGame = new JButton("Load Game");
 			newGame = new JButton("New Game");
-			
-			loadGame.setLocation(200, 50);
-			loadGame.setSize(30, 20);
-			loadGame.setBackground(Color.BLACK);
-			newGame.setLocation(200, 120);
-			newGame.setSize(30, 20);
-			newGame.setBackground(Color.BLACK);
-			
+			screen = new JPanel() {
+				@Override
+				protected void paintComponent(Graphics g) {
+					super.paintComponent(g);
+					try {
+						g.drawImage(ImageIO.read(new File("./images/splash_screen.jpg")), 0, 0, 600, 400, this);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			};
+			// title.setFont(Font.);
+			screen.setVisible(true);
+			screen.setLayout(null);
+			screen.setSize(600, 400);
+			screen.repaint();
+			screen.add(title);
+			screen.add(loadGame);
+			screen.add(newGame);
+
+			title.setLocation(250, 10);
+			// title.setFont(Font.MONOSPACED);
+			title.setSize(300, 100);
+			title.setVisible(true);
+			loadGame.setLocation(100, 300);
+			loadGame.setSize(100, 50);
+			newGame.setLocation(400, 300);
+			newGame.setSize(100, 50);
+
 			title.setForeground(Color.BLACK);
-			//title.setFont(Font.);
-			
-			this.add(title, BorderLayout.NORTH);
-			this.add(loadGame);
-			this.add(newGame);
-			this.repaint();
-			
+
+			this.add(screen);
+
 			loadGame.addActionListener(new LoadListener());
 			newGame.addActionListener(new NewGListener());
+
+			this.setLocation(550, 350);
+			this.setSize(600, 400);
+			this.setVisible(true);
 		}
-		
-		private void paintComponent(Graphics g){
-			Graphics2D g2 = (Graphics2D)g;
-			try {
-				g2.drawImage(ImageIO.read(new File("./images/splash_screen.jpg")), 0, 0, 300, 200, null);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		
-		private class LoadListener implements ActionListener{
+
+		private class LoadListener implements ActionListener {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -711,22 +738,115 @@ public class AresFrame extends JFrame {
 				dispose();
 			}
 		}
-		
-		private class NewGListener implements ActionListener{
+
+		private class NewGListener implements ActionListener {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				model = Generator.generateStandardModel(50, 50);
-//				model = new MotherBoard(colonists, Generator.generateEasyMap(tiles));		
-//				model.getArrColonists().add(new Colonist("Paul", 0, 0));
-//				model.getArrColonists().add(new Colonist("Mingcheng", 0, 0));
-//				model.addBuilding(new Dormitory(4, 4));
-//				model.addBuilding(new Mess(4, 5));
-//				model.addBuilding(new StorageBuilding(8, 1));
+				// model = new MotherBoard(colonists,
+				// Generator.generateEasyMap(tiles));
+				// model.getArrColonists().add(new Colonist("Paul", 0, 0));
+				// model.getArrColonists().add(new Colonist("Mingcheng", 0, 0));
+				// model.addBuilding(new Dormitory(4, 4));
+				// model.addBuilding(new Mess(4, 5));
+				// model.addBuilding(new StorageBuilding(8, 1));
 
 				model.addItem(new JackHammer());
 				dispose();
 			}
 		}
+	}
+
+	private class CloseScreen extends JDialog {
+		private JLabel title;
+		private JButton save;
+		private JButton exit;
+		private JPanel screen;
+		private MotherBoard state;
+
+		public CloseScreen(MotherBoard in) {
+			super((java.awt.Frame) null, true);
+			this.setModal(true);
+			this.setLayout(null);
+			state = in;
+			title = new JLabel("EXIT MENU");
+			save = new JButton("Save & Exit");
+			exit = new JButton("Exit Game");
+			screen = new JPanel() {
+				@Override
+				protected void paintComponent(Graphics g) {
+					super.paintComponent(g);
+					try {
+						g.drawImage(ImageIO.read(new File("./images/closing_screen.jpg")), 0, 0, 600, 400, this);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			};
+			screen.setVisible(true);
+			screen.setLayout(null);
+			screen.setSize(600, 400);
+			screen.repaint();
+			screen.add(title);
+			screen.add(exit);
+			screen.add(save);
+
+			title.setLocation(250, 10);
+			// title.setFont(Font.MONOSPACED);
+			title.setSize(300, 100);
+			title.setVisible(true);
+			exit.setLocation(100, 300);
+			exit.setSize(100, 50);
+			save.setLocation(400, 300);
+			save.setSize(100, 50);
+
+			title.setForeground(Color.BLACK);
+
+			this.add(screen);
+
+			exit.addActionListener(new ExitListener());
+			save.addActionListener(new SaveListener());
+
+			this.setLocation(550, 350);
+			this.setSize(600, 400);
+			this.setVisible(true);
+		}
+
+		private class SaveListener implements ActionListener {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ObjectOutputStream objStream = null;
+				try {
+					FileOutputStream stream = new FileOutputStream("SavedModelState");
+					objStream = new ObjectOutputStream(stream);
+					objStream.writeObject(state);
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				} finally {
+					try {
+						if (objStream != null) {
+							objStream.close();
+						}
+					} catch (IOException e1) {
+						System.err.println("File did not close.");
+						e1.printStackTrace();
+					}
+				}
+				dispose();
+			}
+		}
+
+		private class ExitListener implements ActionListener {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				dispose();
+			}
+		}
+
 	}
 }
