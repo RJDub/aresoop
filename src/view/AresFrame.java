@@ -474,7 +474,7 @@ public class AresFrame extends JFrame {
 				//hud.setDisplayableObject(new DisplayableMapTile(model,map.getSelectedRow(),map.getSelectedCol()));
 			} else if (arg0.getClickCount() == 1){
 				map.setHighlightedRowColFromPixel(arg0.getX(),arg0.getY());
-				
+				hud.setDisplayableObject(new DisplayableMapTile(model,map.getHighlightedRow(),map.getHighlightedCol()));
 			}
 			
 			
