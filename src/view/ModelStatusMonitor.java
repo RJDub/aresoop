@@ -26,6 +26,7 @@ public class ModelStatusMonitor extends JPanel implements Observer {
 		text_area = new JTextArea(10,10);
 		
 		text_area.setText("testing");
+		text_area.setEditable(false);
 		this.add(text_area);
 		
 	}
