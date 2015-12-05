@@ -149,7 +149,7 @@ public class MapPanel3D extends JPanel implements Observer {
 					}
 					for (Colonist c : mobo.getArrColonists()) {
 						if ((c.getR() == row) && (c.getC() == col)) {
-							g2.drawImage(drawColonist(), (col - offset_col + WINDOW_COL_COUNT / 2) * X_INCREMENT,
+							g2.drawImage(drawColonist(c), (col - offset_col + WINDOW_COL_COUNT / 2) * X_INCREMENT,
 									(row - offset_row + WINDOW_ROW_COUNT / 2) * Y_OFFSET, null);
 						}
 
@@ -245,6 +245,15 @@ public class MapPanel3D extends JPanel implements Observer {
 		int width = 50;
 		int height = 50;
 		return sheet.getSubimage(0, 100, X_INCREMENT, Y_INCREMENT);
+	}
+
+	private Image drawColonist(Colonist c) {
+		int width = 50;
+		int height = 50;
+		if (c.isAlive())
+			return sheet.getSubimage(0, 100, X_INCREMENT, Y_INCREMENT);
+		else
+			return sheet.getSubimage(0, 150, X_INCREMENT, Y_INCREMENT) ;
 	}
 
 	@Override

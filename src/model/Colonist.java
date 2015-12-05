@@ -32,7 +32,9 @@ public class Colonist implements Serializable {
 		action = Action.None;
 		r = row;
 		c = column;
-		thirst = 210;
+		//for testing
+		thirst = 20;
+		//thirst = 210;
 		thirst_threshold = 200;
 		hunger = 210;
 		hunger_threshold = 200;

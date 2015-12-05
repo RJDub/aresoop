@@ -32,11 +32,13 @@ public class MotherBoard extends Observable implements Serializable{
 	}
 
 	public void update() {
+		
 		updateColonists();
 		updateBuildings(); // TODO: finish this method.
 		setChanged();
 		notifyObservers(this);
 	}
+	
 
 	public void updateColonists() {
 		for (Colonist colonist : colonists) {

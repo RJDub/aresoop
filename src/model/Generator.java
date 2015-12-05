@@ -166,7 +166,7 @@ public class Generator implements Serializable {
 		spawnBuilding(new Dormitory(8,5), model);		
 		spawnBuilding(new Mess(8,7), model);
 		StorageBuilding storage = new StorageBuilding(8,6);
-		storage.depositResource(1000, Task.MiningMossyRock);
+		storage.depositResource(50, Task.MiningMossyRock);
 		storage.depositResource(50, Task.MiningIce);
 		
 		spawnBuilding(storage, model);
