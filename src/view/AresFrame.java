@@ -284,16 +284,6 @@ public class AresFrame extends JFrame {
 		}
 	}
 
-//	private void sendModelToPanels() {
-//		// actually this did nothing to panels, they won't update themselves
-//		// with data changed
-//		// what do to the panels are updateView() below
-//		map.updateBoard(model);
-//		colonistPanel.updateColonistList(model.getArrColonists());
-//		buildings.updateBuildingList(model.getArrBuildings());
-//		items.updateItemList(model.getArrItems());
-//	}
-
 	private void updateView() {
 		colonistPanel.update(model.getArrColonists());
 		items.update(model.getArrItems());

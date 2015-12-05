@@ -94,11 +94,6 @@ public class MapPanel3D extends JPanel {
 		repaint();
 	}
 
-	// public void updateBoard(MotherBoard in) {
-	// mobo = in;
-	// repaint();
-	// }
-
 	private class Board extends JPanel implements Observer {
 
 		private MotherBoard mother;
