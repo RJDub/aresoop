@@ -364,6 +364,7 @@ public class AresFrame extends JFrame {
 				// System.out.println("called model.update");
 				updateView();
 			}
+			
 		}
 	}
 
