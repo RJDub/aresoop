@@ -20,7 +20,7 @@ import enums.*;
 import model.*;
 
 public class MapPanel3D extends JPanel {
-	private final int WINDOW_ROW_COUNT = 20;
+	private final int WINDOW_ROW_COUNT = 14;
 	private final int WINDOW_COL_COUNT = 20;
 
 	private final int X_INCREMENT = 50;
