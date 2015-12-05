@@ -43,6 +43,9 @@ import buildings.*;
 import enums.*;
 import items.JackHammer;
 import model.*;
+import view.displayables.DisplayableBuilding;
+import view.displayables.DisplayableColonist;
+import view.displayables.DisplayableItem;
 import view.displayables.DisplayableMapTile;
 
 public class AresFrame extends JFrame {

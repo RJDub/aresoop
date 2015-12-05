@@ -18,6 +18,7 @@ import javax.swing.JTextField;
 import model.Building;
 import model.Colonist;
 import model.Item;
+import view.displayables.DisplayableObject;
 
 public class DisplayPanel extends JPanel implements Observer{
 	
