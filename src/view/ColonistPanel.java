@@ -37,7 +37,7 @@ public class ColonistPanel extends JPanel{
 
 	private void layoutGUI() {
 		columnNames = new String[]{"Name", "Hunger", "Thirst", "Fatigue"};
-		data = new String[10][6];
+		data = new String[20][6];
 		for(int i =0; i < colonists.size(); i++){
 			data[i][0] = colonists.get(i).getName();
 			data[i][1] = Integer.toString(colonists.get(i).getHungerLevel());
@@ -46,7 +46,7 @@ public class ColonistPanel extends JPanel{
 			data[i][4] = colonists.get(i).getTask().toString();
 			data[i][5] = colonists.get(i).getAction().toString();
 		}
-		for (int j = colonists.size(); j < 10; j++) {
+		for (int j = colonists.size(); j < 20; j++) {
 			data[j][0] = "";
 			data[j][1] = "";
 			data[j][2] = "";
@@ -54,7 +54,7 @@ public class ColonistPanel extends JPanel{
 			data[j][4] = "";
 			data[j][5] = "";
 		}
-		table = new JTable(new ColonistTableModel(data,columnNames,10));
+		table = new JTable(new ColonistTableModel(data,columnNames,20));
 		table.setPreferredSize(new Dimension(600,1500));
 		JScrollPane scrollPane = new JScrollPane(table);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);

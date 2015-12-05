@@ -201,8 +201,6 @@ public class AresFrame extends JFrame {
 		view.add(mapPane);
 		view.add(colonistPanel);
 		this.add(view);
-		model.getArrItems().add(new JackHammer());
-		System.out.println(items.getArrItems().size());
 	}
 
 	private void setupModelAndTimer() {
