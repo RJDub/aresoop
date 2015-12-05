@@ -13,4 +13,9 @@ public class Mess extends Building implements Serializable {
 		super.setFatigueBonus(0);
 		super.setHungerBonus(100);
 	}
+
+	@Override
+	public String getFunction() {
+		return "For Colonists To Eat";
+	}
 }

@@ -11,5 +11,10 @@ public class CapitalBuilding extends Building implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
+	@Override
+	public String getFunction() {
+		return "";
+	}
+
 	
 }

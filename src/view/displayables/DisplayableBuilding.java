@@ -14,17 +14,17 @@ public class DisplayableBuilding implements DisplayableObject {
 	public String display() {
 		String result = building.toString()+'\n';
 		if (building.getType().equals(BuildingType.Storage)){
-			result+="resources: \n";
-			result+="\t water: "+((StorageBuilding)building).getWaterAmount()+'\n';
-			result+="\t iron ore: "+((StorageBuilding)building).getIronOreAmount()+'\n';
-			result+="\t unobtainium: "+((StorageBuilding)building).getUnobtainiumAmount()+'\n';
-			result+="\t food: "+((StorageBuilding)building).getFoodAmount()+'\n';
+			result+="Resources: \n";
+			result+="\t Water: "+((StorageBuilding)building).getWaterAmount()+'\n';
+			result+="\t Iron Ore: "+((StorageBuilding)building).getIronOreAmount()+'\n';
+			result+="\t Unobtainium: "+((StorageBuilding)building).getUnobtainiumAmount()+'\n';
+			result+="\t Food: "+((StorageBuilding)building).getFoodAmount()+'\n';
 			
 		}
-		result+= "\nrow: "+building.getR();
-		result+= "\ncol: "+building.getC();
+		result+= "\nRow: "+building.getR();
+		result+= "\nCol: "+building.getC();
 		
-		return result + "\n\tadd better descprition in DisplayableBuilding class";
+		return result + "\nFunction: " + building.getFunction();
 		
 	}
 

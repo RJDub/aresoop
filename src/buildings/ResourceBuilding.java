@@ -33,6 +33,11 @@ public class ResourceBuilding extends Building{
 	public int getLevel(){
 		return level;
 	}
+
+	@Override
+	public String getFunction() {
+		return "";
+	}
 	
 	
 
