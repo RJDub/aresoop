@@ -52,6 +52,10 @@ import view.displayables.DisplayableItem;
 import view.displayables.DisplayableMapTile;
 
 public class AresFrame extends JFrame {
+	
+	public static final Font BOLD_FONT = new Font(Font.MONOSPACED, Font.BOLD, 16);
+	public static final Font FONT = new Font(Font.MONOSPACED, Font.BOLD, 12);
+	public static final Color F_COLOR = Color.YELLOW;
 	private static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
 	private static final int screen_height = (int) Math.round(screenSize.height);
@@ -197,7 +201,6 @@ public class AresFrame extends JFrame {
 		map.setVisible(true);
 		map.setLocation(0, 0);
 		map.setPreferredSize(new Dimension(screen_width, screen_height));
-		map.setBackground(Color.BLACK);
 	}
 
 	private void setupColonistPanel() {

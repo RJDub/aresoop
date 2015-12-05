@@ -20,8 +20,8 @@ import enums.*;
 import model.*;
 
 public class MapPanel3D extends JPanel {
-	private final int WINDOW_ROW_COUNT = 20;
-	private final int WINDOW_COL_COUNT = 20;
+	private final int WINDOW_ROW_COUNT = 50;
+	private final int WINDOW_COL_COUNT = 50;
 
 	private final int X_INCREMENT = 50;
 	private final int Y_INCREMENT = 50;
@@ -51,8 +51,8 @@ public class MapPanel3D extends JPanel {
 		this.setLayout(null);
 		mobo = boardIn;
 		board = new Board(boardIn);
-		board.setLocation(50, 50);
-		board.setSize(width - 100, height - 100);
+		board.setLocation(0, 30);
+		board.setSize(width - 60, height - 60);
 		board.setVisible(true);
 		MAX_ROW_COUNT = mobo.getBoardHeight();
 		MAX_COL_COUNT = mobo.getBoardWidth();
