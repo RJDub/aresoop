@@ -69,4 +69,6 @@ public abstract class Building implements Serializable {
 	public String toString(){
 		return type.toString()+ " Row: "+this.getR()+ " Col: "+this.getC(); 
 	}
+
+	public abstract String getFunction();
 }
