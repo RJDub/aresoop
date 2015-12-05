@@ -246,36 +246,6 @@ public class MotherBoard extends Observable implements Serializable{
 					return Action.Move_To_MossyRock;
 			}
 		}
-//		}
-//			
-//			if (col.getAction() == Action.Mine && !col.hasCapacityToMineResources()) {
-//			constructBuildingPath(col, BuildingType.Storage);
-//			return Action.Move_To_Storage;
-//		} else if (col.getPath() == null && !col.hasCapacityToMineResources()) {
-//			return Action.UnloadCargo;
-//		} else {
-//			return Action.Mine;
-//		}
-		// if (!col.hasCapacityToMineResources()) {
-		// if (col.getPath()==null)
-		// constructBuildingPath(col, BuildingType.Storage);
-		// return Action.UnloadCargo;
-		// }
-		// if (map[col.getR()][col.getC()].getType() == resource) {
-		// collectResource(col, resource);
-		// return Action.Mine;
-		// }else if (){
-		//
-		// }else {
-		// if (col.getPath() == null) {
-		// if (!col.hasCapacityToMineResources()){
-		// constructBuildingPath(col, BuildingType.Storage);
-		// } else {
-		// constructResourcePath(col, resource);
-		// }
-		// }
-		// return Action.Move;
-		// }
 	}
 
 	public void assignTask(Colonist col, Task t) {
@@ -361,23 +331,6 @@ public class MotherBoard extends Observable implements Serializable{
 	public void addColonist(Colonist c) {
 		colonists.add(c);
 	}
-
-	// private void moveTowardsBuilding(Colonist col, BuildingType bt) {
-	// // This is going away because a colonist just MOVES.
-	// // TODO: add code that moves this colonist towards a building (to drop
-	// // off storage or to
-	// // fulfill need.
-	//
-	// // find nearest storage
-	// // weak pathfinding code:
-	// // this just finds the first building of bt x,y.
-	// for (Building b : buildings) {
-	// if (b.getType() == bt) {
-	// // TODO: Paul implement a pathfinder for buildings here
-	// }
-	// }
-	//
-	// }
 
 	private void collectResource(Colonist col, TileType res) {
 		// TODO: we need to add code to get a colonist to extract resources
