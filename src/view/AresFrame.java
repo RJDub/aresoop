@@ -3,6 +3,8 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.ScrollPane;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -11,6 +13,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -20,6 +23,7 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Random;
 
+import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -29,6 +33,7 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.Timer;
@@ -55,6 +60,7 @@ public class AresFrame extends JFrame {
 	private static MotherBoard model;
 	private JPanel view;
 	private Timer timer;
+	private boolean finished;
 
 	public static void main(String[] args) {
 		AresFrame window = new AresFrame();
@@ -80,7 +86,8 @@ public class AresFrame extends JFrame {
 			//model = Generator.generateTestMotherBoard(10, 10);
 
 		} else {
-
+//			SplashScreen loading = new SplashScreen();
+//			loading.setVisible(true);
 			if (model == null) {
 				int decision = JOptionPane.showConfirmDialog(AresFrame.this, "Do you want to load your saved game?");
 				if (decision == JOptionPane.YES_OPTION) {
@@ -107,12 +114,12 @@ public class AresFrame extends JFrame {
 				} else {
 
 					model = Generator.generateStandardModel(50, 50);
-//					model = new MotherBoard(colonists, Generator.generateEasyMap(tiles));		
-//					model.getArrColonists().add(new Colonist("Paul", 0, 0));
-//					model.getArrColonists().add(new Colonist("Mingcheng", 0, 0));
-//					model.addBuilding(new Dormitory(4, 4));
-//					model.addBuilding(new Mess(4, 5));
-//					model.addBuilding(new StorageBuilding(8, 1));
+					model = new MotherBoard(colonists, Generator.generateEasyMap(tiles));		
+					model.getArrColonists().add(new Colonist("Paul", 0, 0));
+					model.getArrColonists().add(new Colonist("Mingcheng", 0, 0));
+					model.addBuilding(new Dormitory(4, 4));
+					model.addBuilding(new Mess(4, 5));
+					model.addBuilding(new StorageBuilding(8, 1));
 
 					model.addItem(new JackHammer());
 
@@ -624,6 +631,97 @@ public class AresFrame extends JFrame {
 			colonistPanel.getTable().clearSelection();
 			buildings.getBuildingList().clearSelection();
 			items.getItemList().clearSelection();
+		}
+	}
+	
+	private class SplashScreen extends JDialog{
+
+		private JLabel title;
+		private JButton loadGame;
+		private JButton newGame;
+		
+		public SplashScreen(){
+			super((java.awt.Frame) null, true);
+			setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
+			this.setLocation(300, 200);
+			this.setSize(300, 200);
+			this.setLayout(null);
+			title = new JLabel("PROJECT A.R.E.S.");
+			loadGame = new JButton("Load Game");
+			newGame = new JButton("New Game");
+			
+			loadGame.setLocation(200, 50);
+			loadGame.setSize(30, 20);
+			loadGame.setBackground(Color.BLACK);
+			newGame.setLocation(200, 120);
+			newGame.setSize(30, 20);
+			newGame.setBackground(Color.BLACK);
+			
+			title.setForeground(Color.BLACK);
+			//title.setFont(Font.);
+			
+			this.add(title, BorderLayout.NORTH);
+			this.add(loadGame);
+			this.add(newGame);
+			this.repaint();
+			
+			loadGame.addActionListener(new LoadListener());
+			newGame.addActionListener(new NewGListener());
+		}
+		
+		private void paintComponent(Graphics g){
+			Graphics2D g2 = (Graphics2D)g;
+			try {
+				g2.drawImage(ImageIO.read(new File("./images/splash_screen.jpg")), 0, 0, 300, 200, null);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		private class LoadListener implements ActionListener{
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ObjectInputStream objStr = null;
+				try {
+					FileInputStream stream = new FileInputStream("SavedModelState");
+					objStr = new ObjectInputStream(stream);
+					model = (MotherBoard) objStr.readObject();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				} catch (ClassNotFoundException e1) {
+					System.err.println("Found something other than motherboard");
+					e1.printStackTrace();
+				} finally {
+					try {
+						if (objStr != null) {
+							objStr.close();
+						}
+					} catch (IOException e1) {
+						System.err.println("File did not close.");
+						e1.printStackTrace();
+					}
+				}
+				dispose();
+			}
+		}
+		
+		private class NewGListener implements ActionListener{
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				model = Generator.generateStandardModel(50, 50);
+//				model = new MotherBoard(colonists, Generator.generateEasyMap(tiles));		
+//				model.getArrColonists().add(new Colonist("Paul", 0, 0));
+//				model.getArrColonists().add(new Colonist("Mingcheng", 0, 0));
+//				model.addBuilding(new Dormitory(4, 4));
+//				model.addBuilding(new Mess(4, 5));
+//				model.addBuilding(new StorageBuilding(8, 1));
+
+				model.addItem(new JackHammer());
+				dispose();
+			}
 		}
 	}
 }
