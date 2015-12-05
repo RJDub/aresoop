@@ -299,10 +299,7 @@ public class MapPanel3D extends JPanel implements Observer {
 		int delta_row = top_left_window_row+row-WINDOW_ROW_COUNT/2;
 		int delta_col = top_left_window_col+col-WINDOW_COL_COUNT/2;
 		setTopLeftRowCol(delta_row,delta_col);
-		//setCenteredRowCol( delta_row, delta_col);
-		System.out.println("-----clicked");
-		System.out.println("centered_row: "+centered_row);
-		System.out.println("centered_col: "+centered_col);
+
 	}
 
 	private boolean isInTheWindow(int row, int col) {
