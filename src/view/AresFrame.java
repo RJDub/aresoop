@@ -193,7 +193,6 @@ public class AresFrame extends JFrame {
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setPreferredSize(screenSize);
 		this.setSize(screen_width, screen_height);
-
 	}
 
 	private void setupView() {
