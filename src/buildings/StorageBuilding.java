@@ -3,6 +3,7 @@ import java.io.Serializable;
 
 import enums.BuildingType;
 import enums.Task;
+import enums.TileType;
 import model.Building;
 
 public class StorageBuilding extends Building  implements Serializable {
@@ -91,5 +92,42 @@ public class StorageBuilding extends Building  implements Serializable {
 		}
 		else
 			return false;
+	}
+	
+	public int getResourceAmountByTileType(TileType type){
+		if(type == TileType.Ice){
+			return this.getWaterAmount();
+		}
+		if(type == TileType.MossyRock){
+			return this.getFoodAmount();	
+		}
+		
+		if(type == TileType.IronOre){
+			return this.getIronOreAmount();
+		}
+		
+		if (type == TileType.Unobtainium){
+			return this.getUnobtainiumAmount(); 
+		}
+		return 0;
+	}
+	
+	public boolean withdrawResourceAmountByTileType(TileType type, int amt){
+		if(type == TileType.Ice){
+			return this.withdrawWater(amt);
+		}
+		if(type == TileType.MossyRock){
+			return this.withdrawFood(amt);	
+		}
+		
+		if(type == TileType.IronOre){
+			return this.withdrawIronOre(amt);
+		}
+		
+		if (type == TileType.Unobtainium){
+			return this.withdrawUnobtainium(amt);
+			
+		}
+		return false;
 	}
 }

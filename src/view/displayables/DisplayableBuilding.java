@@ -1,4 +1,4 @@
-package view;
+package view.displayables;
 
 import buildings.StorageBuilding;
 import enums.BuildingType;

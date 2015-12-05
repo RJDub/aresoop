@@ -165,7 +165,12 @@ public class Generator implements Serializable {
 		createPatch(TileType.IronOre, 8,8, 6,model);
 		spawnBuilding(new Dormitory(8,5), model);		
 		spawnBuilding(new Mess(8,7), model);
-		spawnBuilding(new StorageBuilding(8	, 6), model);
+		StorageBuilding storage = new StorageBuilding(8,6);
+		storage.depositResource(50, Task.MiningMossyRock);
+		storage.depositResource(50, Task.MiningIce);
+		
+		spawnBuilding(storage, model);
+		
 		spawnColonist("Paul",5,4, model);
 		
 		spawnColonist("Ryan",8,4, model);

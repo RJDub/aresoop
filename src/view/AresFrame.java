@@ -41,10 +41,14 @@ import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.Timer;
 
+import Helpers.ResourceAmountHelper;
 import buildings.*;
 import enums.*;
 import items.JackHammer;
 import model.*;
+import view.displayables.DisplayableBuilding;
+import view.displayables.DisplayableColonist;
+import view.displayables.DisplayableItem;
 import view.displayables.DisplayableMapTile;
 
 public class AresFrame extends JFrame {
@@ -141,8 +145,6 @@ public class AresFrame extends JFrame {
 		view.add(mapPane);
 		view.add(colonistPanel);
 		this.add(view);
-		model.getArrItems().add(new JackHammer());
-		System.out.println(items.getArrItems().size());
 	}
 
 	private void setupModelAndTimer() {
@@ -257,7 +259,7 @@ public class AresFrame extends JFrame {
 				if (e.getClickCount() == 1) {
 					int index = items.getItemTable().getSelectedRow();
 					Item i = model.getArrItems().get(index);
-					if (i != null)
+					if (i != null) 
 						hud.setDisplayableObject(new DisplayableItem(i));
 				} else if (e.getClickCount() == 2) {
 					AssignItemToColonistDialog a = new AssignItemToColonistDialog(e);
@@ -414,7 +416,7 @@ public class AresFrame extends JFrame {
 				//hud.setDisplayableObject(new DisplayableMapTile(model,map.getSelectedRow(),map.getSelectedCol()));
 			} else if (arg0.getClickCount() == 1){
 				map.setHighlightedRowColFromPixel(arg0.getX(),arg0.getY());
-				
+				hud.setDisplayableObject(new DisplayableMapTile(model,map.getHighlightedRow(),map.getHighlightedCol()));
 			}
 			
 			
@@ -519,15 +521,16 @@ public class AresFrame extends JFrame {
 				case "Mess Hall":
 					// TODO: figure out how to get location working better
 					model.getArrBuildings().add(new Mess(10 + rand.nextInt(10), 10 + rand.nextInt(10)));
-					model.withdrawIronTotal(5);
+					//model.withdrawIronTotal(5);
+					ResourceAmountHelper.withdrawAmountUsingTileType(TileType.IronOre,model,5);
 					break;
 				case "Dormitory":
 					model.getArrBuildings().add(new Dormitory(10 + rand.nextInt(10), 10 + rand.nextInt(10)));
-					model.withdrawIronTotal(5);
+					ResourceAmountHelper.withdrawAmountUsingTileType(TileType.IronOre,model,5);
 					break;
 				case "Storage":
 					model.getArrBuildings().add(new StorageBuilding(10 + rand.nextInt(10), 10 + rand.nextInt(10)));
-					model.withdrawIronTotal(10);
+					ResourceAmountHelper.withdrawAmountUsingTileType(TileType.IronOre,model,10);
 					break;
 				default:
 					break;
@@ -595,7 +598,13 @@ public class AresFrame extends JFrame {
 				// TODO do somethings to the model
 				// model.getArrItems().remove(indexOfI);
 				refItem.setOwner(refColonist);
-			} else {
+			}
+			else if (refItem != null && refItem.getOwner() != null) {
+				refItem.reclaim(refItem);
+				refItem.setOwner(null);
+				JOptionPane.showMessageDialog(null, "Reclaim Item successfully");
+			}
+			else {
 				JOptionPane.showMessageDialog(null, "Please Select a Colonist first!");
 			}
 			colonistPanel.getTable().clearSelection();
