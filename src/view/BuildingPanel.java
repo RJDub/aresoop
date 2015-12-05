@@ -54,4 +54,6 @@ public class BuildingPanel extends JPanel{
 		buildingArray = in;
 	}
 	
+
+	
 }

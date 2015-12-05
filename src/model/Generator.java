@@ -158,11 +158,11 @@ public class Generator implements Serializable {
 			int count = r.nextInt(10);
 			createPatch(t, rand_r,rand_c, count,model);
 		}
-//		createPatch(TileType.Ice, 5,10,5,model);
-//		createPatch(TileType.Mountain, 2,1,5, model);
-//		createPatch(TileType.Crater, 2,1,3, model);
-//		createPatch(TileType.Volcano, 2,1,5, model);
-//		createPatch(TileType.IronOre, 8,8, 6,model);
+		createPatch(TileType.Ice, 5,10,5,model);
+		createPatch(TileType.Mountain, 2,1,5, model);
+		createPatch(TileType.Crater, 2,1,3, model);
+		createPatch(TileType.Volcano, 2,1,5, model);
+		createPatch(TileType.IronOre, 8,8, 6,model);
 		spawnBuilding(new Dormitory(8,5), model);		
 		spawnBuilding(new Mess(8,7), model);
 		spawnBuilding(new StorageBuilding(8	, 6), model);
@@ -217,7 +217,11 @@ public class Generator implements Serializable {
 		if (path != null){
 			int r = path.get(path.size()-1)[0];
 			int c = path.get(path.size()-1)[1];
+			
 			tiles[r][c] = new Tile(tile_type, r, c);
+			if (tile_type == TileType.Ice){
+				tiles[r][c].setResourceAmt(20);
+			}
 			return true;
 		} else 
 			return false;

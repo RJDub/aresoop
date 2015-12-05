@@ -16,6 +16,12 @@ public class Tile implements Serializable{
 		this.type = type;
 		r = row;
 		c = column;
+		resource_amt =0;
+	}
+	
+	public Tile(TileType type, int row, int column, int amt){
+		this(type,row,column);
+		resource_amt = amt;
 	}
 	
 	public TileType getType(){

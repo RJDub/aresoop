@@ -55,6 +55,8 @@ public class AresFrame extends JFrame {
 	private static MotherBoard model;
 	private JPanel view;
 	private Timer timer;
+	
+	private ModelStatusMonitor monitor;
 
 	public static void main(String[] args) {
 		AresFrame window = new AresFrame();
@@ -72,7 +74,7 @@ public class AresFrame extends JFrame {
 
 		Tile[][] tiles = new Tile[30][50];
 		ArrayList<Colonist> colonists = new ArrayList<Colonist>();
-		boolean TESTINGMODE = false;
+		boolean TESTINGMODE = true;
 		if (TESTINGMODE) {
 
 			//Tile[][] tiles = new Tile[30][50];
@@ -132,8 +134,9 @@ public class AresFrame extends JFrame {
 
 		view = new JPanel();
 		setupView();
-
-		map = new MapPanel3D(model);
+		
+		monitor = new ModelStatusMonitor(model);
+		map = new MapPanel3D(model,monitor);
 		setupMapPanel();
 		mapPane = new JScrollPane(map);
 
@@ -174,8 +177,10 @@ public class AresFrame extends JFrame {
 	private void setupModelAndTimer() {
 		model.addObserver(map);
 		model.addObserver(hud);
+		model.addObserver(monitor);
 		model.assignTask(model.getArrColonists().get(0), Task.MiningIce);
 		model.assignTask(model.getArrColonists().get(1), Task.MiningIronOre);
+		
 
 		timer = new Timer(500, new OurTimerListener());
 		// timer.start();
@@ -193,6 +198,7 @@ public class AresFrame extends JFrame {
 		hud.getConstruction().addActionListener(new BuildConstructListener());
 		hud.getRecruitment().addActionListener(new RecruitmentListener());
 		map.addMouseListener(new MapPanelClickedActionListener());
+		
 
 		// buildings.getBuildingList().addMouseListener(new
 		// BuildingRowSelectListener());
@@ -447,7 +453,7 @@ public class AresFrame extends JFrame {
 		public TaskDialog() {
 			this.setVisible(true);
 			this.setLocation(400, 400);
-			this.setSize(300, 100);
+			this.setSize(300, 150);
 			list = new JList<String>();
 			select = new JButton("Select");
 			tasks = new DefaultListModel<String>();
@@ -545,6 +551,7 @@ public class AresFrame extends JFrame {
 				default:
 					break;
 				}
+				
 				colonistPanel.getTable().clearSelection();
 				buildings.getBuildingList().clearSelection();
 				items.getItemList().clearSelection();
