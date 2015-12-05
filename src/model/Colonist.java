@@ -19,6 +19,8 @@ public class Colonist implements Serializable {
 	private int r, c;
 	private int resourceAmount;
 	private Item items;
+	private int max_food_consumption = 1000;
+	private int max_water_consumption = 1000;
 
 	int capacity; // need to think what this will do!
 
@@ -250,29 +252,10 @@ public class Colonist implements Serializable {
 		resourceAmount+=amt_to_mine;
 	}
 
-
-	
-
-	// public Colonist switchOccupation(String decision, String identification)
-	// {
-	// if (decision.compareTo("Worker") == 0){
-	// return new Worker(identification);
-	// } else if (decision.compareTo("Farmer") == 0){
-	// return new Farmer(identification);
-	// } else {
-	// return new Explorer(identification);
-	// }
-	// }
-	//
-	// public ProfessionalColonist upgradeColonist(String type, String
-	// identification) {
-	// if (type.compareTo("Worker") == 0){
-	// return new Engineer(identification);
-	// } else if (type.compareTo("Farmer") == 0){
-	// return new Advocate(identification);
-	// } else {
-	// return new Scientist(identification);
-	// }
-	// }
-
+	public int getMaxFoodConsumption(){
+		return max_food_consumption;
+	}
+	public int getMaxWaterConsumption(){
+		return max_water_consumption;
+	}
 }

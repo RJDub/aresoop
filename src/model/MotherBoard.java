@@ -142,16 +142,33 @@ public class MotherBoard extends Observable implements Serializable{
 						if (colonist.getR() == building.getR() && colonist.getC() == building.getC()){
 							//check if enough food is in storage
 							int available_food = ResourceAmountHelper.getStorageAmountFromTileType(TileType.MossyRock, this);
-							colonist.incrementHungerLevel(((Mess)building).getHungerBonus()); 
+							int col_max_food_consumption = colonist.getMaxFoodConsumption();
+							int hungerBonus = building.getHungerBonus();
+							int max_food_colonist_can_eat = col_max_food_consumption/hungerBonus;
+							if (available_food >= max_food_colonist_can_eat){
+								colonist.incrementHungerLevel(max_food_colonist_can_eat*hungerBonus); 
+								ResourceAmountHelper.withdrawAmountUsingTileType(TileType.MossyRock, this, max_food_colonist_can_eat);
+								//eat max food
+							} else{
+								colonist.incrementHungerLevel(available_food*hungerBonus);
+								ResourceAmountHelper.withdrawAmountUsingTileType(TileType.MossyRock, this, available_food);
+							}	
 						}
-							
-						
-							
 						break;
 					case FindWater:
-						if (colonist.getR() == building.getR() && colonist.getC() == building.getC())
-							colonist.incrementThirstLevel(((Mess)building).getThirstBonus()); 
-						break;
+						//check if enough water is in storage
+						int available_water = ResourceAmountHelper.getStorageAmountFromTileType(TileType.Ice, this);
+						int col_max_water_consumption = colonist.getMaxWaterConsumption();
+						int thirstBonus = building.getThirstBonus();
+						int max_water_colonist_can_consume = col_max_water_consumption/thirstBonus;
+						if (available_water >= max_water_colonist_can_consume){
+							colonist.incrementThirstLevel(max_water_colonist_can_consume*thirstBonus); 
+							ResourceAmountHelper.withdrawAmountUsingTileType(TileType.Ice, this, max_water_colonist_can_consume);
+							//eat max food
+						} else{
+							colonist.incrementHungerLevel(available_water*thirstBonus);
+							ResourceAmountHelper.withdrawAmountUsingTileType(TileType.Ice, this, available_water);
+						}	
 					default:
 						break;
 					}
