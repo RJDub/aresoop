@@ -13,6 +13,7 @@ public enum TileType implements Serializable {
 	Mountain(999);
 	
 	private boolean buildable;
+	private String string;
 	
 	static {
 		Flat.buildable = true;
@@ -38,6 +39,21 @@ public enum TileType implements Serializable {
 		return buildable;
 	}
 	
+	static {
+		Flat.string = "Flat";
+		Ice.string = "Ice";
+		IronOre.string = "Iron Ore";
+		Volcano.string= "Lava";
+		Crater.string= "Crater";
+		Mountain.string= "Boulder";
+		Unobtainium.string ="Unobtainium";
+		MossyRock.string="Moss";
+	}
+	
+	@Override
+	public String toString(){
+		return string;
+	}
 	
 	
 }
