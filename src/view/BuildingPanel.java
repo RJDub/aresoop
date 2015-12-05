@@ -45,7 +45,7 @@ public class BuildingPanel extends JPanel{
 			data[j][2] = "";
 		}
 		table = new JTable(new BuildingTableModel(data,columnNames,10));
-		
+		table.setFocusable(false);
 		table.setPreferredSize(new Dimension(400,1000));
 		JScrollPane scrollPane = new JScrollPane(table);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);

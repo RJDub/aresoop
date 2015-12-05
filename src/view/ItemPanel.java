@@ -48,6 +48,7 @@ public class ItemPanel extends JPanel{
 		}
 		table = new JTable(new ItemTableModel(data,columnNames,10));
 		table.setPreferredSize(new Dimension(400,1000));
+		table.setFocusable(false);
 		JScrollPane scrollPane = new JScrollPane(table);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPane.setPreferredSize(new Dimension((int) (Toolkit.getDefaultToolkit().getScreenSize().width * .333),(int) (Toolkit.getDefaultToolkit().getScreenSize().height * .13)));
