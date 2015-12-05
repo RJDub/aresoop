@@ -1,5 +1,6 @@
 package view.displayables;
 
+import enums.TileType;
 import model.MotherBoard;
 import model.Tile;
 import view.DisplayableObject;
@@ -18,7 +19,10 @@ public class DisplayableMapTile implements DisplayableObject {
 	public String display() {
 		String str = "";
 		str += "Row: "+ row + " Col: "+ col+"\n";
-		str += "Tile: "+tile.getType().toString();
+		str += "Tile: "+tile.getType().toString()+"\n";
+		if (tile.getType().isMineable()){
+			str+=tile.getType().toString()+" remaining: "+tile.getResourceAmt()+"\n";
+		}
 		return str;
 	}
 
