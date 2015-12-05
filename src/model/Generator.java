@@ -174,11 +174,11 @@ public class Generator implements Serializable {
 		
 		spawnBuilding(storage, model);
 		int landingPadLoc[] = LandingPadLocation.getLandingPadLocation(model);
-		spawnColonist("Paul",landingPadLoc[0],landingPadLoc[1], model);
+		spawnColonist("Paul", model);
 		
-		spawnColonist("Ryan",landingPadLoc[0],landingPadLoc[1], model);
-		spawnColonist("Mingchen",landingPadLoc[0],landingPadLoc[1], model);
-		spawnColonist("Sean",landingPadLoc[0],landingPadLoc[1], model);
+		spawnColonist("Ryan", model);
+		spawnColonist("Mingchen", model);
+		spawnColonist("Sean", model);
 		return model;
 	}
 	
@@ -218,6 +218,12 @@ public class Generator implements Serializable {
 		} else 
 			return false;
 	
+	}
+	public static boolean spawnColonist(String name, MotherBoard model){
+			int landingPadLoc[] = LandingPadLocation.getLandingPadLocation(model);
+			model.addColonist(new Colonist(name,landingPadLoc[0],landingPadLoc[1]));
+			return true;
+		
 	}
 
 	public static boolean spawnTile(TileType tile_type,int row, int col, Tile[][] tiles){
