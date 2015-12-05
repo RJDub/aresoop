@@ -14,6 +14,10 @@ public class MossKing extends Item implements Serializable {
 		owner = null;
 	}
 	
+	public String getFunction() {
+		return "Gathering Food Faster";
+	}
+	
 	@Override
 	public String toString(){
 		return "MossKing";

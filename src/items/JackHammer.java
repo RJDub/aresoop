@@ -14,6 +14,11 @@ public class JackHammer extends Item implements Serializable {
 		owner = null;
 		
 	}
+	
+	public String getFunction() {
+		return "Mining Iron Ore Faster";
+	}
+	
 	@Override
 	public String toString(){
 		return "Jackhammer";

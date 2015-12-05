@@ -12,6 +12,10 @@ public class IceDrill extends Item {
 		owner = null;
 	}
 	
+	public String getFunction() {
+		return "Mining Ice Faster";
+	}
+	
 	@Override
 	public String toString(){
 		return "IceDrill";
