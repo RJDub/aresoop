@@ -11,6 +11,10 @@ public class TheKeyToWin extends Item {
 		owner = null;
 	}
 	
+	public String getFunction() {
+		return "Mining Unobtainium Faster";
+	}
+	
 	@Override
 	public String toString(){
 		return "TheKeyToWin";
