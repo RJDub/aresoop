@@ -20,8 +20,8 @@ import enums.*;
 import model.*;
 
 public class MapPanel3D extends JPanel {
-	private final int WINDOW_ROW_COUNT = 14;
-	private final int WINDOW_COL_COUNT = 20;
+	private final int WINDOW_ROW_COUNT = 20;
+	private final int WINDOW_COL_COUNT = 15;
 
 	private final int X_INCREMENT = 50;
 	private final int Y_INCREMENT = 50;
@@ -190,6 +190,8 @@ public class MapPanel3D extends JPanel {
 			return sheet.getSubimage(150, 100, X_INCREMENT, Y_INCREMENT);
 		case Storage:
 			return sheet.getSubimage(50, 100, X_INCREMENT, Y_INCREMENT);
+		case LandingPad:
+			return sheet.getSubimage(100, 150, X_INCREMENT, Y_INCREMENT);
 		default:
 			return null;
 		}

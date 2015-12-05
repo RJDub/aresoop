@@ -5,9 +5,11 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import buildings.Dormitory;
+import buildings.LandingPad;
 import buildings.Mess;
 import buildings.StorageBuilding;
 import enums.*;
+import Helpers.*;
 
 public class Generator implements Serializable {
 
@@ -165,17 +167,18 @@ public class Generator implements Serializable {
 		createPatch(TileType.IronOre, 8,8, 6,model);
 		spawnBuilding(new Dormitory(8,5), model);		
 		spawnBuilding(new Mess(8,7), model);
+		spawnBuilding(new LandingPad(8,3),model);
 		StorageBuilding storage = new StorageBuilding(8,6);
 		storage.depositResource(50, Task.MiningMossyRock);
 		storage.depositResource(50, Task.MiningIce);
 		
 		spawnBuilding(storage, model);
+		int landingPadLoc[] = LandingPadLocation.getLandingPadLocation(model);
+		spawnColonist("Paul",landingPadLoc[0],landingPadLoc[1], model);
 		
-		spawnColonist("Paul",5,4, model);
-		
-		spawnColonist("Ryan",8,4, model);
-		spawnColonist("Mingchen",8,4, model);
-		spawnColonist("Sean",8,4, model);
+		spawnColonist("Ryan",landingPadLoc[0],landingPadLoc[1], model);
+		spawnColonist("Mingchen",landingPadLoc[0],landingPadLoc[1], model);
+		spawnColonist("Sean",landingPadLoc[0],landingPadLoc[1], model);
 		return model;
 	}
 	
