@@ -10,6 +10,8 @@ import java.awt.ScrollPane;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
@@ -42,6 +44,7 @@ import javax.swing.Timer;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 
+import Helpers.ResourceAmountHelper;
 import buildings.*;
 import enums.*;
 import items.IceDrill;
@@ -71,7 +74,6 @@ public class AresFrame extends JFrame {
 	private static MotherBoard model;
 	private JPanel view;
 	private Timer timer;
-	private ModelStatusMonitor monitor;
 
 	public static void main(String[] args) {
 		AresFrame window = new AresFrame();
@@ -98,62 +100,6 @@ public class AresFrame extends JFrame {
 
 		} else {
 			SplashScreen splash = new SplashScreen();
-			// splash.setModal(true);
-			// splash.setLayout(null);
-			// JLabel title = new JLabel("PROJECT A.R.E.S.");
-			// JButton loadGame = new JButton("Load Game");
-			// JButton newGame = new JButton("New Game");
-			// JPanel screen = new JPanel(){
-			// @Override
-			// protected void paintComponent(Graphics g){
-			// super.paintComponent(g);
-			// try {
-			// g.drawImage(ImageIO.read(new File("./images/splash_screen.jpg")),
-			// 0, 0, 600, 400, this);
-			// } catch (IOException e) {
-			// // TODO Auto-generated catch block
-			// e.printStackTrace();
-			// }
-			// }
-			//
-			// @Override
-			// public Dimension getPreferredSize() {
-			// Dimension size = super.getPreferredSize();
-			// size.width = 300;
-			// size.height = 200;
-			//
-			// return size;
-			// }
-			// };
-			// //title.setFont(Font.);
-			// screen.setVisible(true);
-			// screen.setLayout(null);
-			// screen.setSize(600, 400);
-			// screen.repaint();
-			// screen.add(title);
-			// screen.add(loadGame);
-			// screen.add(newGame);
-			//
-			// title.setLocation(250, 10);
-			// title.setFont(Font.MONOSPACED);
-			// title.setSize(300, 100);
-			// title.setVisible(true);
-			// loadGame.setLocation(100, 300);
-			// loadGame.setSize(100, 50);
-			// loadGame.setBackground(Color.BLACK);
-			// newGame.setLocation(400, 300);
-			// newGame.setSize(100, 50);
-			// newGame.setBackground(Color.BLACK);
-			// title.setForeground(Color.BLACK);
-			//
-			// splash.add(screen);
-			//
-			// loadGame.addActionListener(new LoadListener());
-			// newGame.addActionListener(new NewGListener());
-			//
-			// splash.setLocation(550, 350);
-			// splash.setSize(600, 400);
-			// splash.setVisible(true);
 		}
 
 		layoutGUI();
@@ -169,15 +115,14 @@ public class AresFrame extends JFrame {
 		view = new JPanel();
 		setupView();
 
-		monitor = new ModelStatusMonitor(model);
-		map = new MapPanel3D(model, monitor);
+		map = new MapPanel3D(model, screen_width, (int) (screen_height * .666));
 		setupMapPanel();
 		mapPane = new JScrollPane(map);
 
 		mapPane.setVisible(true);
 		mapPane.setLocation(0, 0);
+		view.add(map);
 
-		mapPane.setSize(screen_width, (int) (screen_height * .666));
 		mapPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		mapPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 
@@ -209,9 +154,9 @@ public class AresFrame extends JFrame {
 	}
 
 	private void setupModelAndTimer() {
-		model.addObserver(map);
+//		model.addObserver(map);
 		model.addObserver(hud);
-		model.addObserver(monitor);
+//		model.addObserver(monitor);
 		model.assignTask(model.getArrColonists().get(0), Task.MiningIce);
 		model.assignTask(model.getArrColonists().get(1), Task.MiningIronOre);
 
@@ -231,6 +176,7 @@ public class AresFrame extends JFrame {
 		hud.getConstruction().addActionListener(new BuildConstructListener());
 		hud.getRecruitment().addActionListener(new RecruitmentListener());
 		map.addMouseListener(new MapPanelClickedActionListener());
+		this.addKeyListener(new ArrowKeyListener());
 
 		// buildings.getBuildingList().addMouseListener(new
 		// BuildingRowSelectListener());
@@ -251,14 +197,13 @@ public class AresFrame extends JFrame {
 		view.setSize(screen_width, screen_height);
 		view.setVisible(true);
 		view.setLocation(0, 0);
-		view.setBackground(Color.BLACK);
 	}
 
 	private void setupMapPanel() {
 		map.setVisible(true);
 		map.setLocation(0, 0);
 		map.setPreferredSize(new Dimension(screen_width, screen_height));
-		map.setBackground(Color.BLUE);
+		map.setBackground(Color.BLACK);
 	}
 
 	private void setupColonistPanel() {
@@ -330,15 +275,21 @@ public class AresFrame extends JFrame {
 			}
 		});
 	}
+	
+	private class ArrowKeyListener extends KeyAdapter{
 
-	private void sendModelToPanels() {
-		// actually this did nothing to panels, they won't update themselves
-		// with data changed
-		// what do to the panels are updateView() below
-		map.updateBoard(model);
-		colonistPanel.updateColonistList(model.getArrColonists());
-		buildings.updateBuildingList(model.getArrBuildings());
-		items.updateItemList(model.getArrItems());
+		@Override
+		public void keyPressed(KeyEvent e) {
+			if (e.getKeyCode() == KeyEvent.VK_UP){
+				map.moveUp();
+			} else if (e.getKeyCode() == KeyEvent.VK_DOWN){
+				map.moveDown();
+			} else if (e.getKeyCode() == KeyEvent.VK_LEFT){
+				map.moveLeft();
+			} else if (e.getKeyCode() == KeyEvent.VK_RIGHT){
+				map.moveRight();
+			}
+		}
 	}
 
 	private void updateView() {
@@ -371,6 +322,7 @@ public class AresFrame extends JFrame {
 				// System.out.println("called model.update");
 				updateView();
 			}
+			
 		}
 	}
 
@@ -380,26 +332,6 @@ public class AresFrame extends JFrame {
 		public void windowClosing(WindowEvent e) {
 			timer.stop();
 			CloseScreen close = new CloseScreen(model);
-//			int decision = JOptionPane.showConfirmDialog(AresFrame.this, "Save game?");
-//			if (decision == JOptionPane.YES_OPTION) {
-//				ObjectOutputStream objStream = null;
-//				try {
-//					FileOutputStream stream = new FileOutputStream("SavedModelState");
-//					objStream = new ObjectOutputStream(stream);
-//					objStream.writeObject(model);
-//				} catch (IOException e1) {
-//					e1.printStackTrace();
-//				} finally {
-//					try {
-//						if (objStream != null) {
-//							objStream.close();
-//						}
-//					} catch (IOException e1) {
-//						System.err.println("File did not close.");
-//						e1.printStackTrace();
-//					}
-//				}
-//			}
 		}
 	}
 
@@ -588,15 +520,16 @@ public class AresFrame extends JFrame {
 				case "Mess Hall":
 					// TODO: figure out how to get location working better
 					model.getArrBuildings().add(new Mess(10 + rand.nextInt(10), 10 + rand.nextInt(10)));
-					model.withdrawIronTotal(5);
+					//model.withdrawIronTotal(5);
+					ResourceAmountHelper.withdrawAmountUsingTileType(TileType.IronOre,model,5);
 					break;
 				case "Dormitory":
 					model.getArrBuildings().add(new Dormitory(10 + rand.nextInt(10), 10 + rand.nextInt(10)));
-					model.withdrawIronTotal(5);
+					ResourceAmountHelper.withdrawAmountUsingTileType(TileType.IronOre,model,5);
 					break;
 				case "Storage":
 					model.getArrBuildings().add(new StorageBuilding(10 + rand.nextInt(10), 10 + rand.nextInt(10)));
-					model.withdrawIronTotal(10);
+					ResourceAmountHelper.withdrawAmountUsingTileType(TileType.IronOre,model,10);
 					break;
 				default:
 					break;

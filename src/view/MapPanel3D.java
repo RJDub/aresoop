@@ -1,15 +1,10 @@
 
 package view;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.Point;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -19,14 +14,12 @@ import java.util.Random;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
-import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import enums.BuildingType;
-import enums.TileType;
+import enums.*;
 import model.*;
 
-public class MapPanel3D extends JPanel implements Observer {
+public class MapPanel3D extends JPanel {
 	private final int WINDOW_ROW_COUNT = 20;
 	private final int WINDOW_COL_COUNT = 20;
 
@@ -40,27 +33,27 @@ public class MapPanel3D extends JPanel implements Observer {
 
 	private MotherBoard mobo;
 	private BufferedImage sheet, background;
+	private Board board;
 	private int centered_row;
 	private int centered_col;
 	private int highlighted_row;
 	private int highlighted_col;
 	private int top_left_window_row;
 	private int top_left_window_col;
-	
-	public static Random r = new Random();
-	
-	private JPanel[][] tiles;
-	private JPanel buttons_panel;
-	JButton button_north;
-	JButton button_south;
-	JButton button_east;
-	JButton button_west;
-	
-	private ModelStatusMonitor monitor;
 
-	public MapPanel3D(MotherBoard boardIn) {
-		
+	public static Random r = new Random();
+
+	private JPanel[][] tiles;
+	private JPanel infoPanel;
+
+	public MapPanel3D(MotherBoard boardIn, int width, int height) {
+		this.setSize(width, height);
+		this.setLayout(null);
 		mobo = boardIn;
+		board = new Board(boardIn);
+		board.setLocation(50, 50);
+		board.setSize(width - 100, height - 100);
+		board.setVisible(true);
 		MAX_ROW_COUNT = mobo.getBoardHeight();
 		MAX_COL_COUNT = mobo.getBoardWidth();
 		try {
@@ -70,123 +63,108 @@ public class MapPanel3D extends JPanel implements Observer {
 			System.out.println("Could not find 'SpriteSheet.png'");
 		}
 		drawBoard();
-		buttons_panel = new JPanel();
-		buttons_panel.setLocation(WINDOW_COL_COUNT * X_INCREMENT, 0);
-		buttons_panel.setSize(200, 200);
-		buttons_panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		button_north = new JButton("UP");
-		button_south = new JButton("DOWN");
-		button_east = new JButton("RIGHT");
-		button_west = new JButton("LEFT");
-
-		buttons_panel.add(button_north);
-		buttons_panel.add(button_south);
-		buttons_panel.add(button_east);
-		buttons_panel.add(button_west);
-
-		button_north.addActionListener(new DirectionButtonListener());
-		button_south.addActionListener(new DirectionButtonListener());
-		button_east.addActionListener(new DirectionButtonListener());
-		button_west.addActionListener(new DirectionButtonListener());
-
-		this.setLayout(null);
-		this.add(buttons_panel);
-
-		setTopLeftRowCol(0,0);
-	
-		monitor = null;
-
+		infoPanel = new ModelStatusMonitor(mobo, width);
+		mobo.addObserver((Observer) infoPanel);
+		mobo.addObserver(board);
+		this.add(infoPanel);
+		this.add(board);
+		setTopLeftRowCol(0, 0);
 	}
+
+	public void setInfoPanelSize(int width, int height) {
+		infoPanel.setSize(width, height);
+	}
+
 	private void setTopLeftRowCol(int r, int c) {
-		if (r < 0)r = 0; 
-		if (c < 0)c = 0;
-		if (r > (MAX_ROW_COUNT-WINDOW_ROW_COUNT))r = ( MAX_ROW_COUNT-WINDOW_ROW_COUNT);
-		if (c > (MAX_COL_COUNT-WINDOW_COL_COUNT))c = ( MAX_COL_COUNT-WINDOW_COL_COUNT);
+		if (r < 0)
+			r = 0;
+		if (c < 0)
+			c = 0;
+		if (r > (MAX_ROW_COUNT - WINDOW_ROW_COUNT))
+			r = (MAX_ROW_COUNT - WINDOW_ROW_COUNT);
+		if (c > (MAX_COL_COUNT - WINDOW_COL_COUNT))
+			c = (MAX_COL_COUNT - WINDOW_COL_COUNT);
 		top_left_window_row = r;
 		top_left_window_col = c;
-		setCenteredRowCol(top_left_window_row+WINDOW_ROW_COUNT/2,top_left_window_col+WINDOW_COL_COUNT/2);		
+		setCenteredRowCol(top_left_window_row + WINDOW_ROW_COUNT / 2, top_left_window_col + WINDOW_COL_COUNT / 2);
 	}
-	public MapPanel3D(MotherBoard boardIn, ModelStatusMonitor mon) {
-		this(boardIn);
-		monitor = mon;
-		
-		monitor.setSize(400,400);
-		monitor.setLocation(1000,300);
-		
-		this.add(monitor);
-	}
+
 	// draws the board
 	public void drawBoard() {
 		repaint();
 	}
 
-	public void updateBoard(MotherBoard in) {
-		mobo = in;
-		repaint();
-	}
+	private class Board extends JPanel implements Observer {
 
-	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
+		private MotherBoard mother;
 
-		int offset_col = centered_col;// -WINDOW_COL_COUNT/2;
-		int offset_row = centered_row;// -WINDOW_ROW_COUNT/2;
-		Graphics2D g2 = (Graphics2D) g;
-		for (int row = 0; row < mobo.getBoardHeight(); row++) {
-			for (int col = 0; col < mobo.getBoardWidth(); col++) {
-				if (isInTheWindow(row, col)) {
-					g2.drawImage(drawTile(row, col), (col - offset_col + WINDOW_COL_COUNT / 2) * X_INCREMENT,
-							(row - offset_row + WINDOW_ROW_COUNT / 2) * Y_OFFSET, null);
-					//add highlight;
-					if(row == highlighted_row && col == highlighted_col){
-						g2.drawImage(drawHighlightBox(), (col - offset_col + WINDOW_COL_COUNT / 2) * X_INCREMENT, (row - offset_row + WINDOW_ROW_COUNT / 2) * Y_OFFSET, null);
-					}
-					for (Building b : mobo.getArrBuildings()) {
-						BuildingType bt = b.getType();
-						if ((b.getR() == row) && (b.getC() == col)) {
-							g2.drawImage(drawBuilding(bt), (col - offset_col + WINDOW_COL_COUNT / 2) * X_INCREMENT,
+		public Board(MotherBoard in) {
+			mother = in;
+			this.setBackground(Color.BLACK);
+		}
+
+		@Override
+		public void update(Observable o, Object arg) {
+			mother = (MotherBoard) o;
+			repaint();
+		}
+
+		public void paintComponent(Graphics g) {
+			super.paintComponent(g);
+			int offset_col = centered_col;// -WINDOW_COL_COUNT/2;
+			int offset_row = centered_row;// -WINDOW_ROW_COUNT/2;
+			Graphics2D g2 = (Graphics2D) g;
+			for (int row = 0; row < mobo.getBoardHeight(); row++) {
+				for (int col = 0; col < mobo.getBoardWidth(); col++) {
+					if (isInTheWindow(row, col)) {
+						g2.drawImage(drawTile(row, col), (col - offset_col + WINDOW_COL_COUNT / 2) * X_INCREMENT,
+								(row - offset_row + WINDOW_ROW_COUNT / 2) * Y_OFFSET, null);
+						// add highlight;
+						if (row == highlighted_row && col == highlighted_col) {
+							g2.drawImage(drawHighlightBox(), (col - offset_col + WINDOW_COL_COUNT / 2) * X_INCREMENT,
 									(row - offset_row + WINDOW_ROW_COUNT / 2) * Y_OFFSET, null);
 						}
-					}
-					for (Colonist c : mobo.getArrColonists()) {
-						if ((c.getR() == row) && (c.getC() == col)) {
-							g2.drawImage(drawColonist(), (col - offset_col + WINDOW_COL_COUNT / 2) * X_INCREMENT,
-									(row - offset_row + WINDOW_ROW_COUNT / 2) * Y_OFFSET, null);
+						for (Building b : mobo.getArrBuildings()) {
+							BuildingType bt = b.getType();
+							if ((b.getR() == row) && (b.getC() == col)) {
+								g2.drawImage(drawBuilding(bt), (col - offset_col + WINDOW_COL_COUNT / 2) * X_INCREMENT,
+										(row - offset_row + WINDOW_ROW_COUNT / 2) * Y_OFFSET, null);
+							}
 						}
-
+						for (Colonist c : mobo.getArrColonists()) {
+							if ((c.getR() == row) && (c.getC() == col)) {
+								g2.drawImage(drawColonist(c), (col - offset_col + WINDOW_COL_COUNT / 2) * X_INCREMENT,
+										(row - offset_row + WINDOW_ROW_COUNT / 2) * Y_OFFSET, null);
+							}
+						}
 					}
-					
-
 				}
 			}
 		}
+
 	}
 
 	private Image drawHighlightBox() {
 		return sheet.getSubimage(50, 150, X_INCREMENT, Y_INCREMENT);
-		
+
 	}
+
 	public void setCenteredRowCol(int r, int c) {
 		centered_row = r;
 		centered_col = c;
 		/*
-		if ((r > WINDOW_ROW_COUNT / 2)) {
-			if (r <= (MAX_ROW_COUNT - (WINDOW_ROW_COUNT / 2)))
-				centered_row = r;
-			else
-				centered_row = MAX_ROW_COUNT - (WINDOW_ROW_COUNT / 2);
-		} else
-			centered_row = (WINDOW_ROW_COUNT / 2)-1;
-
-		if (c > WINDOW_COL_COUNT / 2) {
-			if (c <= (MAX_COL_COUNT - (WINDOW_COL_COUNT / 2)))
-				centered_col = c;
-			else
-				centered_col = MAX_COL_COUNT - (WINDOW_COL_COUNT / 2);
-		} else
-			centered_col = (WINDOW_COL_COUNT / 2)-1;
-		*/
-//		System.out.println("Centered Row: " + centered_row);
-//		System.out.println("Centered Col: " + centered_col);
+		 * if ((r > WINDOW_ROW_COUNT / 2)) { if (r <= (MAX_ROW_COUNT -
+		 * (WINDOW_ROW_COUNT / 2))) centered_row = r; else centered_row =
+		 * MAX_ROW_COUNT - (WINDOW_ROW_COUNT / 2); } else centered_row =
+		 * (WINDOW_ROW_COUNT / 2)-1;
+		 * 
+		 * if (c > WINDOW_COL_COUNT / 2) { if (c <= (MAX_COL_COUNT -
+		 * (WINDOW_COL_COUNT / 2))) centered_col = c; else centered_col =
+		 * MAX_COL_COUNT - (WINDOW_COL_COUNT / 2); } else centered_col =
+		 * (WINDOW_COL_COUNT / 2)-1;
+		 */
+		// System.out.println("Centered Row: " + centered_row);
+		// System.out.println("Centered Col: " + centered_col);
 	}
 
 	private void drawArrBuildings(Graphics2D g2) {
@@ -247,58 +225,47 @@ public class MapPanel3D extends JPanel implements Observer {
 		return sheet.getSubimage(0, 100, X_INCREMENT, Y_INCREMENT);
 	}
 
-	@Override
-	public void update(Observable arg0, Object arg1) {
-		mobo = (MotherBoard) arg0;
-		repaint();
-
+	public void moveUp() {
+		centered_row--;
+		drawBoard();
 	}
 
-	private class DirectionButtonListener implements ActionListener {
-
-		@Override
-		public void actionPerformed(ActionEvent arg0) {
-			if (arg0.getSource() == button_north) {
-				if (centered_row > 0) {
-					centered_row--;
-					drawBoard();
-				}
-
-			} else if (arg0.getSource() == button_south) {
-				if (centered_row < MAX_ROW_COUNT) {
-					centered_row++;
-					drawBoard();
-				}
-
-			} else if (arg0.getSource() == button_east) {
-				if (centered_col < MAX_COL_COUNT) {
-					centered_col++;
-					drawBoard();
-				}
-
-			} else if (arg0.getSource() == button_west) {
-				if (centered_col > 0) {
-					centered_col--;
-					drawBoard();
-				}
-			}
-
-		}
-
+	private Image drawColonist(Colonist c) {
+		int width = 50;
+		int height = 50;
+		if (c.isAlive())
+			return sheet.getSubimage(0, 100, X_INCREMENT, Y_INCREMENT);
+		else
+			return sheet.getSubimage(0, 150, X_INCREMENT, Y_INCREMENT);
 	}
-	
-	public void centerMap(int x, int y){
-		int clicked_row=(int) (x / X_INCREMENT )- 1;
+
+	public void moveDown() {
+		centered_row++;
+		drawBoard();
+	}
+
+	public void moveLeft() {
+		centered_col--;
+		drawBoard();
+	}
+
+	public void moveRight() {
+		centered_col++;
+		drawBoard();
+	}
+
+	public void centerMap(int x, int y) {
+		int clicked_row = (int) (x / X_INCREMENT) - 1;
 		int clicked_col = (int) (y / Y_OFFSET) - 1;
 	}
 
 	public void setCenteredRowColFromPixel(int x, int y) {
 		y -= 25;
-		int col = (int) (x / X_INCREMENT )- 1;
+		int col = (int) (x / X_INCREMENT) - 1;
 		int row = (int) (y / Y_OFFSET) - 1;
-		int delta_row = top_left_window_row+row-WINDOW_ROW_COUNT/2;
-		int delta_col = top_left_window_col+col-WINDOW_COL_COUNT/2;
-		setTopLeftRowCol(delta_row,delta_col);
+		int delta_row = top_left_window_row + row - WINDOW_ROW_COUNT / 2;
+		int delta_col = top_left_window_col + col - WINDOW_COL_COUNT / 2;
+		setTopLeftRowCol(delta_row, delta_col);
 
 	}
 
@@ -310,39 +277,40 @@ public class MapPanel3D extends JPanel implements Observer {
 		boolean inCol = (col < centered_col + WINDOW_COL_COUNT / 2) && (col > centered_col - WINDOW_COL_COUNT / 2);
 		return inRow && inCol;
 	}
-	
-	public int getCenteredRow(){
+
+	public int getCenteredRow() {
 		return centered_row;
 	}
-	
-	public int getCenteredCol(){
+
+	public int getCenteredCol() {
 		return centered_col;
 	}
-	
-	public void setHighlightedRow(int r){
-		System.out.println("Highlilghted row: "+r);
+
+	public void setHighlightedRow(int r) {
+		System.out.println("Highlilghted row: " + r);
 		highlighted_row = r;
 	}
-	
-	public void setHighlightedCol(int c){
+
+	public void setHighlightedCol(int c) {
 		highlighted_col = c;
 	}
-	
-	public int getHighlightedRow(){
+
+	public int getHighlightedRow() {
 		return highlighted_row;
 	}
-	
-	public int getHighlightedCol(){
+
+	public int getHighlightedCol() {
 		return highlighted_col;
 	}
+
 	public void setHighlightedRowColFromPixel(int x, int y) {
 		int window_x_offset = 0;
 		int window_y_offset = 0;
 		y -= 25;
-		int col = (int) (x / X_INCREMENT );
-		int row = (int) (y / Y_OFFSET) ;
-		int delta_row = row + centered_row-WINDOW_ROW_COUNT/2;
-		int delta_col = col + centered_col-WINDOW_COL_COUNT/2;
+		int col = (int) (x / X_INCREMENT);
+		int row = (int) (y / Y_OFFSET);
+		int delta_row = row + centered_row - WINDOW_ROW_COUNT / 2;
+		int delta_col = col + centered_col - WINDOW_COL_COUNT / 2;
 		setHighlightedRow(delta_row);
 		setHighlightedCol(delta_col);
 	}
