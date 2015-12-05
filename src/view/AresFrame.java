@@ -172,6 +172,8 @@ public class AresFrame extends JFrame {
 		view.add(mapPane);
 		view.add(colonistPanel);
 		this.add(view);
+		model.getArrItems().add(new JackHammer());
+		System.out.println(items.getArrItems().size());
 	}
 
 	private void setupModelAndTimer() {
@@ -283,10 +285,10 @@ public class AresFrame extends JFrame {
 		items.setVisible(true);
 		items.setLocation(0, (int) (screenSize.height * .17));
 		items.setSize((int) (screen_width * .333), (int) (screen_height * .13));
-		items.getItemList().addMouseListener(new MouseAdapter() {
+		items.getItemTable().addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 1) {
-					int index = items.getItemList().locationToIndex(e.getPoint());
+					int index = items.getItemTable().getSelectedRow();
 					Item i = model.getArrItems().get(index);
 					if (i != null)
 						hud.setDisplayableObject(new DisplayableItem(i));
@@ -299,6 +301,8 @@ public class AresFrame extends JFrame {
 	}
 	
 	private void sendModelToPanels() {
+		// actually this did nothing to panels, they won't update themselves with data changed
+		// what do to the panels are setTexts
 		map.updateBoard(model);
 		colonistPanel.updateColonistList(model.getArrColonists());
 		buildings.updateBuildingList(model.getArrBuildings());
@@ -307,6 +311,7 @@ public class AresFrame extends JFrame {
 
 	private void updateView() {
 		colonistPanel.update(model.getArrColonists());
+		items.update(model.getArrItems());
 		// updateHud();
 	}
 
@@ -405,7 +410,7 @@ public class AresFrame extends JFrame {
 				JOptionPane.showMessageDialog(null, "Gather more iron first!");
 				colonistPanel.getTable().clearSelection();
 				buildings.getBuildingList().clearSelection();
-				items.getItemList().clearSelection();
+				items.getItemTable().clearSelection();
 				return;
 			}
 		}
@@ -425,7 +430,7 @@ public class AresFrame extends JFrame {
 			//JOptionPane.showMessageDialog(null, builder, "Choose a building to be built", JOptionPane.INFORMATION_MESSAGE);
 			colonistPanel.getTable().clearSelection();
 			buildings.getBuildingList().clearSelection();
-			items.getItemList().clearSelection();
+			items.getItemTable().clearSelection();
 		}
 	}
 
@@ -435,7 +440,7 @@ public class AresFrame extends JFrame {
 		public void mousePressed(MouseEvent arg0) {
 			colonistPanel.getTable().clearSelection();
 			buildings.getBuildingList().clearSelection();
-			items.getItemList().clearSelection();
+			items.getItemTable().clearSelection();
 			
 			if (arg0.getClickCount() == 2) {
 				map.setSelectedRowColFromPixel(arg0.getX(), arg0.getY());
@@ -504,7 +509,7 @@ public class AresFrame extends JFrame {
 				}
 				colonistPanel.getTable().clearSelection();
 				buildings.getBuildingList().clearSelection();
-				items.getItemList().clearSelection();
+				items.getItemTable().clearSelection();
 				dispose();
 			}
 		}
@@ -557,7 +562,7 @@ public class AresFrame extends JFrame {
 				
 				colonistPanel.getTable().clearSelection();
 				buildings.getBuildingList().clearSelection();
-				items.getItemList().clearSelection();
+				items.getItemTable().clearSelection();
 				dispose();
 			}
 		}
@@ -608,21 +613,22 @@ public class AresFrame extends JFrame {
 			if (indexOfC >= 0 && indexOfC < model.getArrColonists().size()) {
 				refColonist = model.getArrColonists().get(indexOfC);
 			}
-			int indexOfI = items.getItemList().locationToIndex(e.getPoint());
+			int indexOfI = items.getItemTable().getSelectedRow();
 			refItem = model.getArrItems().get(indexOfI);
 			
 			if (refColonist != null && refItem != null) {
 				refColonist.addItem(refItem);
 				JOptionPane.showMessageDialog(null, "Assign Item to Colonist successfully!");
 				//TODO do somethings to the model
-				model.getArrItems().remove(indexOfI);
+				//model.getArrItems().remove(indexOfI);
+				refItem.setOwner(refColonist);
 			}
 			else {
 				JOptionPane.showMessageDialog(null, "Please Select a Colonist first!");
 			}
 			colonistPanel.getTable().clearSelection();
 			buildings.getBuildingList().clearSelection();
-			items.getItemList().clearSelection();
+			items.getItemTable().clearSelection();
 		}
 	}
 }

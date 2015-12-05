@@ -55,7 +55,6 @@ public class ColonistPanel extends JPanel{
 			data[j][5] = "";
 		}
 		table = new JTable(new ColonistTableModel(data,columnNames,10));
-		table.setAutoCreateRowSorter(true);
 		table.setPreferredSize(new Dimension(600,1500));
 		JScrollPane scrollPane = new JScrollPane(table);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
