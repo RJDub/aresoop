@@ -34,14 +34,20 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.Timer;
+import javax.swing.event.TableModelListener;
+import javax.swing.table.AbstractTableModel;
 
 import buildings.*;
 import enums.*;
+import items.IceDrill;
 import items.JackHammer;
+import items.MossKing;
+import items.TheKeyToWin;
 import model.*;
 import view.displayables.DisplayableBuilding;
 import view.displayables.DisplayableColonist;
@@ -313,11 +319,13 @@ public class AresFrame extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 1) {
 					int index = items.getItemTable().getSelectedRow();
-					Item i = model.getArrItems().get(index);
+					Item i = null;
+					if (index < model.getArrItems().size())
+						i = model.getArrItems().get(index);
 					if (i != null) 
 						hud.setDisplayableObject(new DisplayableItem(i));
 				} else if (e.getClickCount() == 2) {
-					AssignItemToColonistDialog a = new AssignItemToColonistDialog(e);
+						AssignItemToColonistDialog a = new AssignItemToColonistDialog(e);
 				}
 			}
 		});
@@ -648,7 +656,8 @@ public class AresFrame extends JFrame {
 				refColonist = model.getArrColonists().get(indexOfC);
 			}
 			int indexOfI = items.getItemTable().getSelectedRow();
-			refItem = model.getArrItems().get(indexOfI);
+			if (indexOfI < model.getArrItems().size())
+				refItem = model.getArrItems().get(indexOfI);
 
 			if (refColonist != null && refItem != null) {
 				refColonist.addItem(refItem);
@@ -656,6 +665,9 @@ public class AresFrame extends JFrame {
 				// TODO do somethings to the model
 				// model.getArrItems().remove(indexOfI);
 				refItem.setOwner(refColonist);
+			}
+			else if (refColonist == null && refItem == null) {
+				CreateNewItemDialog b = new CreateNewItemDialog();
 			}
 			else if (refItem != null && refItem.getOwner() != null) {
 				refItem.reclaim(refItem);
@@ -670,6 +682,145 @@ public class AresFrame extends JFrame {
 			items.getItemTable().clearSelection();
 		}
 	}
+	
+	private class CreateNewItemDialog extends JDialog {
+		
+		private JTable table;
+		private String[] columnNames;
+		private String[][] data;
+		
+		public CreateNewItemDialog() {
+			this.setVisible(true);
+			this.setSize(600, 200);
+			this.setLocation(400, 400);
+			columnNames = new String[]{"Name", "Cost", "Function"};
+			data = new String[4][3];
+			data[0][0] = "JackHammer";
+			data[0][1] = "50 Unobtainium 50 Iron Ore";
+			data[0][2] = "Mining Iron Ore Faster";
+			data[1][0] = "MossKing";
+			data[1][1] = "50 Unobtainium 50 Iron Ore";
+			data[1][2] = "Gathering Food Faster";
+			data[2][0] = "IceDrill";
+			data[2][1] = "50 Unobtainium 50 Iron Ore";
+			data[2][2] = "Mining Ice Faster";
+			data[3][0] = "TheKeyToWin";
+			data[3][1] = "50 Unobtainium 50 Iron Ore";
+			data[3][2] = "Mining Unobtainium Faster";
+			table = new JTable(new ItemCreateTableModel(data,columnNames,4));
+			this.add(table, BorderLayout.CENTER);
+			JButton select = new JButton("Select");
+			select.addActionListener(new CreateItemListener());
+			this.add(select, BorderLayout.SOUTH);
+		}
+		
+		private class CreateItemListener implements ActionListener {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int i = table.getSelectedRow();
+				switch (i) {
+				case 0:
+					if (model.withdrawIronTotal(50) && model.withdrawUnobtaniumTotal(50))
+						model.getArrItems().add(new JackHammer());
+					else
+						JOptionPane.showMessageDialog(null, "You Need More Resources");
+					break;
+				case 1:
+					if (model.withdrawIronTotal(50) && model.withdrawUnobtaniumTotal(50))
+						model.getArrItems().add(new MossKing());
+					else
+						JOptionPane.showMessageDialog(null, "You Need More Resources");
+					break;
+				case 2:
+					if (model.withdrawIronTotal(50) && model.withdrawUnobtaniumTotal(50))
+						model.getArrItems().add(new IceDrill());
+					else
+						JOptionPane.showMessageDialog(null, "You Need More Resources");
+					break;
+				case 3:
+					if (model.withdrawIronTotal(50) && model.withdrawUnobtaniumTotal(50))
+						model.getArrItems().add(new TheKeyToWin());
+					else
+						JOptionPane.showMessageDialog(null, "You Need More Resources");
+					break;
+				default:
+					break;
+				}
+				table.clearSelection();
+				dispose();
+			}
+	}
+		
+	}
+	class ItemCreateTableModel extends AbstractTableModel {
+
+		private String[][] data;
+		private String[] columnNames;
+		private int row;
+		
+		public ItemCreateTableModel(String[][] d, String[] c, int i) {
+			data = d;
+			columnNames = c;
+			row = i;
+		}
+		
+		@Override
+		public int getRowCount() {
+			return row;
+		}
+
+		@Override
+		public int getColumnCount() {
+			return 3;
+		}
+
+		@Override
+		public String getColumnName(int columnIndex) {
+			if (columnIndex == 0)
+				return "Name";
+			else if (columnIndex == 1)
+				return "Cost";
+			else
+				return "Function";
+		}
+
+		@Override
+		public Class<?> getColumnClass(int columnIndex) {
+			return String.class;
+		}
+
+		@Override
+		public boolean isCellEditable(int rowIndex, int columnIndex) {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+		@Override
+		public Object getValueAt(int rowIndex, int columnIndex) {
+			return data[rowIndex][columnIndex];
+		}
+
+		@Override
+		public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+			data[rowIndex][columnIndex] = (String) aValue;
+			fireTableCellUpdated(rowIndex, columnIndex);
+		}
+
+		@Override
+		public void addTableModelListener(TableModelListener l) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void removeTableModelListener(TableModelListener l) {
+			// TODO Auto-generated method stub
+
+		}
+
+	}
+
 
 	private class SplashScreen extends JDialog {
 
