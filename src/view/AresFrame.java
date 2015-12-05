@@ -194,7 +194,6 @@ public class AresFrame extends JFrame {
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setPreferredSize(screenSize);
 		this.setSize(screen_width, screen_height);
-
 	}
 
 	private void setupView() {
@@ -326,12 +325,89 @@ public class AresFrame extends JFrame {
 		public void actionPerformed(ActionEvent arg0) {
 			if (timer.isRunning()) {
 				model.update();
+				if(isGameOver()){
+					OverWindow over = new OverWindow(model);
+				}
 				// System.out.println("called model.update");
 				updateView();
 			}
 			
 		}
+		
+		private class OverWindow extends JDialog {
+			private JLabel title;
+			private JButton exit;
+			private JPanel screen;
+			private MotherBoard state;
+
+			public OverWindow(MotherBoard in) {
+				super((java.awt.Frame) null, true);
+				this.setModal(true);
+				this.setLayout(null);
+				state = in;
+				title = new JLabel("GAME OVER");
+				exit = new JButton("Exit Game");
+				screen = new JPanel() {
+					@Override
+					protected void paintComponent(Graphics g) {
+						super.paintComponent(g);
+						try {
+							g.drawImage(ImageIO.read(new File("./images/gameover.jpg")), 0, 0, 600, 400, this);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				};
+				screen.setVisible(true);
+				screen.setLayout(null);
+				screen.setSize(600, 400);
+				screen.repaint();
+				screen.add(title);
+				screen.add(exit);
+
+				title.setLocation(250, 10);
+				// title.setFont(Font.MONOSPACED);
+				title.setSize(300, 100);
+				title.setVisible(true);
+				exit.setLocation(240, 200);
+				exit.setSize(100, 50);
+
+				title.setForeground(Color.WHITE);
+
+				this.add(screen);
+
+				exit.addActionListener(new ExitListener());
+
+				this.setLocation(550, 350);
+				this.setSize(600, 400);
+				this.setVisible(true);
+			}
+			
+			private class ExitListener implements ActionListener {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					dispose();
+					System.exit(0);
+				}
+			}
+		}
+
+		private boolean isGameOver() {
+			int totalColonists = model.getArrColonists().size();
+			for(Colonist c: model.getArrColonists()) {
+				if (!c.isAlive()) {
+					totalColonists--;
+				}
+			}
+			
+			return (totalColonists <= 0);
+		
+		}
 	}
+	
+	
 
 	private class MyWindowListener extends WindowAdapter {
 

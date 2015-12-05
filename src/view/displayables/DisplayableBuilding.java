@@ -24,7 +24,7 @@ public class DisplayableBuilding implements DisplayableObject {
 		result+= "\nRow: "+building.getR();
 		result+= "\nCol: "+building.getC();
 		
-		return result + "\nFunction: " + building.getFunction();
+		return result + "\n\nFunction: " + building.getFunction();
 		
 	}
 
