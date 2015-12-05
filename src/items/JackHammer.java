@@ -11,6 +11,7 @@ public class JackHammer extends Item implements Serializable {
 		super();
 		task= Task.MiningIronOre;
 		bonus_amount = 1;
+		owner = null;
 		
 	}
 	@Override

@@ -50,9 +50,11 @@ public class MapPanel3D extends JPanel implements Observer {
 	JButton button_south;
 	JButton button_east;
 	JButton button_west;
+	
+	private ModelStatusMonitor monitor;
 
 	public MapPanel3D(MotherBoard boardIn) {
-
+		
 		mobo = boardIn;
 		MAX_ROW_COUNT = mobo.getBoardHeight();
 		MAX_COL_COUNT = mobo.getBoardWidth();
@@ -86,9 +88,19 @@ public class MapPanel3D extends JPanel implements Observer {
 		this.add(buttons_panel);
 
 		setSelectedRowCol(0, 0);
+		
+		monitor = null;
 
 	}
-
+	public MapPanel3D(MotherBoard boardIn, ModelStatusMonitor mon) {
+		this(boardIn);
+		monitor = mon;
+		
+		monitor.setSize(400,400);
+		monitor.setLocation(1000,300);
+		
+		this.add(monitor);
+	}
 	// draws the board
 	public void drawBoard() {
 		repaint();

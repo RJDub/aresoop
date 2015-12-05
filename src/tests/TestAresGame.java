@@ -20,6 +20,22 @@ import model.MotherBoard;
 import model.Tile;
 import items.*;
 public class TestAresGame {
+	@Test
+	public void testResourceAmount(){
+		MotherBoard model = Generator.generateStandardModel(100,100);
+		int total_resource = 0;
+		int total_ice_count=0;
+		for (int row = 0; row < 100; row++){
+			for (int col = 0; col < 100; col++){
+				if (model.getTiles()[row][col].getType() == TileType.Ice){
+					total_ice_count++;
+					total_resource += model.getTileAtLocation(row,col).getResourceAmt();
+					
+				}
+			}
+		}
+		assertEquals(total_resource/total_ice_count, 20);
+	}
 	
 	@Test
 	public void testItems(){

@@ -61,6 +61,7 @@ public class AresFrame extends JFrame {
 	private JPanel view;
 	private Timer timer;
 	private boolean finished;
+	private ModelStatusMonitor monitor;
 
 	public static void main(String[] args) {
 		AresFrame window = new AresFrame();
@@ -78,7 +79,7 @@ public class AresFrame extends JFrame {
 
 		Tile[][] tiles = new Tile[30][50];
 		ArrayList<Colonist> colonists = new ArrayList<Colonist>();
-		boolean TESTINGMODE = false;
+		boolean TESTINGMODE = true;
 		if (TESTINGMODE) {
 
 			//Tile[][] tiles = new Tile[30][50];
@@ -139,8 +140,9 @@ public class AresFrame extends JFrame {
 
 		view = new JPanel();
 		setupView();
-
-		map = new MapPanel3D(model);
+		
+		monitor = new ModelStatusMonitor(model);
+		map = new MapPanel3D(model,monitor);
 		setupMapPanel();
 		mapPane = new JScrollPane(map);
 
@@ -176,13 +178,17 @@ public class AresFrame extends JFrame {
 		view.add(mapPane);
 		view.add(colonistPanel);
 		this.add(view);
+		model.getArrItems().add(new JackHammer());
+		System.out.println(items.getArrItems().size());
 	}
 
 	private void setupModelAndTimer() {
 		model.addObserver(map);
 		model.addObserver(hud);
+		model.addObserver(monitor);
 		model.assignTask(model.getArrColonists().get(0), Task.MiningIce);
 		model.assignTask(model.getArrColonists().get(1), Task.MiningIronOre);
+		
 
 		timer = new Timer(500, new OurTimerListener());
 		// timer.start();
@@ -200,6 +206,7 @@ public class AresFrame extends JFrame {
 		hud.getConstruction().addActionListener(new BuildConstructListener());
 		hud.getRecruitment().addActionListener(new RecruitmentListener());
 		map.addMouseListener(new MapPanelClickedActionListener());
+		
 
 		// buildings.getBuildingList().addMouseListener(new
 		// BuildingRowSelectListener());
@@ -237,7 +244,7 @@ public class AresFrame extends JFrame {
 		colonistPanel.setBackground(Color.RED);
 		colonistPanel.getTable().addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				buildings.getBuildingList().clearSelection();
+				buildings.getBuildingTable().clearSelection();
 				if (e.getClickCount() == 1) {
 					int index = colonistPanel.getTable().getSelectedRow();
 					if (index >= 0 && index < model.getArrColonists().size())
@@ -267,11 +274,11 @@ public class AresFrame extends JFrame {
 		buildings.setVisible(true);
 		buildings.setLocation(0, 0);
 		buildings.setSize((int) (screen_width * .333), (int) (screen_height * .13));
-		buildings.getBuildingList().addMouseListener(new MouseAdapter() {
+		buildings.getBuildingTable().addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				colonistPanel.getTable().clearSelection();
 				if (e.getClickCount() == 1) {
-					int index = buildings.getBuildingList().locationToIndex(e.getPoint());
+					int index = buildings.getBuildingTable().getSelectedRow();
 					Building b = buildings.getArrBuildings().get(index);
 					if (b != null)
 						hud.setDisplayableObject(new DisplayableBuilding(b));
@@ -284,10 +291,10 @@ public class AresFrame extends JFrame {
 		items.setVisible(true);
 		items.setLocation(0, (int) (screenSize.height * .17));
 		items.setSize((int) (screen_width * .333), (int) (screen_height * .13));
-		items.getItemList().addMouseListener(new MouseAdapter() {
+		items.getItemTable().addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 1) {
-					int index = items.getItemList().locationToIndex(e.getPoint());
+					int index = items.getItemTable().getSelectedRow();
 					Item i = model.getArrItems().get(index);
 					if (i != null)
 						hud.setDisplayableObject(new DisplayableItem(i));
@@ -300,6 +307,8 @@ public class AresFrame extends JFrame {
 	}
 	
 	private void sendModelToPanels() {
+		// actually this did nothing to panels, they won't update themselves with data changed
+		// what do to the panels are updateView() below
 		map.updateBoard(model);
 		colonistPanel.updateColonistList(model.getArrColonists());
 		buildings.updateBuildingList(model.getArrBuildings());
@@ -308,6 +317,8 @@ public class AresFrame extends JFrame {
 
 	private void updateView() {
 		colonistPanel.update(model.getArrColonists());
+		items.update(model.getArrItems());
+		buildings.update(model.getArrBuildings());
 		// updateHud();
 	}
 
@@ -405,8 +416,8 @@ public class AresFrame extends JFrame {
 			} else {
 				JOptionPane.showMessageDialog(null, "Gather more iron first!");
 				colonistPanel.getTable().clearSelection();
-				buildings.getBuildingList().clearSelection();
-				items.getItemList().clearSelection();
+				buildings.getBuildingTable().clearSelection();
+				items.getItemTable().clearSelection();
 				return;
 			}
 		}
@@ -425,8 +436,8 @@ public class AresFrame extends JFrame {
 			}
 			//JOptionPane.showMessageDialog(null, builder, "Choose a building to be built", JOptionPane.INFORMATION_MESSAGE);
 			colonistPanel.getTable().clearSelection();
-			buildings.getBuildingList().clearSelection();
-			items.getItemList().clearSelection();
+			buildings.getBuildingTable().clearSelection();
+			items.getItemTable().clearSelection();
 		}
 	}
 
@@ -435,8 +446,8 @@ public class AresFrame extends JFrame {
 		@Override
 		public void mousePressed(MouseEvent arg0) {
 			colonistPanel.getTable().clearSelection();
-			buildings.getBuildingList().clearSelection();
-			items.getItemList().clearSelection();
+			buildings.getBuildingTable().clearSelection();
+			items.getItemTable().clearSelection();
 			
 			if (arg0.getClickCount() == 2) {
 				map.setSelectedRowColFromPixel(arg0.getX(), arg0.getY());
@@ -454,7 +465,7 @@ public class AresFrame extends JFrame {
 		public TaskDialog() {
 			this.setVisible(true);
 			this.setLocation(400, 400);
-			this.setSize(300, 100);
+			this.setSize(300, 150);
 			list = new JList<String>();
 			select = new JButton("Select");
 			tasks = new DefaultListModel<String>();
@@ -504,8 +515,8 @@ public class AresFrame extends JFrame {
 					}
 				}
 				colonistPanel.getTable().clearSelection();
-				buildings.getBuildingList().clearSelection();
-				items.getItemList().clearSelection();
+				buildings.getBuildingTable().clearSelection();
+				items.getItemTable().clearSelection();
 				dispose();
 			}
 		}
@@ -541,32 +552,24 @@ public class AresFrame extends JFrame {
 				switch (type) {
 				case "Mess Hall":
 					// TODO: figure out how to get location working better
-					while(true){
-						if (Generator.spawnBuilding(new Mess(10 + rand.nextInt(10), 10 + rand.nextInt(10)), model)){
-							break;
-						}
-					}
+					model.getArrBuildings().add(new Mess(10 + rand.nextInt(10), 10 + rand.nextInt(10)));
+					model.withdrawIronTotal(5);
 					break;
 				case "Dormitory":
-					while(true){
-						if (Generator.spawnBuilding(new Dormitory(10 + rand.nextInt(10), 10 + rand.nextInt(10)), model)){
-							break;
-						}
-					}
+					model.getArrBuildings().add(new Dormitory(10 + rand.nextInt(10), 10 + rand.nextInt(10)));
+					model.withdrawIronTotal(5);
 					break;
 				case "Storage":
-					while(true){
-						if (Generator.spawnBuilding(new StorageBuilding(10 + rand.nextInt(10), 10 + rand.nextInt(10)), model)){
-							break;
-						}
-					}
+					model.getArrBuildings().add(new StorageBuilding(10 + rand.nextInt(10), 10 + rand.nextInt(10)));
+					model.withdrawIronTotal(10);
 					break;
 				default:
 					break;
 				}
+				
 				colonistPanel.getTable().clearSelection();
-				buildings.getBuildingList().clearSelection();
-				items.getItemList().clearSelection();
+				buildings.getBuildingTable().clearSelection();
+				items.getItemTable().clearSelection();
 				dispose();
 			}
 		}
@@ -600,6 +603,7 @@ public class AresFrame extends JFrame {
 					colonistPanel.addANewRow();
 					model.getArrColonists().add(new Colonist(input, 5, 5));
 					colonistPanel.updateColonistList(model.getArrColonists());
+					model.withdrawIronTotal(20);
 					dispose();
 				} else {
 					JOptionPane.showMessageDialog(null, "ERROR! No name inputed by user. Enter a name!");
@@ -616,21 +620,22 @@ public class AresFrame extends JFrame {
 			if (indexOfC >= 0 && indexOfC < model.getArrColonists().size()) {
 				refColonist = model.getArrColonists().get(indexOfC);
 			}
-			int indexOfI = items.getItemList().locationToIndex(e.getPoint());
+			int indexOfI = items.getItemTable().getSelectedRow();
 			refItem = model.getArrItems().get(indexOfI);
 			
 			if (refColonist != null && refItem != null) {
 				refColonist.addItem(refItem);
 				JOptionPane.showMessageDialog(null, "Assign Item to Colonist successfully!");
 				//TODO do somethings to the model
-				model.getArrItems().remove(indexOfI);
+				//model.getArrItems().remove(indexOfI);
+				refItem.setOwner(refColonist);
 			}
 			else {
 				JOptionPane.showMessageDialog(null, "Please Select a Colonist first!");
 			}
 			colonistPanel.getTable().clearSelection();
-			buildings.getBuildingList().clearSelection();
-			items.getItemList().clearSelection();
+			buildings.getBuildingTable().clearSelection();
+			items.getItemTable().clearSelection();
 		}
 	}
 	
