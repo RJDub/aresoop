@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -13,15 +15,14 @@ import java.util.Observer;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
-import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
 import enums.*;
 import model.*;
 
 public class MapPanel3D extends JPanel {
-	private final int WINDOW_ROW_COUNT = 50;
-	private final int WINDOW_COL_COUNT = 50;
+	private final int WINDOW_ROW_COUNT = 20;
+	private final int WINDOW_COL_COUNT = 15;
 
 	private final int X_INCREMENT = 50;
 	private final int Y_INCREMENT = 50;
@@ -52,7 +53,7 @@ public class MapPanel3D extends JPanel {
 		mobo = boardIn;
 		board = new Board(boardIn);
 		board.setLocation(0, 30);
-		board.setSize(width - 60, height - 60);
+		board.setSize(width, height - 30);
 		board.setVisible(true);
 		MAX_ROW_COUNT = mobo.getBoardHeight();
 		MAX_COL_COUNT = mobo.getBoardWidth();
@@ -93,6 +94,8 @@ public class MapPanel3D extends JPanel {
 	public void drawBoard() {
 		repaint();
 	}
+	
+	
 
 	private class Board extends JPanel implements Observer {
 
@@ -100,7 +103,6 @@ public class MapPanel3D extends JPanel {
 
 		public Board(MotherBoard in) {
 			mother = in;
-			this.setBackground(Color.BLACK);
 		}
 
 		@Override
@@ -114,6 +116,13 @@ public class MapPanel3D extends JPanel {
 			int offset_col = centered_col;// -WINDOW_COL_COUNT/2;
 			int offset_row = centered_row;// -WINDOW_ROW_COUNT/2;
 			Graphics2D g2 = (Graphics2D) g;
+			
+			try {
+				g2.drawImage(ImageIO.read(new File("./images/surface.jpg")), 0, 0, this.getWidth(), this.getHeight(), this);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			for (int row = 0; row < mobo.getBoardHeight(); row++) {
 				for (int col = 0; col < mobo.getBoardWidth(); col++) {
 					if (isInTheWindow(row, col)) {

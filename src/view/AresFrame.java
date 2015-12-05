@@ -14,6 +14,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
@@ -213,7 +214,10 @@ public class AresFrame extends JFrame {
 		colonistPanel.setVisible(true);
 		colonistPanel.setLocation(0, (int) (screen_height * .666));
 		colonistPanel.setSize((int) (screen_width * .333), (int) (screen_height * .333));
-		colonistPanel.setBackground(Color.RED);
+		colonistPanel.setFocusable(false);
+		colonistPanel.setBackground(Color.BLACK);
+		colonistPanel.setFont(FONT);
+		colonistPanel.setForeground(F_COLOR);
 		colonistPanel.getTable().addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				buildings.getBuildingTable().clearSelection();
