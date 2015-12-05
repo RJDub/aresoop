@@ -649,7 +649,8 @@ public class AresFrame extends JFrame {
 				String input = name.getText();
 				if (input.compareTo("") != 0) {
 					colonistPanel.addANewRow();
-					model.getArrColonists().add(new Colonist(input, 5, 5));
+					Generator.spawnColonist(input, model);
+					//model.getArrColonists().add(new Colonist(input, 5, 5));
 					colonistPanel.updateColonistList(model.getArrColonists());
 					model.withdrawIronTotal(20);
 					dispose();

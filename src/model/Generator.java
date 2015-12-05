@@ -175,7 +175,6 @@ public class Generator implements Serializable {
 		spawnBuilding(storage, model);
 		int landingPadLoc[] = LandingPadLocation.getLandingPadLocation(model);
 		spawnColonist("Paul", model);
-		
 		spawnColonist("Ryan", model);
 		spawnColonist("Mingchen", model);
 		spawnColonist("Sean", model);
