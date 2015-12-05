@@ -13,6 +13,7 @@ public enum TileType implements Serializable {
 	Mountain(999);
 	
 	private boolean buildable;
+	private boolean mineable;
 	private String string;
 	
 	static {
@@ -25,7 +26,16 @@ public enum TileType implements Serializable {
 		Unobtainium.buildable=false;
 		MossyRock.buildable=false;
 	}
-	
+	static {
+		Flat.mineable = false;
+		Ice.mineable = true;
+		IronOre.mineable = true;
+		Volcano.mineable = false;
+		Crater.mineable = false;
+		Mountain.mineable = false;
+		Unobtainium.mineable=true;
+		MossyRock.mineable=true;
+	}
 	private int weight;
 	private TileType(int input){
 		weight = input;
@@ -50,6 +60,9 @@ public enum TileType implements Serializable {
 		MossyRock.string="Moss";
 	}
 	
+	public boolean isMineable(){
+		return mineable;
+	}
 	@Override
 	public String toString(){
 		return string;
