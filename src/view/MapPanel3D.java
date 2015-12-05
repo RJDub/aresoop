@@ -20,8 +20,10 @@ import enums.*;
 import model.*;
 
 public class MapPanel3D extends JPanel {
+
 	private final int WINDOW_ROW_COUNT = 20;
-	private final int WINDOW_COL_COUNT = 20;
+	private final int WINDOW_COL_COUNT = 15;
+
 
 	private final int X_INCREMENT = 50;
 	private final int Y_INCREMENT = 50;
@@ -51,8 +53,8 @@ public class MapPanel3D extends JPanel {
 		this.setLayout(null);
 		mobo = boardIn;
 		board = new Board(boardIn);
-		board.setLocation(50, 50);
-		board.setSize(width - 100, height - 100);
+		board.setLocation(0, 30);
+		board.setSize(width - 60, height - 60);
 		board.setVisible(true);
 		MAX_ROW_COUNT = mobo.getBoardHeight();
 		MAX_COL_COUNT = mobo.getBoardWidth();
@@ -190,6 +192,8 @@ public class MapPanel3D extends JPanel {
 			return sheet.getSubimage(150, 100, X_INCREMENT, Y_INCREMENT);
 		case Storage:
 			return sheet.getSubimage(50, 100, X_INCREMENT, Y_INCREMENT);
+		case LandingPad:
+			return sheet.getSubimage(100, 150, X_INCREMENT, Y_INCREMENT);
 		default:
 			return null;
 		}
@@ -225,10 +229,7 @@ public class MapPanel3D extends JPanel {
 		return sheet.getSubimage(0, 100, X_INCREMENT, Y_INCREMENT);
 	}
 
-	public void moveUp() {
-		centered_row--;
-		drawBoard();
-	}
+	
 
 	private Image drawColonist(Colonist c) {
 		int width = 50;
@@ -238,19 +239,31 @@ public class MapPanel3D extends JPanel {
 		else
 			return sheet.getSubimage(0, 150, X_INCREMENT, Y_INCREMENT);
 	}
-
+	public void moveUp() {
+		int top_left_row = top_left_window_row;
+		int top_left_col = top_left_window_col;
+		setTopLeftRowCol(--top_left_row,top_left_col);
+		drawBoard();
+	}
 	public void moveDown() {
-		centered_row++;
+		int top_left_row = top_left_window_row;
+		int top_left_col = top_left_window_col;
+		setTopLeftRowCol(++top_left_row,top_left_col);
+
 		drawBoard();
 	}
 
 	public void moveLeft() {
-		centered_col--;
+		int top_left_row = top_left_window_row;
+		int top_left_col = top_left_window_col;
+		setTopLeftRowCol(top_left_row,--top_left_col);
 		drawBoard();
 	}
 
 	public void moveRight() {
-		centered_col++;
+		int top_left_row = top_left_window_row;
+		int top_left_col = top_left_window_col;
+		setTopLeftRowCol(top_left_row,++top_left_col);
 		drawBoard();
 	}
 
@@ -260,7 +273,8 @@ public class MapPanel3D extends JPanel {
 	}
 
 	public void setCenteredRowColFromPixel(int x, int y) {
-		y -= 25;
+		y -= 75;
+		x -= 50;
 		int col = (int) (x / X_INCREMENT) - 1;
 		int row = (int) (y / Y_OFFSET) - 1;
 		int delta_row = top_left_window_row + row - WINDOW_ROW_COUNT / 2;
@@ -306,7 +320,8 @@ public class MapPanel3D extends JPanel {
 	public void setHighlightedRowColFromPixel(int x, int y) {
 		int window_x_offset = 0;
 		int window_y_offset = 0;
-		y -= 25;
+		y -= 75;
+		x -= 50;
 		int col = (int) (x / X_INCREMENT);
 		int row = (int) (y / Y_OFFSET);
 		int delta_row = row + centered_row - WINDOW_ROW_COUNT / 2;

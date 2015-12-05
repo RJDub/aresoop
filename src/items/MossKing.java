@@ -1,27 +1,26 @@
 package items;
+
 import java.awt.Point;
 import java.io.Serializable;
 
 import enums.Task;
 import model.*;
+public class MossKing extends Item implements Serializable {
 
-public class JackHammer extends Item implements Serializable {
-
-	public JackHammer() {
+	public MossKing() {
 		super();
-		task= Task.MiningIronOre;
+		task= Task.MiningMossyRock;
 		bonus_amount = 1;
 		owner = null;
-		
 	}
 	
 	public String getFunction() {
-		return "Mining Iron Ore Faster";
+		return "Gathering Food Faster";
 	}
 	
 	@Override
 	public String toString(){
-		return "Jackhammer";
+		return "MossKing";
 	}
-
+	
 }

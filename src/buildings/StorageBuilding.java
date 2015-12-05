@@ -130,4 +130,9 @@ public class StorageBuilding extends Building  implements Serializable {
 		}
 		return false;
 	}
+
+	@Override
+	public String getFunction() {
+		return "For Colonists To Store Resources";
+	}
 }

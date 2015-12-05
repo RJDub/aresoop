@@ -1,18 +1,12 @@
 package view;
 
 import java.awt.Color;
-import java.awt.Font;
-import java.awt.GridLayout;
 import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.BorderFactory;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
-import javax.swing.plaf.basic.BasicArrowButton;
-
 import buildings.StorageBuilding;
 import enums.BuildingType;
 import enums.TileType;
@@ -45,7 +39,7 @@ public class ModelStatusMonitor extends JPanel implements Observer {
 		this.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		model = m;
 		
-		Font font = new Font(Font.MONOSPACED, Font.BOLD, 16);
+//		Font AresFrame.BOLD_FONT = new Font(Font.MONOSPACED, Font.BOLD, 16);
 		
 		water = new JLabel("WATER: ");
 		food = new JLabel("FOOD: ");
@@ -59,46 +53,46 @@ public class ModelStatusMonitor extends JPanel implements Observer {
 		
 		water.setVisible(true);
 		water.setForeground(Color.YELLOW);
-		water.setFont(font);
+		water.setFont(AresFrame.BOLD_FONT);
 		water.setLocation(300, 0);
 		water.setSize(80, 30);
 		wAmount.setVisible(true);
 		wAmount.setForeground(Color.YELLOW);
-		wAmount.setFont(font);
+		wAmount.setFont(AresFrame.BOLD_FONT);
 		wAmount.setLocation(380, 0);
 		wAmount.setSize(30, 30);
 		
 		food.setVisible(true);
 		food.setForeground(Color.YELLOW);
-		food.setFont(font);
+		food.setFont(AresFrame.BOLD_FONT);
 		food.setLocation(500, 0);
 		food.setSize(60, 30);
 		fAmount.setVisible(true);
 		fAmount.setForeground(Color.YELLOW);
-		fAmount.setFont(font);
+		fAmount.setFont(AresFrame.BOLD_FONT);
 		fAmount.setLocation(560, 0);
 		fAmount.setSize(30, 30);
 		
 		iron.setVisible(true);
 		iron.setForeground(Color.YELLOW);
-		iron.setFont(font);
+		iron.setFont(AresFrame.BOLD_FONT);
 		iron.setLocation(680, 0);
 		iron.setSize(100, 30);
 		iAmount.setVisible(true);
 		iAmount.setForeground(Color.YELLOW);
-		iAmount.setFont(font);
+		iAmount.setFont(AresFrame.BOLD_FONT);
 		iAmount.setLocation(800, 0);
 		iAmount.setSize(30, 30);
 		
 		unob.setVisible(true);
 		unob.setForeground(Color.YELLOW);
-		unob.setFont(font);
+		unob.setFont(AresFrame.BOLD_FONT);
 		unob.setLocation(920, 0);
-		unob.setSize(150, 30);
+		unob.setSize(130, 30);
 		uAmount.setVisible(true);
 		uAmount.setForeground(Color.YELLOW);
-		uAmount.setFont(font);
-		uAmount.setLocation(1070, 0);
+		uAmount.setFont(AresFrame.BOLD_FONT);
+		uAmount.setLocation(1050, 0);
 		uAmount.setSize(30, 30);
 		
 		this.add(water);
