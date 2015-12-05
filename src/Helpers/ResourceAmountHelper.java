@@ -1,5 +1,7 @@
 package Helpers;
 
+import java.util.ArrayList;
+
 import buildings.StorageBuilding;
 import enums.Action;
 import enums.BuildingType;
@@ -33,8 +35,24 @@ public class ResourceAmountHelper {
 		
 	}
 
-	public static void withdrawAmountUsingTileType(TileType type, MotherBoard model) {
-		// TODO Auto-generated method stub
+	public static boolean withdrawAmountUsingTileType(TileType type, MotherBoard model,int amt) {
+		ArrayList<Building> buildings = model.getArrBuildings();
+		if (amt <= getStorageAmountFromTileType(type, model)){
+			for (Building b: buildings){
+				if (b.getType()==BuildingType.Storage){
+					if (amt <= ((StorageBuilding) b).getResourceAmountByTileType(type)){
+						((StorageBuilding) b).withdrawResourceAmountByTileType(type,amt);
+						amt = 0;
+					} else {
+						int temp_amount = ((StorageBuilding) b).getResourceAmountByTileType(type);
+						((StorageBuilding) b).withdrawResourceAmountByTileType(type,temp_amount);
+						amt -= temp_amount;
+					}
+				}
+			}
+			return true;
+		}
+		return false;
 		
 	}
 

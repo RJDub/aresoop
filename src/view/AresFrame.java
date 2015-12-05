@@ -39,6 +39,7 @@ import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.Timer;
 
+import Helpers.ResourceAmountHelper;
 import buildings.*;
 import enums.*;
 import items.JackHammer;
@@ -582,15 +583,16 @@ public class AresFrame extends JFrame {
 				case "Mess Hall":
 					// TODO: figure out how to get location working better
 					model.getArrBuildings().add(new Mess(10 + rand.nextInt(10), 10 + rand.nextInt(10)));
-					model.withdrawIronTotal(5);
+					//model.withdrawIronTotal(5);
+					ResourceAmountHelper.withdrawAmountUsingTileType(TileType.IronOre,model,5);
 					break;
 				case "Dormitory":
 					model.getArrBuildings().add(new Dormitory(10 + rand.nextInt(10), 10 + rand.nextInt(10)));
-					model.withdrawIronTotal(5);
+					ResourceAmountHelper.withdrawAmountUsingTileType(TileType.IronOre,model,5);
 					break;
 				case "Storage":
 					model.getArrBuildings().add(new StorageBuilding(10 + rand.nextInt(10), 10 + rand.nextInt(10)));
-					model.withdrawIronTotal(10);
+					ResourceAmountHelper.withdrawAmountUsingTileType(TileType.IronOre,model,10);
 					break;
 				default:
 					break;

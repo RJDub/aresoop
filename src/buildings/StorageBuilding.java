@@ -111,4 +111,23 @@ public class StorageBuilding extends Building  implements Serializable {
 		}
 		return 0;
 	}
+	
+	public boolean withdrawResourceAmountByTileType(TileType type, int amt){
+		if(type == TileType.Ice){
+			return this.withdrawWater(amt);
+		}
+		if(type == TileType.MossyRock){
+			return this.withdrawFood(amt);	
+		}
+		
+		if(type == TileType.IronOre){
+			return this.withdrawIronOre(amt);
+		}
+		
+		if (type == TileType.Unobtainium){
+			return this.withdrawUnobtainium(amt);
+			
+		}
+		return false;
+	}
 }
