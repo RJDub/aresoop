@@ -36,7 +36,7 @@ public class ItemPanel extends JPanel{
 	}
 	
 	private void layoutGUI() {
-		columnNames = new String[]{"Name", "Hunger", "Thirst", "Fatigue"};
+		columnNames = new String[]{"Name", "Owner"};
 		data = new String[10][2];
 		for(int i =0; i < itemArray.size(); i++){
 			data[i][0] = itemArray.get(i).toString();

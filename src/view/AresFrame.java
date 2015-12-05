@@ -238,7 +238,7 @@ public class AresFrame extends JFrame {
 		colonistPanel.setBackground(Color.RED);
 		colonistPanel.getTable().addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				buildings.getBuildingList().clearSelection();
+				buildings.getBuildingTable().clearSelection();
 				if (e.getClickCount() == 1) {
 					int index = colonistPanel.getTable().getSelectedRow();
 					if (index >= 0 && index < model.getArrColonists().size())
@@ -268,11 +268,11 @@ public class AresFrame extends JFrame {
 		buildings.setVisible(true);
 		buildings.setLocation(0, 0);
 		buildings.setSize((int) (screen_width * .333), (int) (screen_height * .13));
-		buildings.getBuildingList().addMouseListener(new MouseAdapter() {
+		buildings.getBuildingTable().addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				colonistPanel.getTable().clearSelection();
 				if (e.getClickCount() == 1) {
-					int index = buildings.getBuildingList().locationToIndex(e.getPoint());
+					int index = buildings.getBuildingTable().getSelectedRow();
 					Building b = buildings.getArrBuildings().get(index);
 					if (b != null)
 						hud.setDisplayableObject(new DisplayableBuilding(b));
@@ -302,7 +302,7 @@ public class AresFrame extends JFrame {
 	
 	private void sendModelToPanels() {
 		// actually this did nothing to panels, they won't update themselves with data changed
-		// what do to the panels are setTexts
+		// what do to the panels are updateView() below
 		map.updateBoard(model);
 		colonistPanel.updateColonistList(model.getArrColonists());
 		buildings.updateBuildingList(model.getArrBuildings());
@@ -312,6 +312,7 @@ public class AresFrame extends JFrame {
 	private void updateView() {
 		colonistPanel.update(model.getArrColonists());
 		items.update(model.getArrItems());
+		buildings.update(model.getArrBuildings());
 		// updateHud();
 	}
 
@@ -409,7 +410,7 @@ public class AresFrame extends JFrame {
 			} else {
 				JOptionPane.showMessageDialog(null, "Gather more iron first!");
 				colonistPanel.getTable().clearSelection();
-				buildings.getBuildingList().clearSelection();
+				buildings.getBuildingTable().clearSelection();
 				items.getItemTable().clearSelection();
 				return;
 			}
@@ -429,7 +430,7 @@ public class AresFrame extends JFrame {
 			}
 			//JOptionPane.showMessageDialog(null, builder, "Choose a building to be built", JOptionPane.INFORMATION_MESSAGE);
 			colonistPanel.getTable().clearSelection();
-			buildings.getBuildingList().clearSelection();
+			buildings.getBuildingTable().clearSelection();
 			items.getItemTable().clearSelection();
 		}
 	}
@@ -439,7 +440,7 @@ public class AresFrame extends JFrame {
 		@Override
 		public void mousePressed(MouseEvent arg0) {
 			colonistPanel.getTable().clearSelection();
-			buildings.getBuildingList().clearSelection();
+			buildings.getBuildingTable().clearSelection();
 			items.getItemTable().clearSelection();
 			
 			if (arg0.getClickCount() == 2) {
@@ -508,7 +509,7 @@ public class AresFrame extends JFrame {
 					}
 				}
 				colonistPanel.getTable().clearSelection();
-				buildings.getBuildingList().clearSelection();
+				buildings.getBuildingTable().clearSelection();
 				items.getItemTable().clearSelection();
 				dispose();
 			}
@@ -561,7 +562,7 @@ public class AresFrame extends JFrame {
 				}
 				
 				colonistPanel.getTable().clearSelection();
-				buildings.getBuildingList().clearSelection();
+				buildings.getBuildingTable().clearSelection();
 				items.getItemTable().clearSelection();
 				dispose();
 			}
@@ -627,7 +628,7 @@ public class AresFrame extends JFrame {
 				JOptionPane.showMessageDialog(null, "Please Select a Colonist first!");
 			}
 			colonistPanel.getTable().clearSelection();
-			buildings.getBuildingList().clearSelection();
+			buildings.getBuildingTable().clearSelection();
 			items.getItemTable().clearSelection();
 		}
 	}
