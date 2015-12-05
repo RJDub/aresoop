@@ -173,6 +173,14 @@ public class Colonist implements Serializable {
 		resourceAmount += standard_amount;
 
 	}
+	
+	public int getMiningAmount(){
+		int standard_amount = 1;
+		// TODO go through Items
+		if (items != null && task == items.task)
+			standard_amount += items.bonus_amount;
+		return standard_amount;
+	}
 
 	public boolean hasCapacityToMineResources() {
 		return resourceAmount < capacity;
@@ -237,6 +245,12 @@ public class Colonist implements Serializable {
 		}
 		return false;
 	}
+
+	public void mine(int amt_to_mine) {
+		resourceAmount+=amt_to_mine;
+	}
+
+
 	
 
 	// public Colonist switchOccupation(String decision, String identification)

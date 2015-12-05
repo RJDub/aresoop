@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Observable;
 
+import Helpers.TileHandler;
 import colonists.*;
 import enums.*;
 import buildings.*;
@@ -260,7 +261,11 @@ public class MotherBoard extends Observable implements Serializable{
 		case Mine:
 //			System.out.println("Colonist " + col.getName() + " is mining.");
 			//if (col.getPath() == null) constructResourcePath(col, TileType.IronOre );
-			col.execute();
+			//col.execute();
+			int amt_to_mine = col.getMiningAmount();
+			if(TileHandler.mineTile(map[col.getR()][col.getC()], amt_to_mine))
+				col.mine(amt_to_mine);
+			
 			break;
 		case Move_To_Ice:
 			// move(col);

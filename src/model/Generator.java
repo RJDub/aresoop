@@ -221,7 +221,20 @@ public class Generator implements Serializable {
 			tiles[r][c] = new Tile(tile_type, r, c);
 			if (tile_type == TileType.Ice){
 				tiles[r][c].setResourceAmt(20);
+				
 			}
+			if (tile_type == TileType.IronOre){
+				tiles[r][c].setResourceAmt(20);
+			}
+			
+			if (tile_type == TileType.Unobtainium){
+				tiles[r][c].setResourceAmt(20);
+			}
+			
+			if (tile_type == TileType.MossyRock){
+				tiles[r][c].setResourceAmt(20);
+			}
+			
 			return true;
 		} else 
 			return false;
