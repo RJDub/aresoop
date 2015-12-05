@@ -40,10 +40,12 @@ public class MapPanel3D extends JPanel implements Observer {
 
 	private MotherBoard mobo;
 	private BufferedImage sheet, background;
-	private int selected_row;
-	private int selected_col;
+	private int centered_row;
+	private int centered_col;
 	private int highlighted_row;
 	private int highlighted_col;
+	private int top_left_window_row;
+	private int top_left_window_col;
 	
 	public static Random r = new Random();
 	
@@ -90,10 +92,19 @@ public class MapPanel3D extends JPanel implements Observer {
 		this.setLayout(null);
 		this.add(buttons_panel);
 
-		setSelectedRowCol(0, 0);
-		
+		setTopLeftRowCol(0,0);
+	
 		monitor = null;
 
+	}
+	private void setTopLeftRowCol(int r, int c) {
+		if (r < 0)r = 0; 
+		if (c < 0)c = 0;
+		if (r > (MAX_ROW_COUNT-WINDOW_ROW_COUNT))r = ( MAX_ROW_COUNT-WINDOW_ROW_COUNT);
+		if (c > (MAX_COL_COUNT-WINDOW_COL_COUNT))c = ( MAX_COL_COUNT-WINDOW_COL_COUNT);
+		top_left_window_row = r;
+		top_left_window_col = c;
+		setCenteredRowCol(top_left_window_row+WINDOW_ROW_COUNT/2,top_left_window_col+WINDOW_COL_COUNT/2);		
 	}
 	public MapPanel3D(MotherBoard boardIn, ModelStatusMonitor mon) {
 		this(boardIn);
@@ -117,14 +128,18 @@ public class MapPanel3D extends JPanel implements Observer {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 
-		int offset_col = selected_col;// -WINDOW_COL_COUNT/2;
-		int offset_row = selected_row;// -WINDOW_ROW_COUNT/2;
+		int offset_col = centered_col;// -WINDOW_COL_COUNT/2;
+		int offset_row = centered_row;// -WINDOW_ROW_COUNT/2;
 		Graphics2D g2 = (Graphics2D) g;
 		for (int row = 0; row < mobo.getBoardHeight(); row++) {
 			for (int col = 0; col < mobo.getBoardWidth(); col++) {
 				if (isInTheWindow(row, col)) {
 					g2.drawImage(drawTile(row, col), (col - offset_col + WINDOW_COL_COUNT / 2) * X_INCREMENT,
 							(row - offset_row + WINDOW_ROW_COUNT / 2) * Y_OFFSET, null);
+					//add highlight;
+					if(row == highlighted_row && col == highlighted_col){
+						g2.drawImage(drawHighlightBox(), (col - offset_col + WINDOW_COL_COUNT / 2) * X_INCREMENT, (row - offset_row + WINDOW_ROW_COUNT / 2) * Y_OFFSET, null);
+					}
 					for (Building b : mobo.getArrBuildings()) {
 						BuildingType bt = b.getType();
 						if ((b.getR() == row) && (b.getC() == col)) {
@@ -139,10 +154,7 @@ public class MapPanel3D extends JPanel implements Observer {
 						}
 
 					}
-					//add highlight;
-					if(row == highlighted_row && col == highlighted_col){
-						g2.drawImage(drawHighlightBox(), (col - offset_col + WINDOW_COL_COUNT / 2) * X_INCREMENT, (row - offset_row + WINDOW_ROW_COUNT / 2) * Y_OFFSET, null);
-					}
+					
 
 				}
 			}
@@ -150,27 +162,31 @@ public class MapPanel3D extends JPanel implements Observer {
 	}
 
 	private Image drawHighlightBox() {
-		return sheet.getSubimage(50, 100, X_INCREMENT, Y_INCREMENT);
+		return sheet.getSubimage(50, 150, X_INCREMENT, Y_INCREMENT);
 		
 	}
-	public void setSelectedRowCol(int r, int c) {
+	public void setCenteredRowCol(int r, int c) {
+		centered_row = r;
+		centered_col = c;
+		/*
 		if ((r > WINDOW_ROW_COUNT / 2)) {
-			if (r < (MAX_ROW_COUNT - (WINDOW_ROW_COUNT / 2)))
-				selected_row = r;
+			if (r <= (MAX_ROW_COUNT - (WINDOW_ROW_COUNT / 2)))
+				centered_row = r;
 			else
-				selected_row = MAX_ROW_COUNT - (WINDOW_ROW_COUNT / 2);
+				centered_row = MAX_ROW_COUNT - (WINDOW_ROW_COUNT / 2);
 		} else
-			selected_row = WINDOW_ROW_COUNT / 2;
+			centered_row = (WINDOW_ROW_COUNT / 2)-1;
 
 		if (c > WINDOW_COL_COUNT / 2) {
-			if (c < (MAX_COL_COUNT - (WINDOW_COL_COUNT / 2)))
-				selected_col = c;
+			if (c <= (MAX_COL_COUNT - (WINDOW_COL_COUNT / 2)))
+				centered_col = c;
 			else
-				selected_col = MAX_COL_COUNT - (WINDOW_COL_COUNT / 2);
+				centered_col = MAX_COL_COUNT - (WINDOW_COL_COUNT / 2);
 		} else
-			selected_col = WINDOW_COL_COUNT / 2;
-//		System.out.println("Selected Row: " + selected_row);
-//		System.out.println("Selected Col: " + selected_col);
+			centered_col = (WINDOW_COL_COUNT / 2)-1;
+		*/
+//		System.out.println("Centered Row: " + centered_row);
+//		System.out.println("Centered Col: " + centered_col);
 	}
 
 	private void drawArrBuildings(Graphics2D g2) {
@@ -243,26 +259,26 @@ public class MapPanel3D extends JPanel implements Observer {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			if (arg0.getSource() == button_north) {
-				if (selected_row > 0) {
-					selected_row--;
+				if (centered_row > 0) {
+					centered_row--;
 					drawBoard();
 				}
 
 			} else if (arg0.getSource() == button_south) {
-				if (selected_row < MAX_ROW_COUNT) {
-					selected_row++;
+				if (centered_row < MAX_ROW_COUNT) {
+					centered_row++;
 					drawBoard();
 				}
 
 			} else if (arg0.getSource() == button_east) {
-				if (selected_col < MAX_COL_COUNT) {
-					selected_col++;
+				if (centered_col < MAX_COL_COUNT) {
+					centered_col++;
 					drawBoard();
 				}
 
 			} else if (arg0.getSource() == button_west) {
-				if (selected_col > 0) {
-					selected_col--;
+				if (centered_col > 0) {
+					centered_col--;
 					drawBoard();
 				}
 			}
@@ -270,37 +286,40 @@ public class MapPanel3D extends JPanel implements Observer {
 		}
 
 	}
+	
+	public void centerMap(int x, int y){
+		int clicked_row=(int) (x / X_INCREMENT )- 1;
+		int clicked_col = (int) (y / Y_OFFSET) - 1;
+	}
 
-	public void setSelectedRowColFromPixel(int x, int y) {
-		int window_x_offset = 0;
-		int window_y_offset = 0;
+	public void setCenteredRowColFromPixel(int x, int y) {
 		y -= 25;
-		// System.out.println("Clicked: "+x+", " + y);
 		int col = (int) (x / X_INCREMENT )- 1;
 		int row = (int) (y / Y_OFFSET) - 1;
-		// System.out.println("Clicked row"+row+", col:" + col);
-		// System.out.println("selected_row: "+selected_row+", selected_col:
-		// "+selected_col);
-		int delta_row = row - selected_row;
-		int delta_col = col - selected_col;
-		setSelectedRowCol(row + delta_row, col + delta_col);
+		int delta_row = top_left_window_row+row-WINDOW_ROW_COUNT/2;
+		int delta_col = top_left_window_col+col-WINDOW_COL_COUNT/2;
+		setTopLeftRowCol(delta_row,delta_col);
+		//setCenteredRowCol( delta_row, delta_col);
+		System.out.println("-----clicked");
+		System.out.println("centered_row: "+centered_row);
+		System.out.println("centered_col: "+centered_col);
 	}
 
 	private boolean isInTheWindow(int row, int col) {
-		int row_offset = selected_row / 2;// - WINDOW_ROW_COUNT/2;
-		int col_offset = selected_col / 2;// - WINDOW_COL_COUNT/2;
+		int row_offset = centered_row / 2;// - WINDOW_ROW_COUNT/2;
+		int col_offset = centered_col / 2;// - WINDOW_COL_COUNT/2;
 
-		boolean inRow = (row < selected_row + WINDOW_ROW_COUNT / 2) && (row > selected_row - WINDOW_ROW_COUNT / 2);
-		boolean inCol = (col < selected_col + WINDOW_COL_COUNT / 2) && (col > selected_col - WINDOW_COL_COUNT / 2);
+		boolean inRow = (row < centered_row + WINDOW_ROW_COUNT / 2) && (row > centered_row - WINDOW_ROW_COUNT / 2);
+		boolean inCol = (col < centered_col + WINDOW_COL_COUNT / 2) && (col > centered_col - WINDOW_COL_COUNT / 2);
 		return inRow && inCol;
 	}
 	
-	public int getSelectedRow(){
-		return selected_row;
+	public int getCenteredRow(){
+		return centered_row;
 	}
 	
-	public int getSelectedCol(){
-		return selected_col;
+	public int getCenteredCol(){
+		return centered_col;
 	}
 	
 	public void setHighlightedRow(int r){
@@ -323,14 +342,10 @@ public class MapPanel3D extends JPanel implements Observer {
 		int window_x_offset = 0;
 		int window_y_offset = 0;
 		y -= 25;
-		// System.out.println("Clicked: "+x+", " + y);
 		int col = (int) (x / X_INCREMENT );
 		int row = (int) (y / Y_OFFSET) ;
-		// System.out.println("Clicked row"+row+", col:" + col);
-		// System.out.println("selected_row: "+selected_row+", selected_col:
-		// "+selected_col);
-		int delta_row = row + selected_row-WINDOW_ROW_COUNT/2;
-		int delta_col = col + selected_col-WINDOW_COL_COUNT/2;
+		int delta_row = row + centered_row-WINDOW_ROW_COUNT/2;
+		int delta_col = col + centered_col-WINDOW_COL_COUNT/2;
 		setHighlightedRow(delta_row);
 		setHighlightedCol(delta_col);
 	}

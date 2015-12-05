@@ -37,6 +37,7 @@ import buildings.*;
 import enums.*;
 import items.JackHammer;
 import model.*;
+import view.displayables.DisplayableMapTile;
 
 public class AresFrame extends JFrame {
 	private static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -444,9 +445,17 @@ public class AresFrame extends JFrame {
 			items.getItemTable().clearSelection();
 			
 			if (arg0.getClickCount() == 2) {
-				map.setSelectedRowColFromPixel(arg0.getX(), arg0.getY());
+				map.setCenteredRowColFromPixel(arg0.getX(), arg0.getY());
+				
+				//hud.setDisplayableObject(new DisplayableMapTile(model,map.getSelectedRow(),map.getSelectedCol()));
+			} else if (arg0.getClickCount() == 1){
+				map.setHighlightedRowColFromPixel(arg0.getX(),arg0.getY());
+				
 			}
-			hud.displayTileInformation(arg0.getX(), arg0.getY());
+			
+			
+			
+			//hud.displayTileInformation(arg0.getX(), arg0.getY());
 		}
 	}
 
