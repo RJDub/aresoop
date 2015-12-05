@@ -10,6 +10,7 @@ public class Tile implements Serializable{
 	private TileType type;
 	private int c;
 	private int r;
+	private int resource_amt;
 	
 	public Tile(TileType type, int row, int column){
 		this.type = type;
@@ -36,5 +37,22 @@ public class Tile implements Serializable{
 	@Override 
 	public String toString(){
 		return this.type.toString();
+	}
+	
+	public void setResourceAmt(int amt){
+		resource_amt = amt;
+	}
+	
+	public int getResourceAmt(){
+		return resource_amt;
+	}
+	
+	public boolean withdrawResourceAmt(int amt){
+		if (resource_amt >= amt){
+			resource_amt-=amt;
+			return true;
+		} else {
+			return false;
+		}
 	}
 }
