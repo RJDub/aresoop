@@ -541,12 +541,15 @@ public class AresFrame extends JFrame {
 				case "Mess Hall":
 					// TODO: figure out how to get location working better
 					model.getArrBuildings().add(new Mess(10 + rand.nextInt(10), 10 + rand.nextInt(10)));
+					model.withdrawIronTotal(5);
 					break;
 				case "Dormitory":
 					model.getArrBuildings().add(new Dormitory(10 + rand.nextInt(10), 10 + rand.nextInt(10)));
+					model.withdrawIronTotal(5);
 					break;
 				case "Storage":
 					model.getArrBuildings().add(new StorageBuilding(10 + rand.nextInt(10), 10 + rand.nextInt(10)));
+					model.withdrawIronTotal(10);
 					break;
 				default:
 					break;
@@ -588,6 +591,7 @@ public class AresFrame extends JFrame {
 					colonistPanel.addANewRow();
 					model.getArrColonists().add(new Colonist(input, 5, 5));
 					colonistPanel.updateColonistList(model.getArrColonists());
+					model.withdrawIronTotal(20);
 					dispose();
 				} else {
 					JOptionPane.showMessageDialog(null, "ERROR! No name inputed by user. Enter a name!");
