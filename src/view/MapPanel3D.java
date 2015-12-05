@@ -42,6 +42,9 @@ public class MapPanel3D extends JPanel implements Observer {
 	private BufferedImage sheet, background;
 	private int selected_row;
 	private int selected_col;
+	private int highlighted_row;
+	private int highlighted_col;
+	
 	public static Random r = new Random();
 	
 	private JPanel[][] tiles;
@@ -136,12 +139,20 @@ public class MapPanel3D extends JPanel implements Observer {
 						}
 
 					}
+					//add highlight;
+					if(row == highlighted_row && col == highlighted_col){
+						g2.drawImage(drawHighlightBox(), (col - offset_col + WINDOW_COL_COUNT / 2) * X_INCREMENT, (row - offset_row + WINDOW_ROW_COUNT / 2) * Y_OFFSET, null);
+					}
 
 				}
 			}
 		}
 	}
 
+	private Image drawHighlightBox() {
+		return sheet.getSubimage(50, 100, X_INCREMENT, Y_INCREMENT);
+		
+	}
 	public void setSelectedRowCol(int r, int c) {
 		if ((r > WINDOW_ROW_COUNT / 2)) {
 			if (r < (MAX_ROW_COUNT - (WINDOW_ROW_COUNT / 2)))
@@ -265,7 +276,7 @@ public class MapPanel3D extends JPanel implements Observer {
 		int window_y_offset = 0;
 		y -= 25;
 		// System.out.println("Clicked: "+x+", " + y);
-		int col = (int) (x) / X_INCREMENT - 1;
+		int col = (int) (x / X_INCREMENT )- 1;
 		int row = (int) (y / Y_OFFSET) - 1;
 		// System.out.println("Clicked row"+row+", col:" + col);
 		// System.out.println("selected_row: "+selected_row+", selected_col:
@@ -282,6 +293,46 @@ public class MapPanel3D extends JPanel implements Observer {
 		boolean inRow = (row < selected_row + WINDOW_ROW_COUNT / 2) && (row > selected_row - WINDOW_ROW_COUNT / 2);
 		boolean inCol = (col < selected_col + WINDOW_COL_COUNT / 2) && (col > selected_col - WINDOW_COL_COUNT / 2);
 		return inRow && inCol;
+	}
+	
+	public int getSelectedRow(){
+		return selected_row;
+	}
+	
+	public int getSelectedCol(){
+		return selected_col;
+	}
+	
+	public void setHighlightedRow(int r){
+		System.out.println("Highlilghted row: "+r);
+		highlighted_row = r;
+	}
+	
+	public void setHighlightedCol(int c){
+		highlighted_col = c;
+	}
+	
+	public int getHighlightedRow(){
+		return highlighted_row;
+	}
+	
+	public int getHighlightedCol(){
+		return highlighted_col;
+	}
+	public void setHighlightedRowColFromPixel(int x, int y) {
+		int window_x_offset = 0;
+		int window_y_offset = 0;
+		y -= 25;
+		// System.out.println("Clicked: "+x+", " + y);
+		int col = (int) (x / X_INCREMENT );
+		int row = (int) (y / Y_OFFSET) ;
+		// System.out.println("Clicked row"+row+", col:" + col);
+		// System.out.println("selected_row: "+selected_row+", selected_col:
+		// "+selected_col);
+		int delta_row = row + selected_row-WINDOW_ROW_COUNT/2;
+		int delta_col = col + selected_col-WINDOW_COL_COUNT/2;
+		setHighlightedRow(delta_row);
+		setHighlightedCol(delta_col);
 	}
 
 }
