@@ -225,10 +225,7 @@ public class MapPanel3D extends JPanel {
 		return sheet.getSubimage(0, 100, X_INCREMENT, Y_INCREMENT);
 	}
 
-	public void moveUp() {
-		centered_row--;
-		drawBoard();
-	}
+	
 
 	private Image drawColonist(Colonist c) {
 		int width = 50;
@@ -238,19 +235,31 @@ public class MapPanel3D extends JPanel {
 		else
 			return sheet.getSubimage(0, 150, X_INCREMENT, Y_INCREMENT);
 	}
-
+	public void moveUp() {
+		int top_left_row = top_left_window_row;
+		int top_left_col = top_left_window_col;
+		setTopLeftRowCol(--top_left_row,top_left_col);
+		drawBoard();
+	}
 	public void moveDown() {
-		centered_row++;
+		int top_left_row = top_left_window_row;
+		int top_left_col = top_left_window_col;
+		setTopLeftRowCol(++top_left_row,top_left_col);
+
 		drawBoard();
 	}
 
 	public void moveLeft() {
-		centered_col--;
+		int top_left_row = top_left_window_row;
+		int top_left_col = top_left_window_col;
+		setTopLeftRowCol(top_left_row,--top_left_col);
 		drawBoard();
 	}
 
 	public void moveRight() {
-		centered_col++;
+		int top_left_row = top_left_window_row;
+		int top_left_col = top_left_window_col;
+		setTopLeftRowCol(top_left_row,++top_left_col);
 		drawBoard();
 	}
 
@@ -260,7 +269,8 @@ public class MapPanel3D extends JPanel {
 	}
 
 	public void setCenteredRowColFromPixel(int x, int y) {
-		y -= 25;
+		y -= 75;
+		x -= 50;
 		int col = (int) (x / X_INCREMENT) - 1;
 		int row = (int) (y / Y_OFFSET) - 1;
 		int delta_row = top_left_window_row + row - WINDOW_ROW_COUNT / 2;
@@ -306,7 +316,8 @@ public class MapPanel3D extends JPanel {
 	public void setHighlightedRowColFromPixel(int x, int y) {
 		int window_x_offset = 0;
 		int window_y_offset = 0;
-		y -= 25;
+		y -= 75;
+		x -= 50;
 		int col = (int) (x / X_INCREMENT);
 		int row = (int) (y / Y_OFFSET);
 		int delta_row = row + centered_row - WINDOW_ROW_COUNT / 2;

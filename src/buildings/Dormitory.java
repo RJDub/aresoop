@@ -15,6 +15,11 @@ public class Dormitory extends Building implements Serializable {
 		super.setFatigueBonus(100);
 		super.setHungerBonus(0);
 	}
+
+	@Override
+	public String getFunction() {
+		return "For Colonists To Sleep";
+	}
 	
 	
 }

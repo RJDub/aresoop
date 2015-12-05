@@ -403,6 +403,16 @@ public class MotherBoard extends Observable implements Serializable{
 		return total;
 	}
 	
+	public int getUnobtaniumTotal(){
+		int total = 0;
+		for (Building b: buildings){
+			if (b.getType()==BuildingType.Storage){
+				total+= ((StorageBuilding) b).getUnobtainiumAmount();
+			}
+		}
+		return total;
+	}
+	
 	public boolean withdrawIronTotal(int amt){
 		if (amt <= getIronTotal()){
 			for (Building b: buildings){
@@ -413,6 +423,25 @@ public class MotherBoard extends Observable implements Serializable{
 					} else {
 						int temp_amount = ((StorageBuilding) b).getIronOreAmount();
 						((StorageBuilding) b).withdrawIronOre(temp_amount);
+						amt -= temp_amount;
+					}
+				}
+			}
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean withdrawUnobtaniumTotal(int amt){
+		if (amt <= getUnobtaniumTotal()){
+			for (Building b: buildings){
+				if (b.getType()==BuildingType.Storage){
+					if (amt <= ((StorageBuilding) b).getUnobtainiumAmount()){
+						((StorageBuilding) b).withdrawUnobtainium(amt);
+						amt = 0;
+					} else {
+						int temp_amount = ((StorageBuilding) b).getUnobtainiumAmount();
+						((StorageBuilding) b).withdrawUnobtainium(temp_amount);
 						amt -= temp_amount;
 					}
 				}

@@ -30,6 +30,8 @@ public abstract class Item implements Serializable {
 		
 	}
 	
+	public abstract String getFunction();
+	
 
 	
 }

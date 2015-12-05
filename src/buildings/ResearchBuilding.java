@@ -11,5 +11,10 @@ public class ResearchBuilding extends Building{
 		// TODO Auto-generated constructor stub
 	}
 
+	@Override
+	public String getFunction() {
+		return "";
+	}
+
 
 }
