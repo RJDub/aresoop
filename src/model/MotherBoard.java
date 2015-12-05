@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Observable;
 
+import Helpers.ResourceAmountHelper;
 import Helpers.TileHandler;
 import colonists.*;
 import enums.*;
@@ -138,8 +139,14 @@ public class MotherBoard extends Observable implements Serializable{
 				for (Colonist colonist : colonists) {
 					switch (colonist.getAction()){
 					case FindFood:
-						if (colonist.getR() == building.getR() && colonist.getC() == building.getC())
+						if (colonist.getR() == building.getR() && colonist.getC() == building.getC()){
+							//check if enough food is in storage
+							int available_food = ResourceAmountHelper.getStorageAmountFromTileType(TileType.MossyRock, this);
 							colonist.incrementHungerLevel(((Mess)building).getHungerBonus()); 
+						}
+							
+						
+							
 						break;
 					case FindWater:
 						if (colonist.getR() == building.getR() && colonist.getC() == building.getC())
