@@ -247,8 +247,8 @@ public class AresFrame extends JFrame {
 
 	private void setupSelectorPanel() {
 		selector.setVisible(true);
-		selector.setLocation((int) (screen_width * .666), (int) (screen_height * .666));
-		selector.setSize((int) (screen_width * .333), (int) (screen_height * .333));
+		selector.setLocation((int) (screen_width * .665), (int) (screen_height * .666));
+		selector.setSize((int) (screen_width * .336), (int) (screen_height * .333));
 		selector.setBackground(Color.BLACK);
 	}
 
@@ -256,7 +256,7 @@ public class AresFrame extends JFrame {
 		buildings.setVisible(true);
 		buildings.setLocation(0, 0);
 		buildings.setBackground(Color.BLACK);
-		buildings.setSize((int) (screen_width * .333), (int) (screen_height * .13));
+		buildings.setSize((int) (screen_width * .333), (int) (screen_height * .15));
 		buildings.getBuildingTable().addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				colonistPanel.getTable().clearSelection();
@@ -275,7 +275,7 @@ public class AresFrame extends JFrame {
 	private void setupItemPanel() {
 		items.setVisible(true);
 		items.setLocation(0, (int) (screenSize.height * .17));
-		items.setSize((int) (screen_width * .333), (int) (screen_height * .13));
+		items.setSize((int) (screen_width * .333), (int) (screen_height * .133));
 		items.setBackground(Color.BLACK);
 		items.getItemTable().addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
