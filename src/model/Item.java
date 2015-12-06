@@ -27,7 +27,6 @@ public abstract class Item implements Serializable {
 
 	public void reclaim(Item i) {
 		owner.removeItem(i);
-		
 	}
 	
 	public abstract String getFunction();
