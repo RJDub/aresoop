@@ -45,7 +45,7 @@ import javax.swing.Timer;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 
-import Helpers.ResourceAmountHelper;
+import Helpers.*;
 import buildings.*;
 import enums.*;
 import items.IceDrill;
@@ -79,6 +79,9 @@ public class AresFrame extends JFrame {
 	private static MotherBoard model;
 	private JPanel view;
 	private Timer timer;
+	
+	private int asteroidTimer;
+	private int default_asteroid_timer =120;
 
 	public static void main(String[] args) {
 		AresFrame window = new AresFrame();
@@ -159,6 +162,8 @@ public class AresFrame extends JFrame {
 	}
 
 	private void setupModelAndTimer() {
+		asteroidTimer = default_asteroid_timer;
+		
 //		model.addObserver(map);
 		model.addObserver(hud);
 //		model.addObserver(monitor);
@@ -317,6 +322,7 @@ public class AresFrame extends JFrame {
 				if (thisColonist.getName().equals(colonistPanel.getData()[rowSelected][0]))
 					refColonist = thisColonist;
 			}
+			
 			hud.colonistSelected(refColonist);
 		}
 	}
@@ -327,6 +333,13 @@ public class AresFrame extends JFrame {
 		public void actionPerformed(ActionEvent arg0) {
 			if (timer.isRunning()) {
 				model.update();
+				asteroidTimer--;
+				if (asteroidTimer <= 0){
+					AsteroidWindow aw = new AsteroidWindow(model);
+					AsteroidAttack.asteroidAttack(model);
+					asteroidTimer = default_asteroid_timer;
+					
+				}
 				if(isGameOver()){
 					OverWindow over = new OverWindow(model);
 				}
@@ -335,6 +348,54 @@ public class AresFrame extends JFrame {
 			}
 			
 		}
+
+		
+		//Here is AsteroidWindow
+		
+		private class AsteroidWindow extends JDialog {
+			private JLabel title;
+			private JPanel screen;
+			private MotherBoard state;
+
+			public AsteroidWindow(MotherBoard in) {
+				super((java.awt.Frame) null, true);
+				this.setModal(true);
+				this.setLayout(null);
+				state = in;
+				title = new JLabel("Asteroid is coming!!!");
+				screen = new JPanel() {
+					@Override
+					protected void paintComponent(Graphics g) {
+						super.paintComponent(g);
+						try {
+							g.drawImage(ImageIO.read(new File("./images/gameover.jpg")), 0, 0, 600, 400, this);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				};
+				screen.setVisible(true);
+				screen.setLayout(null);
+				screen.setSize(600, 400);
+				screen.repaint();
+				screen.add(title);
+
+				title.setLocation(250, 10);
+				// title.setFont(Font.MONOSPACED);
+				title.setSize(300, 100);
+				title.setVisible(true);
+
+				title.setForeground(Color.WHITE);
+
+				this.add(screen);
+
+				this.setLocation(550, 350);
+				this.setSize(600, 400);
+				this.setVisible(true);
+			}
+		}
+
 		
 		private class OverWindow extends JDialog {
 			private JLabel title;
@@ -664,7 +725,8 @@ public class AresFrame extends JFrame {
 				}
 				if (input.compareTo("") != 0) {
 					colonistPanel.addANewRow();
-					model.getArrColonists().add(new Colonist(input, 5, 5));
+					Generator.spawnColonist(input, model);
+					//model.getArrColonists().add(new Colonist(input, 5, 5));
 					colonistPanel.updateColonistList(model.getArrColonists());
 					model.withdrawIronTotal(20);
 					dispose();

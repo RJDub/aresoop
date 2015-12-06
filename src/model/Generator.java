@@ -165,17 +165,16 @@ public class Generator implements Serializable {
 		createPatch(TileType.Crater, 2,1,3, model);
 		createPatch(TileType.Volcano, 2,1,5, model);
 		createPatch(TileType.IronOre, 8,8, 6,model);
-		spawnBuilding(new Dormitory(8,5), model);		
-		spawnBuilding(new Mess(8,7), model);
+		//spawnBuilding(new Dormitory(8,5), model);		
+		//spawnBuilding(new Mess(8,7), model);
 		spawnBuilding(new LandingPad(8,3),model);
 		StorageBuilding storage = new StorageBuilding(8,6);
 		storage.depositResource(50, Task.MiningMossyRock);
 		storage.depositResource(100, Task.MiningIce);
 		
-		spawnBuilding(storage, model);
-		int landingPadLoc[] = LandingPadLocation.getLandingPadLocation(model);
+		//spawnBuilding(storage, model);
+		int landingPadLoc[] = LandingPadInfo.getLandingPadLocation(model);
 		spawnColonist("Paul", model);
-		
 		spawnColonist("Ryan", model);
 		spawnColonist("Mingchen", model);
 		spawnColonist("Sean", model);
@@ -220,7 +219,7 @@ public class Generator implements Serializable {
 	
 	}
 	public static boolean spawnColonist(String name, MotherBoard model){
-			int landingPadLoc[] = LandingPadLocation.getLandingPadLocation(model);
+			int landingPadLoc[] = LandingPadInfo.getLandingPadLocation(model);
 			model.addColonist(new Colonist(name,landingPadLoc[0],landingPadLoc[1]));
 			return true;
 		

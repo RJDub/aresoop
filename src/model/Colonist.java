@@ -34,7 +34,9 @@ public class Colonist implements Serializable {
 		c = column;
 		//for testing
 		//thirst = 20;
-		thirst = 210;
+
+		thirst = 300;
+
 		thirst_threshold = 200;
 		hunger = 210;
 		hunger_threshold = 200;
@@ -132,9 +134,14 @@ public class Colonist implements Serializable {
 	}
 
 	public int[] updatePath() {
-		int[] result = path.remove(0);
-		if (path.size() == 0) {
+		
+		int[] result=new int[2];
+		if (path==null || path.size() == 0) {
 			path = null;
+			result[0] = r;
+			result[1] = c;
+		} else {
+			result = path.remove(0);
 		}
 		
 		return result;
