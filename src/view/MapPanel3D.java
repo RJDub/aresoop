@@ -327,8 +327,8 @@ public class MapPanel3D extends JPanel {
 	public void setHighlightedRowColFromPixel(int x, int y) {
 		int window_x_offset = 0;
 		int window_y_offset = 0;
-		y -= 75;
-		x -= 50;
+		y -= 50;
+		x -= 0;
 		int col = (int) (x / X_INCREMENT);
 		int row = (int) (y / Y_OFFSET);
 		int delta_row = row + centered_row - WINDOW_ROW_COUNT / 2;
