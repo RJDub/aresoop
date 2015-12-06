@@ -12,9 +12,11 @@ public enum TileType implements Serializable {
 	Crater(999),
 	Mountain(999);
 	
+	
 	private boolean buildable;
 	private boolean mineable;
 	private String string;
+	private int default_amount;
 	
 	static {
 		Flat.buildable = true;
@@ -60,6 +62,22 @@ public enum TileType implements Serializable {
 		MossyRock.string="Moss";
 	}
 	
+	static{
+		Flat.default_amount = 0;
+		Volcano.default_amount = 0;
+		Mountain.default_amount = 0;
+		Crater.default_amount = 0;
+		Ice.default_amount = Helpers.Constants.DEFAULT_AMOUNT_ICE;
+		IronOre.default_amount = Helpers.Constants.DEFAULT_AMOUNT_ORE;
+		MossyRock.default_amount = Helpers.Constants.DEFAULT_AMOUNT_MOSSYROCK;
+		Unobtainium.default_amount = Helpers.Constants.DEFAULT_AMOUNT_UNOBTAINIUM;
+		
+		
+		
+	}
+	public int getDefaultAmount(){
+		return default_amount;
+	}
 	public boolean isMineable(){
 		return mineable;
 	}

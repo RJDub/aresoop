@@ -88,7 +88,43 @@ public class Map {
 		return ret_array_list;
 			
 	}
-	
+	public static ArrayList<int[]> findClosestBuildableTile(int start_row, int start_col, MotherBoard model){
+		//reset_visited();
+		Tile[][] t = model.getTiles();
+		int [] start = {start_row,start_col};
+		ArrayList<int[]>ret_array_list = new ArrayList<int[]>();
+		ret_array_list.add(start);
+		ArrayList<int[]> path = new ArrayList<int[]>();
+	    visited = new ArrayList<Node>();
+		ArrayList<Node> queue = new ArrayList<Node>();
+		ArrayList<Node> visited2 = getVisited();
+		tiles = t;
+		
+		Node current = new Node(start_row, start_col, null);
+//		visited.add(current);
+		if((t[start_row][start_col].getType() == TileType.Flat) && (Helpers.BuildingHelper.hasNoBuildings(start_row, start_col, model))){
+			return ret_array_list;
+		}
+		queue.add(current);
+		while (!queue.isEmpty()){
+			current = queue.remove(0);
+			ArrayList<Node> children = getChildrenToBuildable(current);
+			for (Node child: children){
+				if ((t[child.getRow()][child.getCol()].getType() == TileType.Flat) && (Helpers.BuildingHelper.hasNoBuildings(child.getRow(), child.getCol(), model))){
+					// Path found to tileType type
+					path = get_reverse_path(child);
+					return path;
+				} else {
+					visited.add(child);
+					queue.add(child);
+				}
+			}
+		}
+		//System.out.println("no destination found");
+		
+		return ret_array_list;
+			
+	}
 	public static ArrayList<int[]> findPathToBuildableTile(int start_row, int start_col, MotherBoard model){
 		//reset_visited();
 		Tile[][] t = model.getTiles();
@@ -174,7 +210,36 @@ public class Map {
 		}
 		return path;
 	}
-
+	private static ArrayList<Node> getChildrenToBuildable(Node current) {
+		ArrayList<Node> children_to_add = new ArrayList<Node>();
+		int row;
+		int col;
+		
+		col = current.getCol() -1;
+		row = current.getRow();
+		if (is_in_bounds(row,col) && !has_visited(row,col)){
+			children_to_add.add(new Node(row,col,current));
+		}
+		
+		col = current.getCol() +1;
+		row = current.getRow();
+		if (is_in_bounds(row,col) && !has_visited(row,col)){
+			children_to_add.add(new Node(row,col,current));
+		}
+		
+		col = current.getCol();
+		row = current.getRow()+1;
+		if (is_in_bounds(row,col) && !has_visited(row,col)){
+			children_to_add.add(new Node(row,col,current));
+		}
+		
+		col = current.getCol();
+		row = current.getRow()-1;
+		if (is_in_bounds(row,col) && !has_visited(row,col)){
+			children_to_add.add(new Node(row,col,current));
+		}
+		return children_to_add;
+	}
 	private static ArrayList<Node> getChildren(Node current) {
 		ArrayList<Node> children_to_add = new ArrayList<Node>();
 		int row;
