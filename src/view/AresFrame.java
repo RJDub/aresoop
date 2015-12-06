@@ -262,7 +262,9 @@ public class AresFrame extends JFrame {
 				colonistPanel.getTable().clearSelection();
 				if (e.getClickCount() == 1) {
 					int index = buildings.getBuildingTable().getSelectedRow();
-					Building b = buildings.getArrBuildings().get(index);
+					Building b = null;
+					if (index < model.getArrBuildings().size())
+						b = buildings.getArrBuildings().get(index);
 					if (b != null)
 						hud.setDisplayableObject(new DisplayableBuilding(b));
 				}
