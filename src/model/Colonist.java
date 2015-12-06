@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import enums.*;
+import Helpers.Constants;
+
 
 public class Colonist implements Serializable {
 
@@ -32,19 +34,18 @@ public class Colonist implements Serializable {
 		action = Action.None;
 		r = row;
 		c = column;
-		//for testing
-		//thirst = 20;
 
-		thirst = 300;
-
-		thirst_threshold = 200;
-		hunger = 210;
-		hunger_threshold = 200;
-		fatigue = 300;
-		fatigue_threshold = 200;
+		thirst = Constants.COLONIST_START_THIRST;
+		fatigue = Constants.COLONIST_START_FATIGUE;
+		hunger = Constants.COLONIST_START_HUNGER;
+		
+		thirst_threshold = Constants.COLONIST_START_THIRST_THRESHOLD;
+		hunger_threshold = Constants.COLONIST_START_FATIGUE_THRESHOLD;
+		fatigue_threshold = Constants.COLONIST_START_HUNGER_THRESHOLD;
+		
+		capacity = Constants.COLONIST_DEFAULT_CAPACITY;
 		
 		resourceAmount = 0;
-		capacity = 5;
 		items = null;
 		path = null;
 

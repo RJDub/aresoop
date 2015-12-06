@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Observable;
 
+import Helpers.ColonistHelper;
 import Helpers.ResourceAmountHelper;
 import Helpers.TileHandler;
 import colonists.*;
@@ -41,6 +42,7 @@ public class MotherBoard extends Observable implements Serializable{
 	
 
 	public void updateColonists() {
+		ColonistHelper.cleanupColonists(colonists);
 		for (Colonist colonist : colonists) {
 			if(colonist.isAlive()){
 				updateNeeds(colonist);
