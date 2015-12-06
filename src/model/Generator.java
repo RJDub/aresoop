@@ -123,6 +123,7 @@ public class Generator implements Serializable {
 	}
 	
 	public static MotherBoard generateStandardModel(int row_count, int col_count){
+		/*
 		MotherBoard model = new MotherBoard(Generator.generateStandardMap(row_count, col_count));
 		Random r = new Random();
 		for (int i = 0; i < row_count; i++){
@@ -165,11 +166,16 @@ public class Generator implements Serializable {
 		createPatch(TileType.Crater, 2,1,3, model);
 		createPatch(TileType.Volcano, 2,1,5, model);
 		createPatch(TileType.IronOre, 8,8, 6,model);
+		*/
+		
+		MotherBoard model = new MotherBoard(MapGeneration.generateTiles(row_count, col_count, 44,8));
 		spawnBuilding(new Dormitory(8,5), model);		
 		spawnBuilding(new Mess(8,5), model);
 		spawnBuilding(new LandingPad(8,5),model);
 		StorageBuilding storage = new StorageBuilding(8,5);
-		storage.depositResource(50, Task.MiningMossyRock);
+		storage.depositResource(Constants.STARTING_FOOD_LEVEL, Task.MiningMossyRock);
+		storage.depositResource(Constants.STARTING_IRON_LEVEL, Task.MiningIronOre);
+		
 		storage.depositResource(Constants.STARTING_WATER_LEVEL, Task.MiningIce);
 		storage.depositResource(Constants.STARTING_UNOBTAINIUM_LEVEL, Task.MiningUnobtainium);
 		
@@ -267,7 +273,7 @@ public class Generator implements Serializable {
 	}
 	
 	public static boolean spawnBuilding(Building b, MotherBoard m){
-		ArrayList<int[]> path = Map.findPathToBuildableTile(b.getR(), b.getC(),m);
+		ArrayList<int[]> path = Map.findClosestBuildableTile(b.getR(), b.getC(),m);
 		if (path != null){
 			b.setRow(path.get(path.size()-1)[0]);
 			b.setCol(path.get(path.size()-1)[1]);
