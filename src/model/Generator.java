@@ -184,7 +184,7 @@ public class Generator implements Serializable {
 		spawnColonist("Paul", model);
 		spawnColonist("Ryan", model);
 		spawnColonist("Mingcheng", model);
-		spawnColonist("Sean", model);
+		spawnColonist("Mark", model);
 		return model;
 	}
 	
