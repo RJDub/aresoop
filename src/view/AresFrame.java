@@ -411,7 +411,7 @@ public class AresFrame extends JFrame {
 				this.setLayout(null);
 				state = in;
 				if (loss)
-					title = new JLabel("GAME OVER");
+					title = new JLabel("GAME OVER \n YOU LOSE");
 				else
 					title = new JLabel("YOU WIN!");
 				exit = new JButton("Exit Game");
@@ -420,7 +420,10 @@ public class AresFrame extends JFrame {
 					protected void paintComponent(Graphics g) {
 						super.paintComponent(g);
 						try {
-							g.drawImage(ImageIO.read(new File("./images/gameover.jpg")), 0, 0, 600, 400, this);
+							if(loss)
+								g.drawImage(ImageIO.read(new File("./images/gameover.jpg")), 0, 0, 600, 400, this);
+							else
+								g.drawImage(ImageIO.read(new File("./images/closing_screen.jpg")), 0, 0, 600, 400, this);
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -477,6 +480,7 @@ public class AresFrame extends JFrame {
 		}
 		
 		private boolean isGameWon(){
+			
 			return (ResourceAmountHelper.getStorageAmountFromTileType(TileType.Unobtainium, model)>= 100);
 		}
 	}

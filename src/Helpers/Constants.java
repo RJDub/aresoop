@@ -10,8 +10,8 @@ public class Constants {
 	public static final int COLONIST_START_HUNGER_THRESHOLD = 100;
 	public static final int COLONIST_DEFAULT_CAPACITY = 5;
 	
-	public static final int STARTING_WATER_LEVEL = 0;
-	public static final int STARTING_UNOBTAINIUM_LEVEL = 0;
+	public static final int STARTING_WATER_LEVEL = 100;
+	public static final int STARTING_UNOBTAINIUM_LEVEL = 1001;
 	
 	
 	
