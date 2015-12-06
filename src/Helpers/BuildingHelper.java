@@ -15,4 +15,12 @@ public class BuildingHelper {
 		}
 		return true;
 	}
+	
+	public static Building returnBuildingAt(int row, int col, MotherBoard model) {
+		for (Building b: model.getArrBuildings()) {
+			if (b.getR() == row && b.getC() == col)
+				return b;
+		}
+		return null;
+	}
 }
