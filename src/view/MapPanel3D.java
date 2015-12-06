@@ -225,9 +225,9 @@ public class MapPanel3D extends JPanel {
 		case Volcano:
 			return sheet.getSubimage(50, 250, Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
 		case Crater:
-			return sheet.getSubimage(100, 250, Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
-//			return drawCrater(x,y);			
-			//return sheet.getSubimage(100, 250, Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
+//			return sheet.getSubimage(100, 250, Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
+			return drawCrater(x,y);			
+//			return sheet.getSubimage(100, 250, Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
 		case Mountain:
 			return sheet.getSubimage(150, 0, Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
 		case Unobtainium:
@@ -267,8 +267,8 @@ public class MapPanel3D extends JPanel {
 			return sheet.getSubimage(250, 150, Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
 		else if (right&&!left&&!up&&!down)
 			return sheet.getSubimage(200, 150, Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
-		else if (!right&&!left&&!up&&!down)
-			return sheet.getSubimage(350, 0, Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);	
+//		else if (!right&&!left&&!up&&!down)
+//			return sheet.getSubimage(350, 0, Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);	
 		else if (!right&&!left&&!up&&down)
 			return sheet.getSubimage(200, 200, Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
 		
