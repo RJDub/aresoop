@@ -226,7 +226,7 @@ public class MapPanel3D extends JPanel {
 			return sheet.getSubimage(50, 250, Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
 		case Crater:
 			return sheet.getSubimage(100, 250, Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
-			//return drawCrater(x,y);			
+//			return drawCrater(x,y);			
 			//return sheet.getSubimage(100, 250, Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
 		case Mountain:
 			return sheet.getSubimage(150, 0, Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
