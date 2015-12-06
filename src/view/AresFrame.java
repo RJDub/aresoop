@@ -604,9 +604,9 @@ public class AresFrame extends JFrame {
 		private DefaultListModel<String> tasks;
 
 		public TaskDialog() {
-			this.setVisible(true);
-			this.setLocation(400, 400);
 			this.setSize(300, 150);
+			this.setLocationRelativeTo(null);
+			this.setVisible(true);
 			list = new JList<String>();
 			select = new JButton("Select");
 			tasks = new DefaultListModel<String>();
@@ -668,9 +668,9 @@ public class AresFrame extends JFrame {
 		private DefaultListModel<String> buildable;
 
 		public BuilderDialog(ArrayList<String> strings) {
-			this.setVisible(true);
 			this.setSize(300, 100);
-			this.setLocation(400, 400);
+			this.setLocationRelativeTo(null);
+			this.setVisible(true);
 			list = new JList<String>();
 			select = new JButton("Select");
 			add(list, BorderLayout.CENTER);
@@ -723,9 +723,9 @@ public class AresFrame extends JFrame {
 		private JTextField name;
 
 		public RecruitDialog() {
-			this.setVisible(true);
 			this.setSize(300, 100);
-			this.setLocation(400, 400);
+			this.setLocationRelativeTo(null);
+			this.setVisible(true);
 
 			JLabel nameLabel = new JLabel("Input a name for your colonist:");
 			name = new JTextField();
@@ -806,9 +806,9 @@ public class AresFrame extends JFrame {
 		private String[][] data;
 		
 		public CreateNewItemDialog() {
-			this.setVisible(true);
 			this.setSize(600, 200);
-			this.setLocation(400, 400);
+			this.setLocationRelativeTo(null);
+			this.setVisible(true);
 			columnNames = new String[]{"Name", "Cost", "Function"};
 			data = new String[4][3];
 			data[0][0] = "JackHammer";
