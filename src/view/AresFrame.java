@@ -341,7 +341,9 @@ public class AresFrame extends JFrame {
 					
 				}
 				if(isGameOver()){
-					OverWindow over = new OverWindow(model);
+					OverWindow over = new OverWindow(model, true);
+				} else if  (isGameWon()){
+					OverWindow over = new OverWindow(model, false);
 				}
 				// System.out.println("called model.update");
 				updateView();
@@ -403,12 +405,15 @@ public class AresFrame extends JFrame {
 			private JPanel screen;
 			private MotherBoard state;
 
-			public OverWindow(MotherBoard in) {
+			public OverWindow(MotherBoard in, boolean loss) {
 				super((java.awt.Frame) null, true);
 				this.setModal(true);
 				this.setLayout(null);
 				state = in;
-				title = new JLabel("GAME OVER");
+				if (loss)
+					title = new JLabel("GAME OVER");
+				else
+					title = new JLabel("YOU WIN!");
 				exit = new JButton("Exit Game");
 				screen = new JPanel() {
 					@Override
@@ -458,6 +463,8 @@ public class AresFrame extends JFrame {
 		}
 
 		private boolean isGameOver() {
+			return (model.getArrColonists().size()<=0);
+			/*
 			int totalColonists = model.getArrColonists().size();
 			for(Colonist c: model.getArrColonists()) {
 				if (!c.isAlive()) {
@@ -466,9 +473,15 @@ public class AresFrame extends JFrame {
 			}
 			
 			return (totalColonists <= 0);
+			*/
+		}
 		
+		private boolean isGameWon(){
+			return (ResourceAmountHelper.getStorageAmountFromTileType(TileType.Unobtainium, model)>= 100);
 		}
 	}
+	
+	
 	
 	
 
@@ -953,7 +966,7 @@ public class AresFrame extends JFrame {
 			title.setVisible(true);
 			loadGame.setLocation(100, 300);
 			loadGame.setSize(100, 50);
-			newGame.setLocation(400, 300);
+			newGame.setLocation(400,300);
 			newGame.setSize(100, 50);
 
 			title.setForeground(Color.BLACK);
@@ -963,7 +976,7 @@ public class AresFrame extends JFrame {
 			loadGame.addActionListener(new LoadListener());
 			newGame.addActionListener(new NewGListener());
 
-			this.setLocation(550, 350);
+			this.setLocation(200, 100);
 			this.setSize(600, 400);
 			this.setVisible(true);
 		}
