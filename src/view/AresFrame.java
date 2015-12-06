@@ -685,16 +685,19 @@ public class AresFrame extends JFrame {
 				switch (type) {
 				case "Mess Hall":
 					// TODO: figure out how to get location working better
-					model.getArrBuildings().add(new Mess(map.getHighlightedRow(), map.getHighlightedCol()));
-					//model.withdrawIronTotal(5);
+					Generator.spawnBuilding(new Mess(map.getHighlightedRow(), map.getHighlightedCol()),model);
+//					model.getArrBuildings().add(new Mess(map.getHighlightedRow(), map.getHighlightedCol()));
+//					model.withdrawIronTotal(5);
 					ResourceAmountHelper.withdrawAmountUsingTileType(TileType.IronOre,model,5);
 					break;
 				case "Dormitory":
-					model.getArrBuildings().add(new Dormitory(map.getHighlightedRow(), map.getHighlightedCol()));
+					Generator.spawnBuilding(new Dormitory(map.getHighlightedRow(), map.getHighlightedCol()),model);
+//					model.getArrBuildings().add(new Dormitory(map.getHighlightedRow(), map.getHighlightedCol()));
 					ResourceAmountHelper.withdrawAmountUsingTileType(TileType.IronOre,model,5);
 					break;
 				case "Storage":
-					model.getArrBuildings().add(new StorageBuilding(map.getHighlightedRow(), map.getHighlightedCol()));
+					Generator.spawnBuilding(new StorageBuilding(map.getHighlightedRow(), map.getHighlightedCol()),model);
+//					model.getArrBuildings().add(new StorageBuilding(map.getHighlightedRow(), map.getHighlightedCol()));
 					ResourceAmountHelper.withdrawAmountUsingTileType(TileType.IronOre,model,10);
 					break;
 				default:
