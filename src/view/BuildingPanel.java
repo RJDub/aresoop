@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ public class BuildingPanel extends JPanel{
 	
 	private ArrayList<Building> buildingArray;
 	private String[] columnNames;
-	private String[][] data;
+	private ArrayList<String[]> data;
 	private static JTable table;
 	
 	
@@ -33,22 +34,29 @@ public class BuildingPanel extends JPanel{
 	private void layoutGUI() {
 //		buildingArray.add(new StorageBuilding(4,4));
 		columnNames = new String[]{"Name", "Row", "Column"};
-		data = new String[10][3];
+		data = new ArrayList<String[]>();
 		for(int i =0; i < buildingArray.size(); i++){
-			data[i][0] = buildingArray.get(i).getType().toString();
-			data[i][1] = Integer.toString(buildingArray.get(i).getR());
-			data[i][2] = Integer.toString(buildingArray.get(i).getC());
+			String[] temp = new String[3];
+			temp[0] = buildingArray.get(i).getType().toString();
+			temp[1] = Integer.toString(buildingArray.get(i).getR());
+			temp[2] = Integer.toString(buildingArray.get(i).getC());
+			data.add(temp);
 		}
-		for (int j = buildingArray.size(); j < 10; j++) {
-			data[j][0] = "";
-			data[j][1] = "";
-			data[j][2] = "";
-		}
-		table = new JTable(new BuildingTableModel(data,columnNames,10));
-		table.setFocusable(false);
+//		for (int j = buildingArray.size(); j < 10; j++) {
+//			data[j][0] = "";
+//			data[j][1] = "";
+//			data[j][2] = "";
+//		}
+		table = new JTable(new BuildingTableModel(data,columnNames));
 		table.setPreferredSize(new Dimension(400,1000));
+		table.setFont(AresFrame.FONT);
+		table.setForeground(AresFrame.F_COLOR);
+		table.setBackground(Color.BLACK);
+		table.setGridColor(Color.BLACK);
+		table.setFocusable(false);
 		JScrollPane scrollPane = new JScrollPane(table);
-		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPane.setBackground(Color.BLACK);
+		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 		scrollPane.setPreferredSize(new Dimension((int) (Toolkit.getDefaultToolkit().getScreenSize().width * .333),(int) (Toolkit.getDefaultToolkit().getScreenSize().height * .13)));
 		this.add(scrollPane);
 	}
@@ -90,19 +98,17 @@ public class BuildingPanel extends JPanel{
 
 class BuildingTableModel extends AbstractTableModel {
 
-	private String[][] data;
+	private ArrayList<String[]> data;
 	private String[] columnNames;
-	private int row;
 	
-	public BuildingTableModel(String[][] d, String[] c, int i) {
+	public BuildingTableModel(ArrayList<String[]> d, String[] c) {
 		data = d;
 		columnNames = c;
-		row = i;
 	}
 	
 	@Override
 	public int getRowCount() {
-		return row;
+		return data.size()-1;
 	}
 
 	@Override
@@ -133,12 +139,12 @@ class BuildingTableModel extends AbstractTableModel {
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		return data[rowIndex][columnIndex];
+		return data.get(rowIndex)[columnIndex];
 	}
 
 	@Override
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-		data[rowIndex][columnIndex] = (String) aValue;
+		data.get(rowIndex)[columnIndex] = (String) aValue;
 		fireTableCellUpdated(rowIndex, columnIndex);
 	}
 

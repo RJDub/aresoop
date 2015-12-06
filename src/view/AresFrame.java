@@ -234,7 +234,7 @@ public class AresFrame extends JFrame {
 		hud.setVisible(true);
 		hud.setLocation((int) (screen_width * .333), (int) (screen_height * .666));
 		hud.setSize((int) (screen_width * .333), (int) (screen_height * .333));
-		hud.setBackground(Color.DARK_GRAY);
+		hud.setBackground(Color.BLACK);
 
 	}
 
@@ -242,12 +242,13 @@ public class AresFrame extends JFrame {
 		selector.setVisible(true);
 		selector.setLocation((int) (screen_width * .666), (int) (screen_height * .666));
 		selector.setSize((int) (screen_width * .333), (int) (screen_height * .333));
-		selector.setBackground(Color.CYAN);
+		selector.setBackground(Color.BLACK);
 	}
 
 	private void setupBuildingPanel() {
 		buildings.setVisible(true);
 		buildings.setLocation(0, 0);
+		buildings.setBackground(Color.BLACK);
 		buildings.setSize((int) (screen_width * .333), (int) (screen_height * .13));
 		buildings.getBuildingTable().addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
@@ -266,6 +267,7 @@ public class AresFrame extends JFrame {
 		items.setVisible(true);
 		items.setLocation(0, (int) (screenSize.height * .17));
 		items.setSize((int) (screen_width * .333), (int) (screen_height * .13));
+		items.setBackground(Color.BLACK);
 		items.getItemTable().addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 1) {
@@ -448,6 +450,10 @@ public class AresFrame extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			int amount = model.getIronTotal();
 			ArrayList<String> types = new ArrayList<String>();
+			if (map.getHighlightedCol() == null || map.getHighlightedCol() == null){
+				JOptionPane.showMessageDialog(null, "Please select a location first!");
+				return;
+			}
 			if (amount >= 10) {
 				types.add("Storage");
 			}
@@ -598,20 +604,19 @@ public class AresFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String type = list.getSelectedValue();
-				Random rand = new Random();
 				switch (type) {
 				case "Mess Hall":
 					// TODO: figure out how to get location working better
-					model.getArrBuildings().add(new Mess(10 + rand.nextInt(10), 10 + rand.nextInt(10)));
+					model.getArrBuildings().add(new Mess(map.getHighlightedRow(), map.getHighlightedCol()));
 					//model.withdrawIronTotal(5);
 					ResourceAmountHelper.withdrawAmountUsingTileType(TileType.IronOre,model,5);
 					break;
 				case "Dormitory":
-					model.getArrBuildings().add(new Dormitory(10 + rand.nextInt(10), 10 + rand.nextInt(10)));
+					model.getArrBuildings().add(new Dormitory(map.getHighlightedRow(), map.getHighlightedCol()));
 					ResourceAmountHelper.withdrawAmountUsingTileType(TileType.IronOre,model,5);
 					break;
 				case "Storage":
-					model.getArrBuildings().add(new StorageBuilding(10 + rand.nextInt(10), 10 + rand.nextInt(10)));
+					model.getArrBuildings().add(new StorageBuilding(map.getHighlightedRow(), map.getHighlightedCol()));
 					ResourceAmountHelper.withdrawAmountUsingTileType(TileType.IronOre,model,10);
 					break;
 				default:
@@ -650,6 +655,13 @@ public class AresFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String input = name.getText();
+				for (int i = 0; i < model.getArrColonists().size(); i++){
+					if (input.compareTo(model.getArrColonists().get(i).getName()) == 0){
+						JOptionPane.showMessageDialog(null, "ERROR! Please enter a different name!");
+						name.setText("");
+						return;
+					}
+				}
 				if (input.compareTo("") != 0) {
 					colonistPanel.addANewRow();
 					model.getArrColonists().add(new Colonist(input, 5, 5));

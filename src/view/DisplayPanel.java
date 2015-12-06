@@ -52,6 +52,9 @@ public class DisplayPanel extends JPanel implements Observer{
 	private void layoutGUI() {
 		// Start Info
 		temp = new JTextArea("\n\n\n\tSelect Something for More Information");
+		temp.setFont(AresFrame.FONT);
+		temp.setForeground(AresFrame.F_COLOR);
+		temp.setBackground(Color.BLACK);
 		temp.setEditable(false);
 		//temp.setPreferredSize(new Dimension((int) (Toolkit.getDefaultToolkit().getScreenSize().width * .333),(int) (Toolkit.getDefaultToolkit().getScreenSize().height * .27)));
 		setupButtonPanel();
@@ -79,6 +82,8 @@ public class DisplayPanel extends JPanel implements Observer{
 		buttonPanel.add(assignTask);
 		buttonPanel.add(construction);
 		buttonPanel.add(recruitment);
+		
+		buttonPanel.setBackground(Color.BLACK);
 	}
 
 	// When colonist is selected

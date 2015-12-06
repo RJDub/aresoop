@@ -60,9 +60,11 @@ public class ColonistPanel extends JPanel{
 		table.setFont(AresFrame.FONT);
 		table.setForeground(AresFrame.F_COLOR);
 		table.setBackground(Color.BLACK);
+		table.setGridColor(Color.BLACK);
 		table.setFocusable(false);
 		JScrollPane scrollPane = new JScrollPane(table);
-		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPane.setBackground(Color.BLACK);
+		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 		scrollPane.setPreferredSize(new Dimension((int) (Toolkit.getDefaultToolkit().getScreenSize().width * .333),(int) (Toolkit.getDefaultToolkit().getScreenSize().height * .333)));
 		this.add(scrollPane, BorderLayout.NORTH);
 		

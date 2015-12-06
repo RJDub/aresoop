@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -48,9 +49,14 @@ public class ItemPanel extends JPanel{
 		}
 		table = new JTable(new ItemTableModel(data,columnNames,10));
 		table.setPreferredSize(new Dimension(400,1000));
+		table.setFont(AresFrame.FONT);
+		table.setForeground(AresFrame.F_COLOR);
+		table.setBackground(Color.BLACK);
+		table.setGridColor(Color.BLACK);
 		table.setFocusable(false);
 		JScrollPane scrollPane = new JScrollPane(table);
-		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPane.setBackground(Color.BLACK);
+		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 		scrollPane.setPreferredSize(new Dimension((int) (Toolkit.getDefaultToolkit().getScreenSize().width * .333),(int) (Toolkit.getDefaultToolkit().getScreenSize().height * .13)));
 		this.add(scrollPane);
 	}
