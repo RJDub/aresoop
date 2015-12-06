@@ -28,6 +28,9 @@ public class Map {
 		tiles = t;
 		Node current = new Node(start_row, start_col, null);
 		//visited.add(current);
+		int [] start = {start_row,start_col};
+		ArrayList<int[]>ret_array_list = new ArrayList<int[]>();
+		ret_array_list.add(start);
 		queue.add(current);
 		while (!queue.isEmpty()){
 			current = queue.remove(0);
@@ -46,7 +49,7 @@ public class Map {
 			}
 		}
 		System.out.println("no destination found");
-		return null;
+		return ret_array_list;
 			
 	}
 	public static ArrayList<int[]> findPathToTileType(int start_row, int start_col, TileType type, Tile[][] t){

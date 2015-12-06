@@ -45,7 +45,7 @@ import javax.swing.Timer;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 
-import Helpers.ResourceAmountHelper;
+import Helpers.*;
 import buildings.*;
 import enums.*;
 import items.IceDrill;
@@ -81,6 +81,7 @@ public class AresFrame extends JFrame {
 	private Timer timer;
 	
 	private int asteroidTimer;
+	private int default_asteroid_timer =120;
 
 	public static void main(String[] args) {
 		AresFrame window = new AresFrame();
@@ -161,7 +162,7 @@ public class AresFrame extends JFrame {
 	}
 
 	private void setupModelAndTimer() {
-		asteroidTimer = 100;
+		asteroidTimer = default_asteroid_timer;
 		
 //		model.addObserver(map);
 		model.addObserver(hud);
@@ -332,8 +333,9 @@ public class AresFrame extends JFrame {
 				model.update();
 				asteroidTimer--;
 				if (asteroidTimer <= 0){
-					//call asteroid window;
-					asteroidTimer = 100;
+					AsteroidWindow aw = new AsteroidWindow(model);
+					AsteroidAttack.asteroidAttack(model);
+					asteroidTimer = default_asteroid_timer;
 					
 				}
 				if(isGameOver()){
