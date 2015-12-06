@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -17,6 +18,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.event.TableModelListener;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.JTableHeader;
 
 import enums.*;
 import model.Colonist;
@@ -63,6 +65,12 @@ public class ColonistPanel extends JPanel{
 		table.setBackground(Color.BLACK);
 		table.setGridColor(Color.BLACK);
 		table.setFocusable(false);
+		JTableHeader header = table.getTableHeader();
+	    header.setBackground(Color.black);
+	    header.setForeground(Color.CYAN);
+	    Font font = header.getFont();
+	    Font boldFont = new Font(font.getFontName(), Font.BOLD, font.getSize() + 1);
+	    header.setFont(boldFont);
 		JScrollPane scrollPane = new JScrollPane(table);
 		scrollPane.setBackground(Color.BLACK);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);

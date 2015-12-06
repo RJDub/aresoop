@@ -785,7 +785,8 @@ public class AresFrame extends JFrame {
 			else if (refColonist == null && refItem == null) {
 				CreateNewItemDialog b = new CreateNewItemDialog();
 			}
-			else if (refItem != null && refItem.getOwner() != null) {
+			else if (refItem != null && refItem.getOwner() != "Unused") {
+				System.out.println(refItem.getOwner());
 				refItem.reclaim(refItem);
 				refItem.setOwner(null);
 				JOptionPane.showMessageDialog(null, "Reclaim Item successfully");
