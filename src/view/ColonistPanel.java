@@ -16,7 +16,6 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 
-import colonists.*;
 import enums.*;
 import model.Colonist;
 

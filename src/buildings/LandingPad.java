@@ -18,6 +18,6 @@ public class LandingPad extends Building implements Serializable{
 	@Override
 	public String getFunction() {
 		
-		return null;
+		return "New colonist will spawn at here.";
 	}
 }

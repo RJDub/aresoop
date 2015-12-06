@@ -7,7 +7,6 @@ import java.util.Observable;
 import Helpers.ColonistHelper;
 import Helpers.ResourceAmountHelper;
 import Helpers.TileHandler;
-import colonists.*;
 import enums.*;
 import buildings.*;
 

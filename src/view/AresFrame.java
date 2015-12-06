@@ -82,6 +82,8 @@ public class AresFrame extends JFrame {
 	
 	private int asteroidTimer;
 	private int default_asteroid_timer =120;
+	private int remove_ast_dialog = -1;
+	private AsteroidWindow aw;
 
 	public static void main(String[] args) {
 		AresFrame window = new AresFrame();
@@ -260,7 +262,9 @@ public class AresFrame extends JFrame {
 				colonistPanel.getTable().clearSelection();
 				if (e.getClickCount() == 1) {
 					int index = buildings.getBuildingTable().getSelectedRow();
-					Building b = buildings.getArrBuildings().get(index);
+					Building b = null;
+					if (index < model.getArrBuildings().size())
+						b = buildings.getArrBuildings().get(index);
 					if (b != null)
 						hud.setDisplayableObject(new DisplayableBuilding(b));
 				}
@@ -334,11 +338,17 @@ public class AresFrame extends JFrame {
 			if (timer.isRunning()) {
 				model.update();
 				asteroidTimer--;
+				remove_ast_dialog--;
 				if (asteroidTimer <= 0){
-					AsteroidWindow aw = new AsteroidWindow(model);
+					aw = new AsteroidWindow();
 					AsteroidAttack.asteroidAttack(model);
 					asteroidTimer = default_asteroid_timer;
-					
+					remove_ast_dialog = 5;
+				}
+				if (remove_ast_dialog == 0){
+					if (aw != null){
+						aw.dispose();
+					}
 				}
 				if(isGameOver()){
 					OverWindow over = new OverWindow(model, true);
@@ -350,144 +360,140 @@ public class AresFrame extends JFrame {
 			}
 			
 		}
-
-		
-		//Here is AsteroidWindow
-		
-		private class AsteroidWindow extends JDialog {
-			private JLabel title;
-			private JPanel screen;
-			private MotherBoard state;
-
-			public AsteroidWindow(MotherBoard in) {
-				super((java.awt.Frame) null, true);
-				this.setModal(true);
-				this.setLayout(null);
-				state = in;
-				title = new JLabel("Asteroid is coming!!!");
-				screen = new JPanel() {
-					@Override
-					protected void paintComponent(Graphics g) {
-						super.paintComponent(g);
-						try {
-							g.drawImage(ImageIO.read(new File("./images/gameover.jpg")), 0, 0, 600, 400, this);
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-				};
-				screen.setVisible(true);
-				screen.setLayout(null);
-				screen.setSize(600, 400);
-				screen.repaint();
-				screen.add(title);
-
-				title.setLocation(250, 10);
-				// title.setFont(Font.MONOSPACED);
-				title.setSize(300, 100);
-				title.setVisible(true);
-
-				title.setForeground(Color.WHITE);
-
-				this.add(screen);
-
-				this.setLocation(300, 100);
-				this.setSize(600, 400);
-				this.setVisible(true);
-			}
-		}
-
-		
-		private class OverWindow extends JDialog {
-			private JLabel title;
-			private JButton exit;
-			private JPanel screen;
-			private MotherBoard state;
-
-			public OverWindow(MotherBoard in, boolean loss) {
-				super((java.awt.Frame) null, true);
-				this.setModal(true);
-				this.setLayout(null);
-				state = in;
-				if (loss)
-					title = new JLabel("GAME OVER \n YOU LOSE");
-				else
-					title = new JLabel("YOU WIN!");
-				exit = new JButton("Exit Game");
-				screen = new JPanel() {
-					@Override
-					protected void paintComponent(Graphics g) {
-						super.paintComponent(g);
-						try {
-							if(loss)
-								g.drawImage(ImageIO.read(new File("./images/gameover.jpg")), 0, 0, 600, 400, this);
-							else
-								g.drawImage(ImageIO.read(new File("./images/closing_screen.jpg")), 0, 0, 600, 400, this);
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-				};
-				screen.setVisible(true);
-				screen.setLayout(null);
-				screen.setSize(600, 400);
-				screen.repaint();
-				screen.add(title);
-				screen.add(exit);
-
-				title.setLocation(250, 10);
-				// title.setFont(Font.MONOSPACED);
-				title.setSize(300, 100);
-				title.setVisible(true);
-				exit.setLocation(240, 200);
-				exit.setSize(100, 50);
-
-				title.setForeground(Color.WHITE);
-
-				this.add(screen);
-
-				exit.addActionListener(new ExitListener());
-
-				this.setLocation(300, 100);
-				this.setSize(600, 400);
-				this.setVisible(true);
-			}
-			
-			private class ExitListener implements ActionListener {
-
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					dispose();
-					System.exit(0);
-				}
-			}
-		}
-
-		private boolean isGameOver() {
-			return (model.getArrColonists().size()<=0);
-			/*
-			int totalColonists = model.getArrColonists().size();
-			for(Colonist c: model.getArrColonists()) {
-				if (!c.isAlive()) {
-					totalColonists--;
-				}
-			}
-			
-			return (totalColonists <= 0);
-			*/
-		}
-		
-		private boolean isGameWon(){
-			
-			return (ResourceAmountHelper.getStorageAmountFromTileType(TileType.Unobtainium, model)>= Helpers.Constants.WIN_CONDITION_UNOBTAINIUM);
-		}
 	}
 	
+	private class AsteroidWindow extends JDialog {
+		private JLabel title;
+		private JPanel screen;
+		private int count;
+
+		public AsteroidWindow() {
+			
+			super((java.awt.Frame) null, true);
+			this.setModal(true);
+			this.setLayout(null);
+			title = new JLabel("Asteroid is coming!!!");
+			title.setFont(BOLD_FONT);
+			title.setForeground(F_COLOR);
+			screen = new JPanel() {
+				@Override
+				protected void paintComponent(Graphics g) {
+					super.paintComponent(g);
+					try {
+						g.drawImage(ImageIO.read(new File("./images/gameover.jpg")), 0, 0, 600, 400, this);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			};
+			screen.setVisible(true);
+			screen.setLayout(null);
+			screen.setSize(600, 400);
+			screen.repaint();
+			screen.add(title);
+
+			title.setLocation(250, 10);
+			// title.setFont(Font.MONOSPACED);
+			title.setSize(300, 100);
+			title.setVisible(true);
+
+			title.setForeground(Color.WHITE);
+
+			this.add(screen);
+
+			this.setSize(600, 400);
+			this.setLocationRelativeTo(null);
+			this.setVisible(true);
+			
+		}
+	}
+
 	
+	private class OverWindow extends JDialog {
+		private JLabel title;
+		private JButton exit;
+		private JPanel screen;
+		private MotherBoard state;
+
+		public OverWindow(MotherBoard in, final boolean loss) {
+			super((java.awt.Frame) null, true);
+			this.setModal(true);
+			this.setLayout(null);
+			state = in;
+			if (loss)
+				title = new JLabel("GAME OVER \n YOU LOSE");
+			else
+				title = new JLabel("YOU WIN!");
+			exit = new JButton("Exit Game");
+			screen = new JPanel() {
+				@Override
+				protected void paintComponent(Graphics g) {
+					super.paintComponent(g);
+					try {
+						if(loss)
+							g.drawImage(ImageIO.read(new File("./images/gameover.jpg")), 0, 0, 600, 400, this);
+						else
+							g.drawImage(ImageIO.read(new File("./images/closing_screen.jpg")), 0, 0, 600, 400, this);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			};
+			screen.setVisible(true);
+			screen.setLayout(null);
+			screen.setSize(600, 400);
+			screen.repaint();
+			screen.add(title);
+			screen.add(exit);
+
+			title.setLocation(250, 10);
+			// title.setFont(Font.MONOSPACED);
+			title.setSize(300, 100);
+			title.setVisible(true);
+			exit.setLocation(240, 200);
+			exit.setSize(100, 50);
+
+			title.setForeground(Color.WHITE);
+
+			this.add(screen);
+
+			exit.addActionListener(new ExitListener());
+
+			this.setSize(600, 400);
+			this.setLocationRelativeTo(null);
+			this.setVisible(true);
+		}
+		
+		private class ExitListener implements ActionListener {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				System.exit(0);
+			}
+		}
+	}
+
+	private boolean isGameOver() {
+		return (model.getArrColonists().size()<=0);
+		/*
+		int totalColonists = model.getArrColonists().size();
+		for(Colonist c: model.getArrColonists()) {
+			if (!c.isAlive()) {
+				totalColonists--;
+			}
+		}
+		
+		return (totalColonists <= 0);
+		*/
+	}
 	
-	
+	private boolean isGameWon(){
+		
+		return (ResourceAmountHelper.getStorageAmountFromTileType(TileType.Unobtainium, model)>= 100);
+	}
 
 	private class MyWindowListener extends WindowAdapter {
 
@@ -983,8 +989,8 @@ public class AresFrame extends JFrame {
 			loadGame.addActionListener(new LoadListener());
 			newGame.addActionListener(new NewGListener());
 
-			this.setLocation(300, 100);
 			this.setSize(600, 400);
+			this.setLocationRelativeTo(null);
 			this.setVisible(true);
 		}
 
@@ -1086,8 +1092,8 @@ public class AresFrame extends JFrame {
 			exit.addActionListener(new ExitListener());
 			save.addActionListener(new SaveListener());
 
-			this.setLocation(300, 100);
 			this.setSize(600, 400);
+			this.setLocationRelativeTo(null);
 			this.setVisible(true);
 		}
 
