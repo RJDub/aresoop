@@ -67,6 +67,12 @@ public class DisplayPanel extends JPanel implements Observer{
 		play = new JButton("Play/Pause");
 		construction = new JButton("Construction");
 		recruitment = new JButton("Recruitment");
+		
+		play.setFocusable(false);
+		assignTask.setFocusable(false);
+		construction.setFocusable(false);
+		recruitment.setFocusable(false);
+		
 		buttonPanel = new JPanel();
 		buttonPanel.setLayout(new GridLayout(1,4));
 		buttonPanel.add(play);

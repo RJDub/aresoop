@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -56,10 +57,14 @@ public class ColonistPanel extends JPanel{
 		}
 		table = new JTable(new ColonistTableModel(data,columnNames,20));
 		table.setPreferredSize(new Dimension(600,1500));
+		table.setFont(AresFrame.FONT);
+		table.setForeground(AresFrame.F_COLOR);
+		table.setBackground(Color.BLACK);
+		table.setFocusable(false);
 		JScrollPane scrollPane = new JScrollPane(table);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		scrollPane.setPreferredSize(new Dimension((int) (Toolkit.getDefaultToolkit().getScreenSize().width * .333),(int) (Toolkit.getDefaultToolkit().getScreenSize().height * .27)));
-		this.add(scrollPane);
+		scrollPane.setPreferredSize(new Dimension((int) (Toolkit.getDefaultToolkit().getScreenSize().width * .333),(int) (Toolkit.getDefaultToolkit().getScreenSize().height * .333)));
+		this.add(scrollPane, BorderLayout.NORTH);
 		
 	}
 

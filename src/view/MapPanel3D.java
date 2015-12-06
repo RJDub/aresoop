@@ -13,17 +13,14 @@ import java.util.Observer;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
-import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
 import enums.*;
 import model.*;
 
 public class MapPanel3D extends JPanel {
-
 	private final int WINDOW_ROW_COUNT = 20;
 	private final int WINDOW_COL_COUNT = 15;
-
 
 	private final int X_INCREMENT = 50;
 	private final int Y_INCREMENT = 50;
@@ -54,8 +51,9 @@ public class MapPanel3D extends JPanel {
 		mobo = boardIn;
 		board = new Board(boardIn);
 		board.setLocation(0, 30);
-		board.setSize(width - 60, height - 60);
+		board.setSize(width, height - 30);
 		board.setVisible(true);
+		board.setFocusable(false);
 		MAX_ROW_COUNT = mobo.getBoardHeight();
 		MAX_COL_COUNT = mobo.getBoardWidth();
 		try {
@@ -95,6 +93,8 @@ public class MapPanel3D extends JPanel {
 	public void drawBoard() {
 		repaint();
 	}
+	
+	
 
 	private class Board extends JPanel implements Observer {
 
@@ -102,7 +102,6 @@ public class MapPanel3D extends JPanel {
 
 		public Board(MotherBoard in) {
 			mother = in;
-			this.setBackground(Color.BLACK);
 		}
 
 		@Override
@@ -116,6 +115,13 @@ public class MapPanel3D extends JPanel {
 			int offset_col = centered_col;// -WINDOW_COL_COUNT/2;
 			int offset_row = centered_row;// -WINDOW_ROW_COUNT/2;
 			Graphics2D g2 = (Graphics2D) g;
+			
+			try {
+				g2.drawImage(ImageIO.read(new File("./images/surface.jpg")), 0, 0, this.getWidth(), this.getHeight(), this);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			for (int row = 0; row < mobo.getBoardHeight(); row++) {
 				for (int col = 0; col < mobo.getBoardWidth(); col++) {
 					if (isInTheWindow(row, col)) {
@@ -320,8 +326,8 @@ public class MapPanel3D extends JPanel {
 	public void setHighlightedRowColFromPixel(int x, int y) {
 		int window_x_offset = 0;
 		int window_y_offset = 0;
-		y -= 75;
-		x -= 50;
+		y -= 50;
+		x -= 0;
 		int col = (int) (x / X_INCREMENT);
 		int row = (int) (y / Y_OFFSET);
 		int delta_row = row + centered_row - WINDOW_ROW_COUNT / 2;
