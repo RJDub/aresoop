@@ -23,6 +23,20 @@ public class Constants {
 	public static final int DEFAULT_AMOUNT_ICE= 20;
 	public static final int DEFAULT_AMOUNT_UNOBTAINIUM= 20;
 	
+	// Map complexity, 10 = VERY BORING, 1000 = CHAOTIC
+	public static final int MAP_COMPLEXITY = 500;
+	// Path complexity 25 seems to 'feel good'. higher than 50 and the map gets a really "open" feeling, less gets a "closed" feeling.
+	public static final int MAP_PATH_COMPLEXITY = 25;
+	
+	//Graphics, Window
+	public static final int WINDOW_ROW_COUNT = 20;
+	public static final int WINDOW_COL_COUNT = 15;
+
+	public static final int X_INCREMENT = 50;
+	public static final int Y_INCREMENT = 50;
+
+	public static final int Y_OFFSET = 25;
+
 	
 	
 }
