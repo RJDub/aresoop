@@ -6,6 +6,7 @@ import java.awt.Toolkit;
 import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
+import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -13,6 +14,7 @@ import javax.swing.JTable;
 import javax.swing.ListModel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.event.TableModelListener;
+import javax.swing.plaf.basic.BasicScrollBarUI;
 import javax.swing.table.AbstractTableModel;
 
 import model.*;
@@ -54,7 +56,33 @@ public class BuildingPanel extends JPanel{
 		table.setFocusable(false);
 		JScrollPane scrollPane = new JScrollPane(table);
 		scrollPane.setBackground(Color.BLACK);
-		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+		scrollPane.getVerticalScrollBar().setUI(new BasicScrollBarUI()
+	    {   
+			@Override 
+	        protected void configureScrollBarColors(){
+	            this.thumbColor = AresFrame.F_COLOR;
+	            this.trackColor = Color.BLACK;
+	        }
+			
+			@Override
+	        protected JButton createDecreaseButton(int orientation) {
+	            return createZeroButton();
+	        }
+
+	        @Override    
+	        protected JButton createIncreaseButton(int orientation) {
+	            return createZeroButton();
+	        }
+
+	        private JButton createZeroButton() {
+	            JButton jbutton = new JButton();
+	            jbutton.setPreferredSize(new Dimension(0, 0));
+	            jbutton.setMinimumSize(new Dimension(0, 0));
+	            jbutton.setMaximumSize(new Dimension(0, 0));
+	            return jbutton;
+	        }
+	    });
 		scrollPane.setPreferredSize(new Dimension((int) (Toolkit.getDefaultToolkit().getScreenSize().width * .333),(int) (Toolkit.getDefaultToolkit().getScreenSize().height * .13)));
 		this.add(scrollPane);
 	}
