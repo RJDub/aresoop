@@ -165,14 +165,14 @@ public class Generator implements Serializable {
 		createPatch(TileType.Crater, 2,1,3, model);
 		createPatch(TileType.Volcano, 2,1,5, model);
 		createPatch(TileType.IronOre, 8,8, 6,model);
-		//spawnBuilding(new Dormitory(8,5), model);		
-		//spawnBuilding(new Mess(8,7), model);
-		spawnBuilding(new LandingPad(8,3),model);
-		StorageBuilding storage = new StorageBuilding(8,6);
+		spawnBuilding(new Dormitory(8,5), model);		
+		spawnBuilding(new Mess(8,5), model);
+		spawnBuilding(new LandingPad(8,5),model);
+		StorageBuilding storage = new StorageBuilding(8,5);
 		storage.depositResource(50, Task.MiningMossyRock);
 		storage.depositResource(100, Task.MiningIce);
 		
-		//spawnBuilding(storage, model);
+		spawnBuilding(storage, model);
 		int landingPadLoc[] = LandingPadInfo.getLandingPadLocation(model);
 		spawnColonist("Paul", model);
 		spawnColonist("Ryan", model);
@@ -266,7 +266,7 @@ public class Generator implements Serializable {
 	}
 	
 	public static boolean spawnBuilding(Building b, MotherBoard m){
-		ArrayList<int[]> path = Map.findPathToTileType(b.getR(), b.getC(), TileType.Flat, m.getTiles());
+		ArrayList<int[]> path = Map.findPathToBuildableTile(b.getR(), b.getC(),m);
 		if (path != null){
 			b.setRow(path.get(path.size()-1)[0]);
 			b.setCol(path.get(path.size()-1)[1]);

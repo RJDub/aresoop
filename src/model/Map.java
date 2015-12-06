@@ -103,7 +103,7 @@ public class Map {
 		
 		Node current = new Node(start_row, start_col, null);
 //		visited.add(current);
-		if(t[start_row][start_col].getType() == TileType.Flat){
+		if((t[start_row][start_col].getType() == TileType.Flat) && (Helpers.BuildingHelper.hasNoBuildings(start_row, start_col, model))){
 			return ret_array_list;
 		}
 		queue.add(current);
@@ -111,7 +111,7 @@ public class Map {
 			current = queue.remove(0);
 			ArrayList<Node> children = getChildren(current);
 			for (Node child: children){
-				if ((t[child.getRow()][child.getCol()].getType() == TileType.Flat) && Helpers.BuildingHelper.hasNoBuildings(child.getRow(), child.getCol(), model)){
+				if ((t[child.getRow()][child.getCol()].getType() == TileType.Flat) && (Helpers.BuildingHelper.hasNoBuildings(child.getRow(), child.getCol(), model))){
 					// Path found to tileType type
 					path = get_reverse_path(child);
 					return path;
