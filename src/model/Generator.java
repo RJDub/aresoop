@@ -170,7 +170,7 @@ public class Generator implements Serializable {
 		spawnBuilding(new LandingPad(8,3),model);
 		StorageBuilding storage = new StorageBuilding(8,6);
 		storage.depositResource(50, Task.MiningMossyRock);
-		storage.depositResource(0, Task.MiningIce);
+		storage.depositResource(100, Task.MiningIce);
 		
 		//spawnBuilding(storage, model);
 		int landingPadLoc[] = LandingPadInfo.getLandingPadLocation(model);

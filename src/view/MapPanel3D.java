@@ -35,8 +35,8 @@ public class MapPanel3D extends JPanel {
 	private Board board;
 	private int centered_row;
 	private int centered_col;
-	private int highlighted_row;
-	private int highlighted_col;
+	private Integer highlighted_row;
+	private Integer highlighted_col;
 	private int top_left_window_row;
 	private int top_left_window_col;
 
@@ -69,6 +69,8 @@ public class MapPanel3D extends JPanel {
 		this.add(infoPanel);
 		this.add(board);
 		setTopLeftRowCol(0, 0);
+		highlighted_row = null;
+		highlighted_col = null;
 	}
 
 	public void setInfoPanelSize(int width, int height) {
@@ -128,9 +130,11 @@ public class MapPanel3D extends JPanel {
 						g2.drawImage(drawTile(row, col), (col - offset_col + WINDOW_COL_COUNT / 2) * X_INCREMENT,
 								(row - offset_row + WINDOW_ROW_COUNT / 2) * Y_OFFSET, null);
 						// add highlight;
-						if (row == highlighted_row && col == highlighted_col) {
-							g2.drawImage(drawHighlightBox(), (col - offset_col + WINDOW_COL_COUNT / 2) * X_INCREMENT,
-									(row - offset_row + WINDOW_ROW_COUNT / 2) * Y_OFFSET, null);
+						if (highlighted_row != null && highlighted_col != null){
+							if (row == highlighted_row && col == highlighted_col) {
+								g2.drawImage(drawHighlightBox(), (col - offset_col + WINDOW_COL_COUNT / 2) * X_INCREMENT,
+										(row - offset_row + WINDOW_ROW_COUNT / 2) * Y_OFFSET, null);
+							}
 						}
 						for (Building b : mobo.getArrBuildings()) {
 							BuildingType bt = b.getType();
@@ -315,11 +319,11 @@ public class MapPanel3D extends JPanel {
 		highlighted_col = c;
 	}
 
-	public int getHighlightedRow() {
+	public Integer getHighlightedRow() {
 		return highlighted_row;
 	}
 
-	public int getHighlightedCol() {
+	public Integer getHighlightedCol() {
 		return highlighted_col;
 	}
 

@@ -34,7 +34,9 @@ public class Colonist implements Serializable {
 		c = column;
 		//for testing
 		//thirst = 20;
+
 		thirst = 300;
+
 		thirst_threshold = 200;
 		hunger = 210;
 		hunger_threshold = 200;
