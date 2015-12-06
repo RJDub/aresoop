@@ -11,10 +11,11 @@ public class Constants {
 	public static final int COLONIST_DEFAULT_CAPACITY = 5;
 	
 	//GAME
-	public static final int STARTING_WATER_LEVEL = 100;
+	public static final int STARTING_WATER_LEVEL = 40;
 	public static final int STARTING_UNOBTAINIUM_LEVEL = 0;
 	public static final int STARTING_IRON_LEVEL = 50;
 	public static final int STARTING_FOOD_LEVEL = 50;
+	public static final int WIN_CONDITION_UNOBTAINIUM = 500;
 	
 	
 	//TILES

@@ -481,7 +481,7 @@ public class AresFrame extends JFrame {
 		
 		private boolean isGameWon(){
 			
-			return (ResourceAmountHelper.getStorageAmountFromTileType(TileType.Unobtainium, model)>= 100);
+			return (ResourceAmountHelper.getStorageAmountFromTileType(TileType.Unobtainium, model)>= Helpers.Constants.WIN_CONDITION_UNOBTAINIUM);
 		}
 	}
 	
