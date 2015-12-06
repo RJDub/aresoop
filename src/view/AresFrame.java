@@ -358,11 +358,6 @@ public class AresFrame extends JFrame {
 			}
 			
 		}
-
-		
-		//Here is AsteroidWindow
-		
-		
 	}
 	
 	private class AsteroidWindow extends JDialog {
