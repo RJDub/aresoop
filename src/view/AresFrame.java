@@ -390,7 +390,7 @@ public class AresFrame extends JFrame {
 
 				this.add(screen);
 
-				this.setLocation(550, 350);
+				this.setLocation(300, 100);
 				this.setSize(600, 400);
 				this.setVisible(true);
 			}
@@ -963,7 +963,7 @@ public class AresFrame extends JFrame {
 			loadGame.addActionListener(new LoadListener());
 			newGame.addActionListener(new NewGListener());
 
-			this.setLocation(550, 350);
+			this.setLocation(300, 100);
 			this.setSize(600, 400);
 			this.setVisible(true);
 		}
@@ -1066,7 +1066,7 @@ public class AresFrame extends JFrame {
 			exit.addActionListener(new ExitListener());
 			save.addActionListener(new SaveListener());
 
-			this.setLocation(550, 350);
+			this.setLocation(300, 100);
 			this.setSize(600, 400);
 			this.setVisible(true);
 		}
