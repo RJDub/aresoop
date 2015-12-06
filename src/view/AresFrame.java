@@ -450,7 +450,7 @@ public class AresFrame extends JFrame {
 
 				exit.addActionListener(new ExitListener());
 
-				this.setLocation(550, 350);
+				this.setLocation(300, 100);
 				this.setSize(600, 400);
 				this.setVisible(true);
 			}
