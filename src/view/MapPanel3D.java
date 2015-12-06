@@ -191,6 +191,7 @@ public class MapPanel3D extends JPanel {
 
 	private void drawArrColonists(Graphics2D g2) {
 		for (int x = 0; x < mobo.getArrColonists().size(); x++) {
+			
 			g2.drawImage(drawColonist(), mobo.getArrColonists().get(x).getC() * Helpers.Constants.X_INCREMENT,
 					mobo.getArrColonists().get(x).getR() * Helpers.Constants.Y_INCREMENT, null);
 
@@ -204,7 +205,7 @@ public class MapPanel3D extends JPanel {
 		case Dormitory:
 			return sheet.getSubimage(150, 100, Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
 		case Storage:
-			return sheet.getSubimage(50, 100, Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
+			return sheet.getSubimage(150, 150, Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
 		case LandingPad:
 			return sheet.getSubimage(100, 150, Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
 		default:
@@ -248,7 +249,16 @@ public class MapPanel3D extends JPanel {
 		int width = 50;
 		int height = 50;
 		if (c.isAlive())
-			return sheet.getSubimage(0, 100, Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
+			if (c.getTask() == Task.MiningIronOre)
+				return sheet.getSubimage(0, 200, Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
+			else if (c . getTask() == Task.MiningIce)
+				return sheet.getSubimage(50, 200, Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
+			else if (c . getTask() == Task.MiningMossyRock)
+				return sheet.getSubimage(100, 200, Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
+			else if (c . getTask() == Task.MiningUnobtainium)
+				return sheet.getSubimage(150, 200, Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
+			else
+				return sheet.getSubimage(0, 100, Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
 		else
 			return sheet.getSubimage(0, 150, Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
 	}
