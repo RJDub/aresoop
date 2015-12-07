@@ -1,6 +1,8 @@
 package view.displayables;
 
+import Helpers.BuildingHelper;
 import enums.TileType;
+import model.Building;
 import model.MotherBoard;
 import model.Tile;
 
@@ -25,6 +27,9 @@ public class DisplayableMapTile implements DisplayableObject {
 		if (tile.getType().isMineable()){
 			str+=tile.getType().toString()+" remaining: "+tile.getResourceAmt()+"\n";
 		}
+		Building b = BuildingHelper.returnBuildingAt(row, col, model);
+		if (b != null)
+			str+= "Building: " + b.getType().toString() + "\nFunction of Building: " + b.getFunction();
 		return str;
 	}
 

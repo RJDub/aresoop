@@ -81,7 +81,7 @@ public class AresFrame extends JFrame {
 	private Timer timer;
 	
 	private int asteroidTimer;
-	private int default_asteroid_timer =120;
+	private int default_asteroid_timer = 120;
 	private int remove_ast_dialog = -1;
 	private AsteroidWindow aw;
 
@@ -247,8 +247,8 @@ public class AresFrame extends JFrame {
 
 	private void setupSelectorPanel() {
 		selector.setVisible(true);
-		selector.setLocation((int) (screen_width * .666), (int) (screen_height * .666));
-		selector.setSize((int) (screen_width * .333), (int) (screen_height * .333));
+		selector.setLocation((int) (screen_width * .665), (int) (screen_height * .666));
+		selector.setSize((int) (screen_width * .336), (int) (screen_height * .333));
 		selector.setBackground(Color.BLACK);
 	}
 
@@ -256,13 +256,15 @@ public class AresFrame extends JFrame {
 		buildings.setVisible(true);
 		buildings.setLocation(0, 0);
 		buildings.setBackground(Color.BLACK);
-		buildings.setSize((int) (screen_width * .333), (int) (screen_height * .13));
+		buildings.setSize((int) (screen_width * .333), (int) (screen_height * .15));
 		buildings.getBuildingTable().addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				colonistPanel.getTable().clearSelection();
 				if (e.getClickCount() == 1) {
 					int index = buildings.getBuildingTable().getSelectedRow();
-					Building b = buildings.getArrBuildings().get(index);
+					Building b = null;
+					if (index < model.getArrBuildings().size())
+						b = buildings.getArrBuildings().get(index);
 					if (b != null)
 						hud.setDisplayableObject(new DisplayableBuilding(b));
 				}
@@ -273,7 +275,7 @@ public class AresFrame extends JFrame {
 	private void setupItemPanel() {
 		items.setVisible(true);
 		items.setLocation(0, (int) (screenSize.height * .17));
-		items.setSize((int) (screen_width * .333), (int) (screen_height * .13));
+		items.setSize((int) (screen_width * .333), (int) (screen_height * .133));
 		items.setBackground(Color.BLACK);
 		items.getItemTable().addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
@@ -339,7 +341,7 @@ public class AresFrame extends JFrame {
 				remove_ast_dialog--;
 				if (asteroidTimer <= 0){
 					aw = new AsteroidWindow();
-					AsteroidAttack.asteroidAttack(model);
+					AsteroidAttack.asteroidAttack(model, buildings);
 					asteroidTimer = default_asteroid_timer;
 					remove_ast_dialog = 5;
 				}
@@ -400,8 +402,8 @@ public class AresFrame extends JFrame {
 
 			this.add(screen);
 
-			this.setLocation(300, 100);
 			this.setSize(600, 400);
+			this.setLocationRelativeTo(null);
 			this.setVisible(true);
 			
 		}
@@ -459,8 +461,8 @@ public class AresFrame extends JFrame {
 
 			exit.addActionListener(new ExitListener());
 
-			this.setLocation(300, 100);
 			this.setSize(600, 400);
+			this.setLocationRelativeTo(null);
 			this.setVisible(true);
 		}
 		
@@ -602,9 +604,9 @@ public class AresFrame extends JFrame {
 		private DefaultListModel<String> tasks;
 
 		public TaskDialog() {
-			this.setVisible(true);
-			this.setLocation(400, 400);
 			this.setSize(300, 150);
+			this.setLocationRelativeTo(null);
+			this.setVisible(true);
 			list = new JList<String>();
 			select = new JButton("Select");
 			tasks = new DefaultListModel<String>();
@@ -666,9 +668,9 @@ public class AresFrame extends JFrame {
 		private DefaultListModel<String> buildable;
 
 		public BuilderDialog(ArrayList<String> strings) {
-			this.setVisible(true);
 			this.setSize(300, 100);
-			this.setLocation(400, 400);
+			this.setLocationRelativeTo(null);
+			this.setVisible(true);
 			list = new JList<String>();
 			select = new JButton("Select");
 			add(list, BorderLayout.CENTER);
@@ -721,9 +723,9 @@ public class AresFrame extends JFrame {
 		private JTextField name;
 
 		public RecruitDialog() {
-			this.setVisible(true);
 			this.setSize(300, 100);
-			this.setLocation(400, 400);
+			this.setLocationRelativeTo(null);
+			this.setVisible(true);
 
 			JLabel nameLabel = new JLabel("Input a name for your colonist:");
 			name = new JTextField();
@@ -783,7 +785,8 @@ public class AresFrame extends JFrame {
 			else if (refColonist == null && refItem == null) {
 				CreateNewItemDialog b = new CreateNewItemDialog();
 			}
-			else if (refItem != null && refItem.getOwner() != null) {
+			else if (refItem != null && refItem.getOwner() != "Unused") {
+				System.out.println(refItem.getOwner());
 				refItem.reclaim(refItem);
 				refItem.setOwner(null);
 				JOptionPane.showMessageDialog(null, "Reclaim Item successfully");
@@ -804,9 +807,9 @@ public class AresFrame extends JFrame {
 		private String[][] data;
 		
 		public CreateNewItemDialog() {
-			this.setVisible(true);
 			this.setSize(600, 200);
-			this.setLocation(400, 400);
+			this.setLocationRelativeTo(null);
+			this.setVisible(true);
 			columnNames = new String[]{"Name", "Cost", "Function"};
 			data = new String[4][3];
 			data[0][0] = "JackHammer";
@@ -987,8 +990,8 @@ public class AresFrame extends JFrame {
 			loadGame.addActionListener(new LoadListener());
 			newGame.addActionListener(new NewGListener());
 
-			this.setLocation(300, 100);
 			this.setSize(600, 400);
+			this.setLocationRelativeTo(null);
 			this.setVisible(true);
 		}
 
@@ -1090,8 +1093,8 @@ public class AresFrame extends JFrame {
 			exit.addActionListener(new ExitListener());
 			save.addActionListener(new SaveListener());
 
-			this.setLocation(300, 100);
 			this.setSize(600, 400);
+			this.setLocationRelativeTo(null);
 			this.setVisible(true);
 		}
 

@@ -183,8 +183,8 @@ public class Generator implements Serializable {
 		int landingPadLoc[] = LandingPadInfo.getLandingPadLocation(model);
 		spawnColonist("Paul", model);
 		spawnColonist("Ryan", model);
-		spawnColonist("Mingchen", model);
-		spawnColonist("Sean", model);
+		spawnColonist("Mingcheng", model);
+		spawnColonist("Mark", model);
 		return model;
 	}
 	

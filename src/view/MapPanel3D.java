@@ -226,9 +226,11 @@ public class MapPanel3D extends JPanel {
 		case IronOre:
 			return sheet.getSubimage(50, 50, Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
 		case Volcano:
-			return sheet.getSubimage(150, 50, Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
+			return sheet.getSubimage(50, 250, Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
 		case Crater:
-			return sheet.getSubimage(100, 50, Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
+//			return sheet.getSubimage(100, 250, Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
+			return drawCrater(x,y);			
+//			return sheet.getSubimage(100, 250, Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
 		case Mountain:
 			return sheet.getSubimage(150, 0, Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
 		case Unobtainium:
@@ -246,8 +248,57 @@ public class MapPanel3D extends JPanel {
 		return sheet.getSubimage(0, 100, Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
 	}
 
+	private BufferedImage drawCrater(int row, int col){
+		//return sheet.getSubimage(100, 250, Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
+		boolean right=false, left=false, up=false, down = false;
+//		//check right
+		if ((col+1) < mobo.getBoardWidth())
+			right = (mobo.getTileAtLocation(row, col+1).getType() == TileType.Crater);
+		
+		if ((col-1) >= 0)
+			left = (mobo.getTileAtLocation(row, col-1).getType() == TileType.Crater);
+		
+		if((row+1) < mobo.getBoardHeight())
+			down = (mobo.getTileAtLocation(row+1, col).getType() == TileType.Crater);
+		if((row-1) >= 0)
+			up = (mobo.getTileAtLocation(row-1, col).getType() == TileType.Crater);
+		if (right && left && up && down)
+			return sheet.getSubimage(250, 50, Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
+		else if (right && left && up && ! down)
+			return sheet.getSubimage(250, 100, Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
+		else if (right&&left&&!up&&!down)
+			return sheet.getSubimage(250, 150, Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
+		else if (right&&!left&&!up&&!down)
+			return sheet.getSubimage(200, 150, Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
+//		else if (!right&&!left&&!up&&!down)
+//			return sheet.getSubimage(350, 0, Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);	
+		else if (!right&&!left&&!up&&down)
+			return sheet.getSubimage(200, 200, Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
+		
+		else if (right&&!left&&!up&&down)
+			return sheet.getSubimage(200, 0, Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
+		else if (right&&left&&!up&&down)
+			return sheet.getSubimage(250, 0,Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
+		else if (right&&!left&&up&&!down)
+			return sheet.getSubimage(200,100,Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
+		else if (!right&&left&&up&&down)
+			return sheet.getSubimage(300,50,Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
+		else if (!right&&left&&!up&&down)
+			return sheet.getSubimage(300,0,Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
+		else if (!right&&left&&!up&&!down)
+			return sheet.getSubimage(300,150,Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
+		else if (!right&&!left&&up&&down)
+			return sheet.getSubimage(250,200,Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
+		else if (!right&&!left&&up&&!down)
+			return sheet.getSubimage(300,200,Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
+		else if (!right&&left&&up&&!down)
+			return sheet.getSubimage(300,100,Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
+		else if (right&&!left&&up&&down)
+			return sheet.getSubimage(200, 50,Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
+		else 
+			return sheet.getSubimage(100, 250, Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
+	}
 	
-
 	private Image drawColonist(Colonist c) {
 		int width = 50;
 		int height = 50;

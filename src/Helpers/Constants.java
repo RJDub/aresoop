@@ -27,7 +27,7 @@ public class Constants {
 	public static final int DEFAULT_AMOUNT_UNOBTAINIUM= 20;
 	
 	// Map complexity, 10 = VERY BORING, 1000 = CHAOTIC
-	public static final int MAP_COMPLEXITY = 750;
+	public static final int MAP_COMPLEXITY =750;
 	// Path complexity 25 seems to 'feel good'. higher than 50 and the map gets a really "open" feeling, less gets a "closed" feeling.
 	public static final int MAP_PATH_COMPLEXITY = 25;
 	
