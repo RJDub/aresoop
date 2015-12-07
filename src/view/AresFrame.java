@@ -65,8 +65,8 @@ public class AresFrame extends JFrame {
 	public static final Color F_COLOR = Color.YELLOW;
 	private static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
-	private static final int screen_height = (int) Math.round(screenSize.height);
-	private static final int screen_width = (int) Math.round(screenSize.width);
+	public static final int screen_height = (int) Math.round(screenSize.height);
+	public static final int screen_width = (int) Math.round(screenSize.width);
 
 	private JScrollPane mapPane;
 	private MapPanel3D map;
@@ -81,7 +81,7 @@ public class AresFrame extends JFrame {
 	private Timer timer;
 	
 	private int asteroidTimer;
-	private int default_asteroid_timer =120;
+	private int default_asteroid_timer = 120;
 	private int remove_ast_dialog = -1;
 	private AsteroidWindow aw;
 
@@ -213,7 +213,7 @@ public class AresFrame extends JFrame {
 	private void setupMapPanel() {
 		map.setVisible(true);
 		map.setLocation(0, 0);
-		map.setPreferredSize(new Dimension(screen_width, screen_height));
+		//map.setPreferredSize(new Dimension(screen_width, screen_height));
 	}
 
 	private void setupColonistPanel() {
@@ -341,7 +341,7 @@ public class AresFrame extends JFrame {
 				remove_ast_dialog--;
 				if (asteroidTimer <= 0){
 					aw = new AsteroidWindow();
-					AsteroidAttack.asteroidAttack(model);
+					AsteroidAttack.asteroidAttack(model, buildings);
 					asteroidTimer = default_asteroid_timer;
 					remove_ast_dialog = 5;
 				}

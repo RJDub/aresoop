@@ -65,6 +65,7 @@ public class ColonistPanel extends JPanel{
 		table.setBackground(Color.BLACK);
 		table.setGridColor(Color.BLACK);
 		table.setFocusable(false);
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		JTableHeader header = table.getTableHeader();
 	    header.setBackground(Color.black);
 	    header.setForeground(Color.CYAN);

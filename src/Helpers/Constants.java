@@ -1,5 +1,7 @@
 package Helpers;
 
+import view.AresFrame;
+
 public class Constants {
 	//COLONISTS
 	public static final int COLONIST_START_THIRST = 100;
@@ -30,14 +32,18 @@ public class Constants {
 	public static final int MAP_PATH_COMPLEXITY = 25;
 	
 	//Graphics, Window
-	public static final int WINDOW_ROW_COUNT = 20;
-	public static final int WINDOW_COL_COUNT = 15;
+	public static final int WINDOW_ROW_COUNT = AresFrame.screen_height / 50;
+	public static final int WINDOW_COL_COUNT = AresFrame.screen_width / 50;
 
 	public static final int X_INCREMENT = 50;
 	public static final int Y_INCREMENT = 50;
+	
+	public static final int BOARD_Y_SIZE = WINDOW_ROW_COUNT * 30;
+	public static final int BOARD_X_SIZE = WINDOW_COL_COUNT * X_INCREMENT;
+	
 
 	public static final int Y_OFFSET = 25;
 
-	
+	public static final int UNIQUE_TILES = 8;
 	
 }
