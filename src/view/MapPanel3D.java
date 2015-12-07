@@ -60,6 +60,7 @@ public class MapPanel3D extends JPanel {
 		board.setLocation(0, 30);
 		board.setVisible(true);
 		board.setFocusable(false);
+		board.setBackground(Color.BLACK);
 		MAX_ROW_COUNT = mobo.getBoardHeight();
 		MAX_COL_COUNT = mobo.getBoardWidth();
 		try {
@@ -124,12 +125,7 @@ public class MapPanel3D extends JPanel {
 			int offset_row = centered_row;// -WINDOW_ROW_COUNT/2;
 			Graphics2D g2 = (Graphics2D) g;
 			
-			try {
-				g2.drawImage(ImageIO.read(new File("./images/surface.jpg")), 0, 0, this.getWidth(), this.getHeight(), this);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			
 			for (int row = 0; row < mobo.getBoardHeight(); row++) {
 				for (int col = 0; col < mobo.getBoardWidth(); col++) {
 					if (isInTheWindow(row, col)) {
