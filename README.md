@@ -23,3 +23,5 @@ PROJECT DESCRIPTION:
 	there ability to build structures, the ability to harvest and use resources, and most importantly the ability to recruit
 	new colonists to the mission. This will allow the user to interact with the game, make decisions, and ultimately test
 	his/her skills to command a colony.
+
+NO MORE COMMMITS!
