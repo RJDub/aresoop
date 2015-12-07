@@ -206,7 +206,7 @@ public class MapPanel3D extends JPanel {
 		case Storage:
 			return sheet.getSubimage(150, 150, Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
 		case LandingPad:
-			return sheet.getSubimage(100, 150, Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
+			return sheet.getSubimage(0, 250, Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
 		default:
 			return null;
 		}
