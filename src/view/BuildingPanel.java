@@ -126,6 +126,11 @@ public class BuildingPanel extends JPanel{
 					table.setValueAt(Integer.toString(b.get(row).getC()), row, col);
 			}
 		}
+		for (int row = b.size(); row < 10000; row++) {
+			for (int col = 0; col < 3; col++) {
+				table.setValueAt("", row, col);
+			}
+		}
 		repaint();
 	}
 }

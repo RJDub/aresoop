@@ -5,9 +5,10 @@ import java.util.Random;
 
 import model.Building;
 import model.MotherBoard;
+import view.BuildingPanel;
 
 public class AsteroidAttack {
-	public static String asteroidAttack(MotherBoard model){
+	public static String asteroidAttack(MotherBoard model, BuildingPanel bPanel){
 		ArrayList<Building> buildings = model.getArrBuildings();
 		int landingPadLocation = LandingPadInfo.getLandingPadInArrayList(model);
 		int size = buildings.size();
@@ -22,6 +23,7 @@ public class AsteroidAttack {
 		}
 		String return_string = buildings.get(building_to_blow_up).toString();
 		buildings.remove(building_to_blow_up);
+		bPanel.getBuildingTable().repaint();
 		return return_string;
 	}
 

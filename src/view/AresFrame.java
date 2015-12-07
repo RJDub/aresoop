@@ -81,7 +81,7 @@ public class AresFrame extends JFrame {
 	private Timer timer;
 	
 	private int asteroidTimer;
-	private int default_asteroid_timer =120;
+	private int default_asteroid_timer = 120;
 	private int remove_ast_dialog = -1;
 	private AsteroidWindow aw;
 
@@ -341,7 +341,7 @@ public class AresFrame extends JFrame {
 				remove_ast_dialog--;
 				if (asteroidTimer <= 0){
 					aw = new AsteroidWindow();
-					AsteroidAttack.asteroidAttack(model);
+					AsteroidAttack.asteroidAttack(model, buildings);
 					asteroidTimer = default_asteroid_timer;
 					remove_ast_dialog = 5;
 				}
