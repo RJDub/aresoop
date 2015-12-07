@@ -168,7 +168,7 @@ public class Generator implements Serializable {
 		createPatch(TileType.IronOre, 8,8, 6,model);
 		*/
 		
-		MotherBoard model = new MotherBoard(MapGeneration.generateTiles(row_count, col_count,Constants.MAP_COMPLEXITY,8));
+		MotherBoard model = new MotherBoard(MapGeneration.generateTiles(row_count, col_count,Constants.MAP_COMPLEXITY, Constants.UNIQUE_TILES));
 		spawnBuilding(new Dormitory(8,5), model);		
 		spawnBuilding(new Mess(8,5), model);
 		spawnBuilding(new LandingPad(8,5),model);

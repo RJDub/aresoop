@@ -53,8 +53,11 @@ public class MapPanel3D extends JPanel {
 		this.setLayout(null);
 		mobo = boardIn;
 		board = new Board(boardIn);
+		//board.setLocation(0, 30);
+		board.setSize(Constants.BOARD_X_SIZE, Constants.BOARD_Y_SIZE);
+//		Integer xLoc = (Integer)((width/2) - (Constants.BOARD_X_SIZE/2));
+//		Integer yLoc = (Integer)(15 + (height/2) - (Constants.BOARD_Y_SIZE/2));
 		board.setLocation(0, 30);
-		board.setSize(width, height - 30);
 		board.setVisible(true);
 		board.setFocusable(false);
 		MAX_ROW_COUNT = mobo.getBoardHeight();
@@ -91,7 +94,7 @@ public class MapPanel3D extends JPanel {
 			c = (MAX_COL_COUNT - Helpers.Constants.WINDOW_COL_COUNT);
 		top_left_window_row = r;
 		top_left_window_col = c;
-		setCenteredRowCol(top_left_window_row + Helpers.Constants.WINDOW_ROW_COUNT / 2, top_left_window_col + Helpers.Constants.WINDOW_COL_COUNT / 2);
+		setCenteredRowCol(top_left_window_row + Constants.WINDOW_ROW_COUNT / 2, top_left_window_col + Constants.WINDOW_COL_COUNT / 2);
 	}
 
 	// draws the board
@@ -130,26 +133,26 @@ public class MapPanel3D extends JPanel {
 			for (int row = 0; row < mobo.getBoardHeight(); row++) {
 				for (int col = 0; col < mobo.getBoardWidth(); col++) {
 					if (isInTheWindow(row, col)) {
-						g2.drawImage(drawTile(row, col), (col - offset_col + Helpers.Constants.WINDOW_COL_COUNT / 2) *Helpers.Constants.X_INCREMENT,
-								(row - offset_row + Helpers.Constants.WINDOW_ROW_COUNT / 2) * Helpers.Constants.Y_OFFSET, null);
+						g2.drawImage(drawTile(row, col), (col - offset_col + Helpers.Constants.WINDOW_COL_COUNT / 2) * Helpers.Constants.X_INCREMENT,
+								(row - offset_row + Helpers.Constants.WINDOW_ROW_COUNT / 2) * Helpers.Constants.Y_OFFSET, 50, 50, null);
 						// add highlight;
 						if (highlighted_row != null && highlighted_col != null){
 							if (row == highlighted_row && col == highlighted_col) {
 								g2.drawImage(drawHighlightBox(), (col - offset_col + Helpers.Constants.WINDOW_COL_COUNT / 2) * Helpers.Constants.X_INCREMENT,
-										(row - offset_row + Helpers.Constants.WINDOW_ROW_COUNT / 2) * Helpers.Constants.Y_OFFSET, null);
+										(row - offset_row + Helpers.Constants.WINDOW_ROW_COUNT / 2) * Helpers.Constants.Y_OFFSET, 50, 50, null);
 							}
 						}
 						for (Building b : mobo.getArrBuildings()) {
 							BuildingType bt = b.getType();
 							if ((b.getR() == row) && (b.getC() == col)) {
 								g2.drawImage(drawBuilding(bt), (col - offset_col + Helpers.Constants.WINDOW_COL_COUNT / 2) * Helpers.Constants.X_INCREMENT,
-										(row - offset_row + Helpers.Constants.WINDOW_ROW_COUNT / 2) * Helpers.Constants.Y_OFFSET, null);
+										(row - offset_row + Helpers.Constants.WINDOW_ROW_COUNT / 2) * Helpers.Constants.Y_OFFSET, 50, 50, null);
 							}
 						}
 						for (Colonist c : mobo.getArrColonists()) {
 							if ((c.getR() == row) && (c.getC() == col)) {
 								g2.drawImage(drawColonist(c), (col - offset_col + Helpers.Constants.WINDOW_COL_COUNT / 2) * Helpers.Constants.X_INCREMENT,
-										(row - offset_row + Helpers.Constants.WINDOW_ROW_COUNT / 2) * Helpers.Constants.Y_OFFSET, null);
+										(row - offset_row + Helpers.Constants.WINDOW_ROW_COUNT / 2) * Helpers.Constants.Y_OFFSET, 50, 50, null);
 							}
 						}
 					}
@@ -207,7 +210,7 @@ public class MapPanel3D extends JPanel {
 		case Storage:
 			return sheet.getSubimage(150, 150, Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
 		case LandingPad:
-			return sheet.getSubimage(0, 250, Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
+			return sheet.getSubimage(100, 150, Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
 		default:
 			return null;
 		}
@@ -223,11 +226,9 @@ public class MapPanel3D extends JPanel {
 		case IronOre:
 			return sheet.getSubimage(50, 50, Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
 		case Volcano:
-			return sheet.getSubimage(50, 250, Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
+			return sheet.getSubimage(150, 50, Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
 		case Crater:
-			return sheet.getSubimage(100, 250, Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
-			//return drawCrater(x,y);			
-			//return sheet.getSubimage(100, 250, Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
+			return sheet.getSubimage(100, 50, Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
 		case Mountain:
 			return sheet.getSubimage(150, 0, Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
 		case Unobtainium:
@@ -245,56 +246,6 @@ public class MapPanel3D extends JPanel {
 		return sheet.getSubimage(0, 100, Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
 	}
 
-	private BufferedImage drawCrater(int row, int col){
-		//return sheet.getSubimage(100, 250, Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
-		boolean right=false, left=false, up=false, down = false;
-//		//check right
-		if ((col+1) < mobo.getBoardWidth())
-			right = (mobo.getTileAtLocation(row, col+1).getType() == TileType.Crater);
-		
-		if ((col-1) >= 0)
-			left = (mobo.getTileAtLocation(row, col-1).getType() == TileType.Crater);
-		
-		if((row+1) < mobo.getBoardHeight())
-			down = (mobo.getTileAtLocation(row+1, col).getType() == TileType.Crater);
-		if((row-1) >= 0)
-			up = (mobo.getTileAtLocation(row-1, col).getType() == TileType.Crater);
-		if (right && left && up && down)
-			return sheet.getSubimage(250, 50, Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
-		else if (right && left && up && ! down)
-			return sheet.getSubimage(250, 100, Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
-		else if (right&&left&&!up&&!down)
-			return sheet.getSubimage(250, 150, Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
-		else if (right&&!left&&!up&&!down)
-			return sheet.getSubimage(200, 150, Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
-		else if (!right&&!left&&!up&&!down)
-			return sheet.getSubimage(350, 0, Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);	
-		else if (!right&&!left&&!up&&down)
-			return sheet.getSubimage(200, 200, Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
-		
-		else if (right&&!left&&!up&&down)
-			return sheet.getSubimage(200, 0, Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
-		else if (right&&left&&!up&&down)
-			return sheet.getSubimage(250, 0,Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
-		else if (right&&!left&&up&&!down)
-			return sheet.getSubimage(200,100,Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
-		else if (!right&&left&&up&&down)
-			return sheet.getSubimage(300,50,Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
-		else if (!right&&left&&!up&&down)
-			return sheet.getSubimage(300,0,Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
-		else if (!right&&left&&!up&&!down)
-			return sheet.getSubimage(300,150,Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
-		else if (!right&&!left&&up&&down)
-			return sheet.getSubimage(250,200,Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
-		else if (!right&&!left&&up&&!down)
-			return sheet.getSubimage(300,200,Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
-		else if (!right&&left&&up&&!down)
-			return sheet.getSubimage(300,100,Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
-		else if (right&&!left&&up&&down)
-			return sheet.getSubimage(200, 50,Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
-		else 
-			return sheet.getSubimage(100, 250, Helpers.Constants.X_INCREMENT, Helpers.Constants.Y_INCREMENT);
-	}
 	
 
 	private Image drawColonist(Colonist c) {
